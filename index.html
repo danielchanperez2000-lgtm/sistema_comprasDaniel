@@ -558,30 +558,38 @@
 <!-- SheetJS CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-const CLAVE_SECRETA = "Darlekzer888";
-  
+// ═══════════════════════════════════════════════
+//  CONTROL DE ACCESO (LOGIN)
+// ═══════════════════════════════════════════════
+const CLAVE_SECRETA = "Dani1234"; // <── Escribe aquí tu contraseña exacta
+
 function verificarAcceso() {
   const input = document.getElementById('login-pass');
   const errorMsg = document.getElementById('login-error');
   const loginScreen = document.getElementById('login-screen');
 
+  // Validamos que el elemento exista antes de leerlo para evitar que JS se congele
+  if (!input) {
+    console.error("No se encontró el elemento con ID 'login-pass'");
+    return;
+  }
+
   if (input.value === CLAVE_SECRETA) {
-    // Si es correcta, guardamos la sesión en el navegador para que no la pida a cada rato
     sessionStorage.setItem('EYMAS_logged', 'true');
-    loginScreen.style.display = 'none'; // Oculta el login
+    if (loginScreen) loginScreen.style.display = 'none';
     showToast('🔑 Acceso concedido. ¡Bienvenido!');
   } else {
-    // Si es incorrecta, muestra error y limpia el campo
-    errorMsg.style.display = 'block';
+    if (errorMsg) errorMsg.style.display = 'block';
     input.value = '';
     input.focus();
   }
 }
 
-// Al cargar la página, revisa si ya se había logueado en esta pestaña antes
+// Evento para ocultar la pantalla si ya te logueaste antes
 window.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('EYMAS_logged') === 'true') {
-    document.getElementById('login-screen').style.display = 'none';
+  const loginScreen = document.getElementById('login-screen');
+  if (loginScreen && sessionStorage.getItem('EYMAS_logged') === 'true') {
+    loginScreen.style.display = 'none';
   }
 });
 

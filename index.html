@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Pedidos · EYMAS</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --border: #30363d;
+    --accent: #00d4aa;
+    --accent2: #0099ff;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #6e7681;
+    --red-bg: rgba(239,68,68,0.15);
+    --green-bg: rgba(34,197,94,0.15);
+    --yellow-bg: rgba(245,158,11,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+  .logo span { color: var(--text2); font-weight: 400; font-size: 12px; margin-left: 12px; }
+  .status-bar { display: flex; gap: 16px; align-items: center; }
+  .status-dot {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text2); font-family: 'IBM Plex Mono', monospace;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+  .dot.active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+  /* ── Layout ── */
+  .container { max-width: 1600px; margin: 0 auto; padding: 24px 32px; }
+
+  /* ── Panel ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 14px 20px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none;
+  }
+  .panel-header h3 {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--text2);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .panel-header h3 .icon { color: var(--accent); font-size: 14px; }
+  .collapse-btn { color: var(--text3); font-size: 10px; transition: transform .3s; }
+  .panel-body { padding: 20px; }
+  .panel.collapsed .panel-body { display: none; }
+  .panel.collapsed .collapse-btn { transform: rotate(-90deg); }
+
+  /* ── Grid layouts ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* ── Upload zones ── */
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(0,212,170,0.04);
+  }
+  .upload-zone.loaded {
+    border-color: var(--success);
+    border-style: solid;
+    background: rgba(34,197,94,0.04);
+  }
+  .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-zone h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .upload-zone p { font-size: 11px; color: var(--text3); }
+  .upload-zone .file-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--success);
+    margin-top: 8px; font-weight: 600;
+  }
+  .upload-cols {
+    margin-top: 10px; font-size: 10px; color: var(--text3);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── Form controls ── */
+  .form-group { margin-bottom: 0; }
+  .form-group label {
+    display: block; font-size: 11px; color: var(--text2);
+    font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group select:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,212,170,0.1);
+  }
+  .form-group select option { background: var(--surface2); }
+
+  /* Checkboxes plaza */
+  .plaza-group { display: flex; gap: 12px; flex-wrap: wrap; }
+  .plaza-chip {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all .2s;
+    font-size: 12px; font-weight: 500;
+  }
+  .plaza-chip input { display: none; }
+  .plaza-chip.selected-chetum { border-color: var(--accent2); background: rgba(0,153,255,0.1); color: var(--accent2); }
+  .plaza-chip.selected-cancun { border-color: var(--accent); background: rgba(0,212,170,0.1); color: var(--accent); }
+
+  /* ── Buttons ── */
+  .btn {
+    padding: 9px 20px; border-radius: 6px; border: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary {
+    background: var(--accent); color: #000;
+  }
+  .btn-primary:hover { background: #00ebb8; box-shadow: 0 0 16px rgba(0,212,170,0.4); }
+  .btn-primary:disabled { background: var(--border); color: var(--text3); cursor: not-allowed; box-shadow: none; }
+  .btn-secondary {
+    background: transparent; color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--text2); color: var(--text); }
+  .btn-danger {
+    background: transparent; color: var(--danger);
+    border: 1px solid rgba(239,68,68,0.3);
+  }
+  .btn-danger:hover { background: var(--red-bg); }
+  .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+  /* ── Stats bar ── */
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .stat-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; }
+  .stat-card .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: var(--text); }
+  .stat-card .value.accent { color: var(--accent); }
+  .stat-card .value.warn { color: var(--warn); }
+  .stat-card .value.danger { color: var(--danger); }
+  .stat-card .sub { font-size: 10px; color: var(--text3); margin-top: 3px; }
+
+  /* ── Table ── */
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px;
+  }
+  thead th {
+    background: var(--surface2);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    position: sticky; top: 0; z-index: 10;
+    cursor: pointer; user-select: none;
+  }
+  thead th:hover { color: var(--accent); }
+  thead th.sort-asc::after { content: ' ↑'; color: var(--accent); }
+  thead th.sort-desc::after { content: ' ↓'; color: var(--accent); }
+  tbody tr {
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+    transition: background .15s;
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody tr.excluded { opacity: 0.35; }
+  td {
+    padding: 9px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    vertical-align: middle;
+  }
+  td.text-cell {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+  }
+  td.num { text-align: right; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .badge-green { background: var(--green-bg); color: var(--success); }
+  .badge-red { background: var(--red-bg); color: var(--danger); }
+  .badge-yellow { background: var(--yellow-bg); color: var(--warn); }
+  .badge-blue { background: rgba(0,153,255,0.15); color: var(--accent2); }
+  .badge-gray { background: rgba(110,118,129,0.2); color: var(--text3); }
+
+  .comprar-cell {
+    font-weight: 700; font-size: 14px;
+  }
+  .comprar-cell.pos { color: var(--accent); }
+  .comprar-cell.zero { color: var(--text3); }
+  .comprar-cell.rezago { color: var(--danger); }
+
+  /* Row coloring */
+  tr.row-comprar { }
+  tr.row-rezago td { background: rgba(239,68,68,0.04); }
+  tr.row-ok td:first-child { border-left: 3px solid var(--success); }
+  tr.row-comprar td:first-child { border-left: 3px solid var(--accent); }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .filter-bar input, .filter-bar select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  .filter-bar input { min-width: 180px; }
+  .filter-bar input:focus, .filter-bar select:focus {
+    outline: none; border-color: var(--accent);
+  }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center; padding: 60px 20px;
+    color: var(--text3);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── Tooltip-like rezago indicator ── */
+  .rezago-flag {
+    display: inline-block;
+    background: var(--red-bg); color: var(--danger);
+    font-size: 9px; font-weight: 700;
+    padding: 2px 5px; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    vertical-align: middle; margin-left: 4px;
+  }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 20px;
+    font-size: 13px; color: var(--text);
+    z-index: 9999; opacity: 0;
+    transition: opacity .3s; pointer-events: none;
+    max-width: 340px;
+  }
+  #toast.show { opacity: 1; }
+
+  /* ── Excluded list ── */
+  .excluded-tags { display: flex; flex-wrap: wrap; gap: 8px; min-height: 32px; }
+  .excluded-tag {
+    background: var(--red-bg);
+    border: 1px solid rgba(239,68,68,0.3);
+    color: var(--danger);
+    border-radius: 16px;
+    padding: 3px 10px;
+    font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer;
+  }
+  .excluded-tag:hover { background: rgba(239,68,68,0.25); }
+
+  /* ── Progress ── */
+  .progress-bar {
+    height: 3px; background: var(--border); border-radius: 2px;
+    overflow: hidden; margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--accent);
+    border-radius: 2px; transition: width .3s;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">EYMAS<span>· Sistema de Pedidos Inteligente</span></div>
+  <div class="status-bar">
+    <div class="status-dot"><div class="dot" id="dot-inv"></div> <span id="lbl-inv">Sin inventario</span></div>
+    <div class="status-dot"><div class="dot" id="dot-ven"></div> <span id="lbl-ven">Sin ventas</span></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ── CARGA DE ARCHIVOS ── -->
+  <div class="panel" id="panel-upload">
+    <div class="panel-header" onclick="togglePanel('panel-upload')">
+      <h3><span class="icon">📂</span>Carga de Reportes</h3>
+      <span class="collapse-btn">▼</span>
+    </div>
+    <div class="panel-body">
+      <div class="grid-2">
+        <div>
+          <div class="upload-zone" id="zone-inv" onclick="document.getElementById('file-inv').click()">
+            <input type="file" id="file-inv" accept=".xlsx,.xls" onchange="loadFile('inv', this)">
+            <div class="upload-icon">📦</div>
+            <h4>Reporte de Inventario</h4>
+            <p>inventarios.xlsx</p>
+            <div class="upload-cols">CLASE · CLAVE · DESCRIPCION · UBICACIÓN · STOCK · COSTO · REZAGO</div>
+            <div class="file-name" id="fname-inv"></div>
+          </div>
+        </div>
+        <div>
+          <div class="upload-zone" id="zone-ven" onclick="document.getElementById('file-ven').click()">
+            <input type="file" id="file-ven" accept=".xlsx,.xls" onchange="loadFile('ven', this)">
+            <div class="upload-icon">💹</div>
+            <h4>Reporte de Ventas</h4>
+            <p>ventas.xlsx</p>
+            <div class="upload-cols">FECHA_VENTA · UBICACION · CLAVE · COSTO · VENTA</div>
+            <div class="file-name" id="fname-ven"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PARÁMETROS ── -->
+  <div class="panel" id="panel-params">
+    <div class="panel-header" onclick="togglePanel('panel-params')">
+      <h3><span class="icon">⚙️</span>Parámetros de Compra</h3>
+      <span class="collapse-btn">▼</span>
+    </div>
+    <div class="panel-body">
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="form-group">
+          <label>⏱ Días en llegar el pedido</label>
+          <input type="number" id="dias-llegada" value="5" min="1" max="90">
+        </div>
+        <div class="form-group">
+          <label>📅 Días de cobertura deseada</label>
+          <input type="number" id="dias-cobertura" value="30" min="1" max="365">
+        </div>
+        <div class="form-group">
+          <label>📊 Días de historial a evaluar</label>
+          <input type="number" id="dias-historial" value="35" min="1" max="365">
+        </div>
+        <div class="form-group">
+          <label>🔍 Filtro por clase</label>
+          <input type="text" id="filtro-clase" placeholder="COIMTI, RETRUS…">
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px">📍 Plaza</label>
+        <div class="plaza-group" id="plaza-group">
+          <label class="plaza-chip selected-chetum" id="chip-chetumal">
+            <input type="checkbox" checked onchange="updateChip(this,'chetumal')"> 🏙 Chetumal
+          </label>
+          <label class="plaza-chip selected-cancun" id="chip-cancun">
+            <input type="checkbox" checked onchange="updateChip(this,'cancun')"> 🌴 Cancún
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px">🔑 Filtro por Clave de Producto</label>
+        <input type="text" id="filtro-clave-param" placeholder="Ej: COIMTI, PC240747… (separar por coma)" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;">
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:flex-end;align-items:center">
+        <button class="btn btn-secondary" onclick="resetAll()">↺ Limpiar todo</button>
+        <button class="btn btn-primary" id="btn-generar" onclick="generateReport()" disabled>
+          ▶ Generar Reporte
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CLAVES EXCLUIDAS ── -->
+  <div class="panel" id="panel-excl">
+    <div class="panel-header" onclick="togglePanel('panel-excl')">
+      <h3><span class="icon">🚫</span>Claves Excluidas <span id="excl-count" style="background:var(--red-bg);color:var(--danger);padding:2px 8px;border-radius:10px;font-size:10px;margin-left:8px">0</span></h3>
+      <span class="collapse-btn">▼</span>
+    </div>
+    <div class="panel-body">
+      <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Las claves excluidas no aparecerán en ningún reporte. Haz clic en una etiqueta para reincorporarla.</p>
+      <div class="excluded-tags" id="excluded-tags">
+        <span style="color:var(--text3);font-size:12px">No hay claves excluidas.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STATS ── -->
+  <div class="stats-bar" id="stats-bar" style="display:none">
+    <div class="stat-card">
+      <div class="label">Total Claves</div>
+      <div class="value accent" id="stat-total">0</div>
+      <div class="sub">en el reporte</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">A Comprar</div>
+      <div class="value warn" id="stat-comprar">0</div>
+      <div class="sub">claves con pedido &gt; 0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Con Rezago</div>
+      <div class="value danger" id="stat-rezago">0</div>
+      <div class="sub">sin compra (rezago activo)</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Piezas Totales</div>
+      <div class="value" id="stat-piezas">0</div>
+      <div class="sub">unidades a pedir</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Inversión Est.</div>
+      <div class="value" id="stat-inversion">$0</div>
+      <div class="sub">costo estimado</div>
+    </div>
+  </div>
+
+  <!-- ── TABLA RESULTADO ── -->
+  <div class="panel" id="panel-result" style="display:none">
+    <div class="panel-header">
+      <h3><span class="icon">📋</span>Resultado del Reporte de Pedidos</h3>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="exportCSV()">⬇ Exportar CSV</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="filter-bar">
+        <input type="text" id="search-tabla" placeholder="🔍  Buscar clave o descripción…" oninput="filterTable()">
+        <select id="filter-plaza-tabla" onchange="filterTable()">
+          <option value="">Todas las plazas</option>
+          <option value="chetumal">Chetumal</option>
+          <option value="cancun">Cancún</option>
+        </select>
+        <select id="filter-comprar" onchange="filterTable()">
+          <option value="">Todos</option>
+          <option value="comprar">Solo a comprar</option>
+          <option value="rezago">Solo con rezago</option>
+          <option value="ok">Stock suficiente</option>
+        </select>
+        <select id="filter-clase-tabla" onchange="filterTable()">
+          <option value="">Todas las clases</option>
+        </select>
+      </div>
+      <div class="table-wrapper">
+        <table id="result-table">
+          <thead id="result-thead"></thead>
+          <tbody id="result-tbody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="empty-state" style="display:none">
+        <div class="icon">🔍</div>
+        <p>No se encontraron resultados con los filtros actuales.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<!-- SheetJS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+const PLAZAS = {
+  chetumal: {
+    tiendas: ['COCTMTCENT','COCTMTMULT','COCTMTPLAZ'],
+    bodega: ['COCTMBNAPO'],  // puede aparecer también como COCTMBMAPO según datos
+    label: 'Chetumal'
+  },
+  cancun: {
+    tiendas: ['COCUNTLAKI'],
+    bodega: ['COCUNTLAKI'],  // en cancún actúa como bodega+tienda
+    label: 'Cancún'
+  }
+};
+
+// Alias extra para la bodega Chetumal (puede haber variaciones en datos)
+const BODEGA_CHETUM_ALIASES = ['COCTMBNAPO','COCTMTNAPO','COCTMTBODEGA','BNAPO'];
+
+let rawInventario = [];
+let rawVentas = [];
+let reportData = [];
+let filteredData = [];
+let excludedKeys = JSON.parse(localStorage.getItem('EYMAS_excluded') || '[]');
+let sortCol = null, sortDir = 1;
+
+// ═══════════════════════════════════════════════
+//  UI HELPERS
+// ═══════════════════════════════════════════════
+function togglePanel(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+function showToast(msg, duration=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+function updateChip(input, plaza) {
+  const chip = document.getElementById('chip-' + plaza);
+  if (input.checked) chip.classList.add(plaza === 'chetumal' ? 'selected-chetum' : 'selected-cancun');
+  else { chip.classList.remove('selected-chetum'); chip.classList.remove('selected-cancun'); }
+}
+function fmt(n) { return n.toLocaleString('es-MX'); }
+function fmtMoney(n) {
+  return '$' + n.toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+// ═══════════════════════════════════════════════
+//  FILE LOADING
+// ═══════════════════════════════════════════════
+function loadFile(type, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb = XLSX.read(e.target.result, {type:'array', cellDates: true});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const data = XLSX.utils.sheet_to_json(ws, {defval: ''});
+      if (type === 'inv') {
+        rawInventario = normalizeInv(data);
+        document.getElementById('zone-inv').classList.add('loaded');
+        document.getElementById('fname-inv').textContent = '✓ ' + file.name + ' (' + rawInventario.length + ' filas)';
+        document.getElementById('dot-inv').classList.add('active');
+        document.getElementById('lbl-inv').textContent = rawInventario.length + ' registros';
+        showToast('✅ Inventario cargado: ' + rawInventario.length + ' registros');
+      } else {
+        rawVentas = normalizeVen(data);
+        document.getElementById('zone-ven').classList.add('loaded');
+        document.getElementById('fname-ven').textContent = '✓ ' + file.name + ' (' + rawVentas.length + ' filas)';
+        document.getElementById('dot-ven').classList.add('active');
+        document.getElementById('lbl-ven').textContent = rawVentas.length + ' registros';
+        showToast('✅ Ventas cargadas: ' + rawVentas.length + ' registros');
+      }
+      checkEnableBtn();
+    } catch(err) {
+      showToast('❌ Error leyendo archivo: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function normalizeInv(rows) {
+  return rows.map(r => {
+    const keys = Object.keys(r);
+    // Flexible column matching
+    const get = (patterns) => {
+      for (const p of patterns) {
+        const k = keys.find(k => k.toUpperCase().replace(/\s/g,'').includes(p.toUpperCase()));
+        if (k) return r[k];
+      }
+      return '';
+    };
+    return {
+      CLASE: String(get(['CLASE','CLASS'])||'').trim().toUpperCase(),
+      CLAVE: String(get(['CLAVE','KEY','SKU'])||'').trim().toUpperCase(),
+      DESCRIPCION: String(get(['DESCRIPCION','DESCRIP','DESC','NOMBRE'])||'').trim(),
+      UBICACION: String(get(['UBICACI','UBICACION','BODEGA','ALMACEN','LOCATION'])||'').trim().toUpperCase(),
+      STOCK: parseFloat(String(get(['STOCK','EXISTENCIA','EXIST','CANTIDAD'])||'0').replace(/,/g,'')) || 0,
+      COSTO: parseFloat(String(get(['COSTO','COST','PRECIO'])||'0').replace(/,/g,'')) || 0,
+      REZAGO: parseFloat(String(get(['REZAGO','REZA'])||'0').replace(/,/g,'')) || 0,
+    };
+  }).filter(r => r.CLAVE);
+}
+
+function normalizeVen(rows) {
+  return rows.map(r => {
+    const keys = Object.keys(r);
+    const get = (patterns) => {
+      for (const p of patterns) {
+        const k = keys.find(k => k.toUpperCase().replace(/\s/g,'').includes(p.toUpperCase()));
+        if (k) return r[k];
+      }
+      return '';
+    };
+
+    let fechaRAW = get(['FECHA','DATE']);
+    let fechaObj = null;
+
+    if (fechaRAW instanceof Date) {
+      fechaObj = fechaRAW;
+    } else if (typeof fechaRAW === 'number') {
+      // Serial de Excel
+      const parsed = XLSX.SSF.parse_date_code(fechaRAW);
+      fechaObj = new Date(parsed.y, parsed.m - 1, parsed.d);
+    } else if (typeof fechaRAW === 'string' && fechaRAW.includes('/')) {
+      // Parsear formato DD/MM/YYYY de México forzando números enteros
+      const partes = fechaRAW.split(' ')[0].split('/');
+      if (partes.length >= 3) {
+          fechaObj = new Date(parseInt(partes[2], 10), parseInt(partes[1], 10) - 1, parseInt(partes[0], 10));
+      } else {
+          fechaObj = new Date(fechaRAW);
+      }
+    } else {
+      fechaObj = new Date(fechaRAW);
+    }
+
+    // Validación robusta para evitar que isNaN rompa el código
+    const esValida = fechaObj instanceof Date && !isNaN(fechaObj.getTime());
+
+    return {
+      FECHA: esValida ? fechaObj : null,
+      UBICACION: String(get(['UBICACI','UBICACION','BODEGA','ALMACEN','LOCATION'])||'').trim().toUpperCase(),
+      CLAVE: String(get(['CLAVE','KEY','SKU'])||'').trim().toUpperCase(),
+      COSTO: parseFloat(String(get(['COSTO','COST'])||'0').replace(/,/g,'')) || 0,
+      VENTA: parseFloat(String(get(['VENTA','QTY','CANTIDAD','PIEZAS','CANT'])||'1').replace(/,/g,'')) || 1,
+    };
+  }).filter(r => r.CLAVE && r.FECHA !== null);
+}
+
+function checkEnableBtn() {
+  document.getElementById('btn-generar').disabled = !(rawInventario.length && rawVentas.length);
+}
+
+// ═══════════════════════════════════════════════
+//  CORE LOGIC
+// ═══════════════════════════════════════════════
+function getSelectedPlazas() {
+  const plazas = [];
+  if (document.getElementById('chip-chetumal').querySelector('input').checked) plazas.push('chetumal');
+  if (document.getElementById('chip-cancun').querySelector('input').checked) plazas.push('cancun');
+  return plazas;
+}
+
+// Get all UBICACION codes for selected plazas
+function getUbicaciones(selectedPlazas) {
+  const ubs = new Set();
+  for (const p of selectedPlazas) {
+    for (const u of PLAZAS[p].tiendas) ubs.add(u);
+    for (const u of PLAZAS[p].bodega) ubs.add(u);
+  }
+  return ubs;
+}
+
+function getPlazaOfUb(ub) {
+  if (PLAZAS.chetumal.tiendas.includes(ub) || PLAZAS.chetumal.bodega.includes(ub)) return 'chetumal';
+  if (PLAZAS.cancun.tiendas.includes(ub) || PLAZAS.cancun.bodega.includes(ub)) return 'cancun';
+  // fallback: check aliases
+  if (BODEGA_CHETUM_ALIASES.some(a => ub.includes(a) || a.includes(ub.slice(0,6)))) return 'chetumal';
+  return null;
+}
+
+// Determine if UBICACION is bodega (not tienda) for chetumal
+function isBodegaChetumal(ub) {
+  return !PLAZAS.chetumal.tiendas.includes(ub) &&
+    (PLAZAS.chetumal.bodega.includes(ub) || BODEGA_CHETUM_ALIASES.some(a => ub.includes(a)));
+}
+
+function generateReport() {
+  const diasLlegada   = parseInt(document.getElementById('dias-llegada').value) || 5;
+  const diasCobertura = parseInt(document.getElementById('dias-cobertura').value) || 30;
+  // LEER DÍAS EN LUGAR DE MESES
+  const diasHist      = parseInt(document.getElementById('dias-historial').value) || 35;
+  const filtroClave   = document.getElementById('filtro-clave-param').value.trim();
+  const filtroClase   = document.getElementById('filtro-clase').value.trim().toUpperCase();
+
+  const clavesFiltro = filtroClave ? filtroClave.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
+  const claseFiltro = filtroClase || null;
+
+  const selectedPlazas = getSelectedPlazas();
+  if (!selectedPlazas.length) { showToast('⚠ Selecciona al menos una plaza'); return; }
+
+  const ubs = getUbicaciones(selectedPlazas);
+
+  // ── 1. Fecha de corte para historial exacta en días (Encerando horas)
+  const hoy = new Date();
+  const fechaCorte = new Date(hoy);
+  fechaCorte.setDate(fechaCorte.getDate() - diasHist);
+  
+  // Forzamos que la fecha de corte empiece desde el primer segundo de ese día (00:00:00)
+  fechaCorte.setHours(0, 0, 0, 0);
+
+  // ── 2. Filtrar ventas por plaza y período
+  const ventasFiltradas = rawVentas.filter(v =>
+    ubs.has(v.UBICACION) && v.FECHA >= fechaCorte
+  );
+
+  // ── 3. Ventas por CLAVE + UBICACION
+  const ventasMap = {}; // { CLAVE: { UBICACION: totalUnidades } }
+  for (const v of ventasFiltradas) {
+    if (!ventasMap[v.CLAVE]) ventasMap[v.CLAVE] = {};
+    if (!ventasMap[v.CLAVE][v.UBICACION]) ventasMap[v.CLAVE][v.UBICACION] = 0;
+    ventasMap[v.CLAVE][v.UBICACION] += v.VENTA;
+  }
+
+  // ── 4. Inventario por CLAVE + UBICACION (solo plazas seleccionadas)
+  const invFilt = rawInventario.filter(i => ubs.has(i.UBICACION));
+
+  // ── 5. Todos los productos únicos presentes en INV (plazas seleccionadas)
+  const claveSet = new Set(invFilt.map(i => i.CLAVE));
+  // Also include claves that appear in ventas but not inventory (edge case)
+  for (const v of ventasFiltradas) claveSet.add(v.CLAVE);
+
+  // ── 6. Por clave, calcular para CADA PLAZA seleccionada
+  const resultByKey = {}; // { CLAVE: { chetumal: {...}, cancun: {...} } }
+
+  for (const clave of claveSet) {
+    // Meta info from inventory
+    const invRows = invFilt.filter(i => i.CLAVE === clave);
+    if (!invRows.length && !ventasMap[clave]) continue;
+
+    const meta = invRows[0] || { CLASE:'', DESCRIPCION:'', COSTO: 0 };
+    const CLASE = meta.CLASE;
+    const DESCRIPCION = meta.DESCRIPCION;
+    const COSTO = invRows.find(r => r.COSTO > 0)?.COSTO || meta.COSTO;
+
+    // Apply filters
+    if (clavesFiltro.length && !clavesFiltro.some(f => clave.includes(f))) continue;
+    if (claseFiltro && CLASE !== claseFiltro) continue;
+    if (excludedKeys.includes(clave)) continue;
+
+    resultByKey[clave] = { CLAVE: clave, CLASE, DESCRIPCION, COSTO, plazas: {} };
+
+    for (const plaza of selectedPlazas) {
+      // 1. Para INVENTARIO sumamos TODO (Tiendas + Bodega) para saber qué tenemos físicamente disponible en la plaza
+      const ubsInventarioSet = new Set([...PLAZAS[plaza].tiendas, ...PLAZAS[plaza].bodega]);
+      const invPlaza = invRows.filter(i => ubsInventarioSet.has(i.UBICACION));
+      
+      const rezagoTotal = invPlaza.reduce((s, i) => s + i.REZAGO, 0);
+      const tieneRezago = rezagoTotal > 0;
+      const stockTotal = invPlaza.reduce((s, i) => s + i.STOCK, 0);
+
+      const stockPorUb = {};
+      for (const i of invPlaza) stockPorUb[i.UBICACION] = (stockPorUb[i.UBICACION]||0) + i.STOCK;
+
+      // 2. Para VENTAS evaluamos EXCLUSIVAMENTE el array de tiendas de la plaza (Chetumal no sumará su bodega)
+      // Usamos Set por seguridad en plazas de una sola sucursal mixta (como Cancún)
+      const ubsTiendasSet = new Set(PLAZAS[plaza].tiendas);
+      const venPlaza = ventasMap[clave] || {};
+      let totalVentasPeriodo = 0;
+      
+      for (const ub of ubsTiendasSet) {
+        totalVentasPeriodo += (venPlaza[ub] || 0);
+      }
+
+      // Ventas promedio diarias (usando DÍAS reales del historial)
+      const ventaDiaria = totalVentasPeriodo / diasHist;
+      const ventaMensual = ventaDiaria * 30;
+
+      // Stock mínimo para cubrir el tiempo de entrega
+      const stockSeguridad = ventaDiaria * diasLlegada;
+
+      // Necesidad total: stock para cobertura + stock de seguridad
+      const necesidad = ventaDiaria * (diasCobertura + diasLlegada);
+
+      // Piezas a pedir = necesidad - stock actual (si no hay rezago)
+      let piezasAPedir = 0;
+      if (tieneRezago) {
+        piezasAPedir = 0; // REGLA: si hay rezago, no comprar
+      } else {
+        piezasAPedir = Math.max(0, Math.ceil(necesidad - stockTotal));
+      }
+
+      // Días de cobertura actual
+      const diasCoberturaActual = ventaDiaria > 0 ? Math.floor(stockTotal / ventaDiaria) : (stockTotal > 0 ? 9999 : 0);
+
+      resultByKey[clave].plazas[plaza] = {
+        stockTotal,
+        stockPorUb,
+        rezagoTotal,
+        tieneRezago,
+        totalVentasPeriodo,
+        ventaDiaria: +ventaDiaria.toFixed(4),
+        ventaMensual: +ventaMensual.toFixed(2),
+        stockSeguridad: +stockSeguridad.toFixed(2),
+        necesidad: +necesidad.toFixed(2),
+        piezasAPedir,
+        diasCoberturaActual,
+      };
+    }
+  }
+
+  // ── 7. Construir rows planas para la tabla
+  // Mode: one row per (clave, plaza) if multi-plaza, or merge if single
+  reportData = [];
+
+  for (const [clave, data] of Object.entries(resultByKey)) {
+    if (selectedPlazas.length === 1) {
+      const plaza = selectedPlazas[0];
+      const p = data.plazas[plaza];
+      if (!p) continue;
+      reportData.push({
+        CLAVE: clave,
+        CLASE: data.CLASE,
+        DESCRIPCION: data.DESCRIPCION,
+        COSTO: data.COSTO,
+        PLAZA: plaza,
+        ...p
+      });
+    } else {
+      // Multiple plazas: one row per plaza
+      for (const plaza of selectedPlazas) {
+        const p = data.plazas[plaza];
+        if (!p) continue;
+        reportData.push({
+          CLAVE: clave,
+          CLASE: data.CLASE,
+          DESCRIPCION: data.DESCRIPCION,
+          COSTO: data.COSTO,
+          PLAZA: plaza,
+          ...p
+        });
+      }
+    }
+  }
+
+  // Sort by piezasAPedir desc
+  reportData.sort((a,b) => b.piezasAPedir - a.piezasAPedir || a.CLAVE.localeCompare(b.CLAVE));
+
+  // ── 8. Stats
+  const toComprar = reportData.filter(r => r.piezasAPedir > 0);
+  const conRezago = reportData.filter(r => r.tieneRezago);
+  const totalPiezas = reportData.reduce((s,r) => s + r.piezasAPedir, 0);
+  const totalInv = reportData.reduce((s,r) => s + r.piezasAPedir * r.COSTO, 0);
+
+  document.getElementById('stat-total').textContent = fmt(reportData.length);
+  document.getElementById('stat-comprar').textContent = fmt(toComprar.length);
+  document.getElementById('stat-rezago').textContent = fmt(conRezago.length);
+  document.getElementById('stat-piezas').textContent = fmt(totalPiezas);
+  document.getElementById('stat-inversion').textContent = fmtMoney(totalInv);
+
+  document.getElementById('stats-bar').style.display = '';
+  document.getElementById('panel-result').style.display = '';
+
+  buildTable();
+  populateClaseFilter();
+  showToast('✅ Reporte generado: ' + reportData.length + ' registros');
+
+  // Auto collapse upload & params
+  document.getElementById('panel-upload').classList.add('collapsed');
+  document.getElementById('panel-params').classList.add('collapsed');
+}
+
+// ═══════════════════════════════════════════════
+//  TABLE
+// ═══════════════════════════════════════════════
+function buildTable() {
+  filteredData = [...reportData];
+  renderTable();
+}
+
+function renderTable() {
+  const thead = document.getElementById('result-thead');
+  const tbody = document.getElementById('result-tbody');
+
+  const cols = [
+    { key: 'CLAVE',            label: 'Clave',        sortable: true },
+    { key: 'DESCRIPCION',      label: 'Descripción',   sortable: true },
+    { key: 'CLASE',            label: 'Clase',         sortable: true },
+    { key: 'PLAZA',            label: 'Plaza',         sortable: true },
+    { key: 'stockTotal',       label: 'Stock Total',   sortable: true },
+    { key: 'rezagoTotal',      label: 'Rezago',        sortable: true },
+    { key: 'totalVentasPeriodo', label: 'Vtas Período', sortable: true },
+    { key: 'ventaDiaria',      label: 'Vta/Día',       sortable: true },
+    { key: 'ventaMensual',     label: 'Vta/Mes',       sortable: true },
+    { key: 'diasCoberturaActual', label: 'Días Cob.', sortable: true },
+    { key: 'necesidad',        label: 'Necesidad',     sortable: true },
+    { key: 'piezasAPedir',     label: '✦ A PEDIR',     sortable: true },
+    { key: 'COSTO',            label: 'Costo Unit.',   sortable: true },
+    { key: '_total',           label: 'Total $',       sortable: true },
+    { key: '_actions',         label: '',              sortable: false },
+  ];
+
+  // Header
+  thead.innerHTML = '<tr>' + cols.map(c => {
+    let cls = '';
+    if (c.key === sortCol) cls = sortDir > 0 ? 'sort-asc' : 'sort-desc';
+    return `<th class="${cls}" ${c.sortable ? `onclick="sortTable('${c.key}')"` : ''}>${c.label}</th>`;
+  }).join('') + '</tr>';
+
+  // Body
+  if (!filteredData.length) {
+    tbody.innerHTML = '';
+    document.getElementById('empty-state').style.display = '';
+    return;
+  }
+  document.getElementById('empty-state').style.display = 'none';
+
+  tbody.innerHTML = filteredData.map((r, i) => {
+    const totalCost = r.piezasAPedir * r.COSTO;
+    const isExcl = excludedKeys.includes(r.CLAVE);
+
+    let rowClass = '';
+    if (r.tieneRezago) rowClass = 'row-rezago';
+    else if (r.piezasAPedir > 0) rowClass = 'row-comprar';
+    else rowClass = 'row-ok';
+
+    const piezasHtml = r.tieneRezago
+      ? `<span class="comprar-cell rezago">🚫 Rezago</span>`
+      : r.piezasAPedir > 0
+        ? `<span class="comprar-cell pos">${fmt(r.piezasAPedir)}</span>`
+        : `<span class="comprar-cell zero">—</span>`;
+
+    const diasCob = r.diasCoberturaActual >= 9999
+      ? '<span class="badge badge-gray">∞</span>'
+      : r.diasCoberturaActual < 5
+        ? `<span class="badge badge-red">${r.diasCoberturaActual}d</span>`
+        : r.diasCoberturaActual < 15
+          ? `<span class="badge badge-yellow">${r.diasCoberturaActual}d</span>`
+          : `<span class="badge badge-green">${r.diasCoberturaActual}d</span>`;
+
+    const plazaBadge = r.PLAZA === 'chetumal'
+      ? '<span class="badge badge-blue">CTM</span>'
+      : '<span class="badge badge-green">CUN</span>';
+
+    const rezagoBadge = r.rezagoTotal > 0
+      ? `<span class="badge badge-red">${fmt(r.rezagoTotal)}</span>`
+      : `<span style="color:var(--text3)">—</span>`;
+
+    return `<tr class="${rowClass}${isExcl ? ' excluded' : ''}">
+      <td><code style="font-size:11px">${r.CLAVE}</code></td>
+      <td class="text-cell" style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${r.DESCRIPCION}">${r.DESCRIPCION}</td>
+      <td><span class="badge badge-blue">${r.CLASE}</span></td>
+      <td>${plazaBadge}</td>
+      <td class="num">${fmt(r.stockTotal)}</td>
+      <td class="num">${rezagoBadge}</td>
+      <td class="num">${fmt(r.totalVentasPeriodo)}</td>
+      <td class="num" style="color:var(--text2)">${r.ventaDiaria.toFixed(2)}</td>
+      <td class="num" style="color:var(--text2)">${r.ventaMensual.toFixed(1)}</td>
+      <td class="num">${diasCob}</td>
+      <td class="num" style="color:var(--text2)">${r.necesidad.toFixed(1)}</td>
+      <td class="num">${piezasHtml}</td>
+      <td class="num" style="color:var(--text3)">${fmtMoney(r.COSTO)}</td>
+      <td class="num" style="font-weight:600">${r.piezasAPedir > 0 ? fmtMoney(totalCost) : '—'}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" onclick="excludeKey('${r.CLAVE}')" title="Excluir clave permanentemente">🚫</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+
+  const getVal = (r) => {
+    if (col === '_total') return r.piezasAPedir * r.COSTO;
+    return r[col];
+  };
+
+  filteredData.sort((a,b) => {
+    const va = getVal(a), vb = getVal(b);
+    if (typeof va === 'number') return (va - vb) * sortDir;
+    return String(va).localeCompare(String(vb)) * sortDir;
+  });
+  renderTable();
+}
+
+function filterTable() {
+  const q = document.getElementById('search-tabla').value.toLowerCase();
+  const plaza = document.getElementById('filter-plaza-tabla').value;
+  const estado = document.getElementById('filter-comprar').value;
+  const clase = document.getElementById('filter-clase-tabla').value;
+
+  filteredData = reportData.filter(r => {
+    if (q && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
+    if (plaza && r.PLAZA !== plaza) return false;
+    if (clase && r.CLASE !== clase) return false;
+    if (estado === 'comprar' && r.piezasAPedir <= 0) return false;
+    if (estado === 'rezago' && !r.tieneRezago) return false;
+    if (estado === 'ok' && (r.piezasAPedir > 0 || r.tieneRezago)) return false;
+    return true;
+  });
+  renderTable();
+}
+
+function populateClaseFilter() {
+  const sel = document.getElementById('filter-clase-tabla');
+  const clases = [...new Set(reportData.map(r => r.CLASE))].sort();
+  sel.innerHTML = '<option value="">Todas las clases</option>' +
+    clases.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  EXCLUDE KEYS
+// ═══════════════════════════════════════════════
+function excludeKey(clave) {
+  if (!excludedKeys.includes(clave)) {
+    excludedKeys.push(clave);
+    localStorage.setItem('EYMAS_excluded', JSON.stringify(excludedKeys));
+    renderExcluded();
+    // Remove from reportData
+    reportData = reportData.filter(r => r.CLAVE !== clave);
+    filterTable();
+    showToast('🚫 Clave excluida: ' + clave);
+  }
+}
+
+function unexcludeKey(clave) {
+  excludedKeys = excludedKeys.filter(k => k !== clave);
+  localStorage.setItem('EYMAS_excluded', JSON.stringify(excludedKeys));
+  renderExcluded();
+  showToast('✅ Clave reincorporada: ' + clave);
+}
+
+function renderExcluded() {
+  const cnt = document.getElementById('excl-count');
+  const container = document.getElementById('excluded-tags');
+  cnt.textContent = excludedKeys.length;
+  if (!excludedKeys.length) {
+    container.innerHTML = '<span style="color:var(--text3);font-size:12px">No hay claves excluidas.</span>';
+    return;
+  }
+  container.innerHTML = excludedKeys.map(k =>
+    `<div class="excluded-tag" onclick="unexcludeKey('${k}')" title="Click para reincorporar">
+      ${k} <span>✕</span>
+    </div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  EXPORT CSV
+// ═══════════════════════════════════════════════
+function exportCSV() {
+  if (!filteredData.length) { showToast('⚠ No hay datos para exportar'); return; }
+  const headers = ['CLAVE','DESCRIPCION','CLASE','PLAZA','STOCK_TOTAL','REZAGO','VENTAS_PERIODO','VENTA_DIARIA','VENTA_MENSUAL','DIAS_COBERTURA_ACT','NECESIDAD','PIEZAS_A_PEDIR','COSTO_UNIT','TOTAL_INVERSION'];
+  const rows = filteredData.map(r => [
+    r.CLAVE, '"' + r.DESCRIPCION.replace(/"/g,'""') + '"', r.CLASE, r.PLAZA,
+    r.stockTotal, r.rezagoTotal, r.totalVentasPeriodo,
+    r.ventaDiaria.toFixed(4), r.ventaMensual.toFixed(2),
+    r.diasCoberturaActual >= 9999 ? 'SIN VENTAS' : r.diasCoberturaActual,
+    r.necesidad.toFixed(2), r.piezasAPedir, r.COSTO.toFixed(2),
+    (r.piezasAPedir * r.COSTO).toFixed(2)
+  ]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'pedidos_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('⬇ CSV exportado');
+}
+
+// ═══════════════════════════════════════════════
+//  RESET
+// ═══════════════════════════════════════════════
+function resetAll() {
+  rawInventario = []; rawVentas = []; reportData = []; filteredData = [];
+  ['zone-inv','zone-ven'].forEach(id => document.getElementById(id).classList.remove('loaded'));
+  ['fname-inv','fname-ven'].forEach(id => document.getElementById(id).textContent = '');
+  ['dot-inv','dot-ven'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById('lbl-inv').textContent = 'Sin inventario';
+  document.getElementById('lbl-ven').textContent = 'Sin ventas';
+  document.getElementById('stats-bar').style.display = 'none';
+  document.getElementById('panel-result').style.display = 'none';
+  checkEnableBtn();
+  showToast('↺ Datos limpiados');
+}
+
+// ═══════════════════════════════════════════════
+//  DRAG & DROP
+// ═══════════════════════════════════════════════
+['zone-inv','zone-ven'].forEach(zoneId => {
+  const zone = document.getElementById(zoneId);
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const type = zoneId === 'zone-inv' ? 'inv' : 'ven';
+      const inputEl = document.getElementById('file-' + type);
+      // Simulate file load
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      inputEl.files = dt.files;
+      loadFile(type, inputEl);
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+renderExcluded();
+</script>
+</body>
+</html>

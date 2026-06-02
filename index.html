@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema de Pedidos · EYMAS</title>
+<title>Sistema de Pedidos · DRP_SYSTEMS</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -362,7 +362,7 @@
 <body>
 
 <header>
-  <div class="logo">EYMAS<span>· Sistema de Pedidos Inteligente</span></div>
+  <div class="logo">DRP_SYSTEMS<span>· Sistema de Pedidos Inteligente</span></div>
   <div class="status-bar">
     <div class="status-dot"><div class="dot" id="dot-inv"></div> <span id="lbl-inv">Sin inventario</span></div>
     <div class="status-dot"><div class="dot" id="dot-ven"></div> <span id="lbl-ven">Sin ventas</span></div>
@@ -567,7 +567,7 @@ let rawInventario = [];
 let rawVentas = [];
 let reportData = [];
 let filteredData = [];
-let excludedKeys = JSON.parse(localStorage.getItem('EYMAS_excluded') || '[]');
+let excludedKeys = JSON.parse(localStorage.getItem('DRP_SYSTEMS_excluded') || '[]');
 let sortCol = null, sortDir = 1;
 
 // ═══════════════════════════════════════════════
@@ -1064,7 +1064,7 @@ function populateClaseFilter() {
 function excludeKey(clave) {
   if (!excludedKeys.includes(clave)) {
     excludedKeys.push(clave);
-    localStorage.setItem('EYMAS_excluded', JSON.stringify(excludedKeys));
+    localStorage.setItem('DRP_SYSTEMS_excluded', JSON.stringify(excludedKeys));
     renderExcluded();
     // Remove from reportData
     reportData = reportData.filter(r => r.CLAVE !== clave);
@@ -1075,7 +1075,7 @@ function excludeKey(clave) {
 
 function unexcludeKey(clave) {
   excludedKeys = excludedKeys.filter(k => k !== clave);
-  localStorage.setItem('EYMAS_excluded', JSON.stringify(excludedKeys));
+  localStorage.setItem('DRP_SYSTEMS_excluded', JSON.stringify(excludedKeys));
   renderExcluded();
   showToast('✅ Clave reincorporada: ' + clave);
 }

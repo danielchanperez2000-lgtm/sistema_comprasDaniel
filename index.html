@@ -118,7 +118,6 @@
     font-size: 9px; padding: 1px 5px; border-radius: 8px;
     font-weight: 700;
   }
-  .tab-badge.green { background: var(--green-bg); color: var(--success); }
 
   /* ── Tab content ── */
   .tab-content { display: none; }
@@ -156,9 +155,7 @@
 
   /* ── Grid ── */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
 
   /* ── KPI Cards ── */
   .kpi-grid {
@@ -186,17 +183,9 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 24px; font-weight: 600;
     color: var(--kpi-color, var(--text));
-    line-height: 1;
-    margin-bottom: 4px;
+    line-height: 1; margin-bottom: 4px;
   }
   .kpi-sub { font-size: 10px; color: var(--text3); }
-  .kpi-trend {
-    position: absolute; top: 14px; right: 14px;
-    font-size: 10px; font-weight: 600;
-    font-family: 'IBM Plex Mono', monospace;
-  }
-  .kpi-trend.up { color: var(--success); }
-  .kpi-trend.down { color: var(--danger); }
   .kpi-icon { position: absolute; bottom: 10px; right: 14px; font-size: 22px; opacity: 0.12; }
 
   /* ── Upload ── */
@@ -223,23 +212,16 @@
   /* ── Form ── */
   .form-group label {
     display: block; font-size: 10px; color: var(--text2);
-    font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-    margin-bottom: 5px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;
   }
   .form-group input, .form-group select {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px 11px;
-    color: var(--text);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 11px; color: var(--text);
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
     transition: border-color .2s;
   }
   .form-group input:focus, .form-group select:focus {
-    outline: none; border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0,212,170,0.08);
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,212,170,0.08);
   }
   .form-group select option { background: var(--surface2); }
 
@@ -259,14 +241,12 @@
   /* ── Buttons ── */
   .btn {
     padding: 8px 18px; border-radius: 6px; border: none;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px; font-weight: 600;
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600;
     cursor: pointer; transition: all .2s;
     display: inline-flex; align-items: center; gap: 7px;
   }
   .btn-primary { background: var(--accent); color: #000; }
   .btn-primary:hover { background: #00ebc9; box-shadow: 0 0 20px rgba(0,212,170,0.35); }
-  .btn-primary:disabled { background: var(--border); color: var(--text3); cursor: not-allowed; box-shadow: none; }
   .btn-secondary { background: transparent; color: var(--text2); border: 1px solid var(--border); }
   .btn-secondary:hover { border-color: var(--text2); color: var(--text); }
   .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(239,68,68,0.25); }
@@ -274,54 +254,35 @@
   .btn-sm { padding: 4px 9px; font-size: 10px; }
 
   /* ── Filter bar ── */
-  .filter-bar {
-    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-    margin-bottom: 14px;
-  }
+  .filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
   .filter-input {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 6px; padding: 7px 11px;
-    color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 11px; color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 11px;
   }
   .filter-input:focus { outline: none; border-color: var(--accent); }
   .filter-input.search { min-width: 200px; }
   .filter-select {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 6px; padding: 7px 11px;
-    color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 11px; color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 11px;
     cursor: pointer;
   }
-  .filter-select:focus { outline: none; border-color: var(--accent); }
 
   /* ── Table ── */
   .table-wrapper { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
   table { width: 100%; border-collapse: collapse; font-size: 11px; }
   thead th {
-    background: var(--surface2);
-    padding: 9px 11px;
-    text-align: left;
-    font-size: 9px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 1px;
-    color: var(--text2);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-    position: sticky; top: 0; z-index: 10;
-    cursor: pointer; user-select: none;
+    background: var(--surface2); padding: 9px 11px; text-align: left;
+    font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text2); border-bottom: 1px solid var(--border); white-space: nowrap;
+    position: sticky; top: 0; z-index: 10; cursor: pointer; user-select: none;
   }
   thead th:hover { color: var(--accent); }
-  thead th.sort-asc::after { content: ' ↑'; color: var(--accent); }
-  thead th.sort-desc::after { content: ' ↓'; color: var(--accent); }
   tbody tr { border-bottom: 1px solid rgba(38,48,64,0.6); transition: background .12s; }
   tbody tr:hover { background: rgba(255,255,255,0.02); }
-  td {
-    padding: 8px 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    vertical-align: middle;
-  }
+  td { padding: 8px 11px; font-family: 'IBM Plex Mono', monospace; vertical-align: middle; }
   td.text-cell { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; }
   td.num { text-align: right; }
 
-  /* Row types */
   tr.row-ghost td { opacity: 0.55; background: rgba(124,92,252,0.04); }
   tr.row-ghost td:first-child { border-left: 3px solid var(--accent3); }
   tr.row-nodesc td { background: rgba(245,158,11,0.03); }
@@ -332,11 +293,7 @@
   tr.row-ok td:first-child { border-left: 3px solid var(--success); }
 
   /* ── Badges ── */
-  .badge {
-    display: inline-block; padding: 2px 7px; border-radius: 9px;
-    font-size: 9px; font-weight: 700;
-    font-family: 'IBM Plex Mono', monospace;
-  }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 9px; font-size: 9px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
   .badge-green { background: var(--green-bg); color: var(--success); }
   .badge-red { background: var(--red-bg); color: var(--danger); }
   .badge-yellow { background: var(--yellow-bg); color: var(--warn); }
@@ -345,7 +302,6 @@
   .badge-gray { background: rgba(79,98,120,0.2); color: var(--text3); }
   .badge-teal { background: rgba(0,212,170,0.12); color: var(--accent); }
 
-  /* ── Comprar cell ── */
   .comprar-cell { font-weight: 700; font-size: 13px; }
   .comprar-cell.pos { color: var(--accent); }
   .comprar-cell.zero { color: var(--text3); }
@@ -355,78 +311,34 @@
   .excluded-tags { display: flex; flex-wrap: wrap; gap: 8px; min-height: 32px; }
   .excluded-tag {
     background: var(--red-bg); border: 1px solid rgba(239,68,68,0.25);
-    color: var(--danger); border-radius: 14px;
-    padding: 3px 10px; font-size: 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    display: flex; align-items: center; gap: 5px;
-    cursor: pointer; transition: background .15s;
+    color: var(--danger); border-radius: 14px; padding: 3px 10px; font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace; display: flex; align-items: center; gap: 5px; cursor: pointer;
   }
   .excluded-tag:hover { background: rgba(239,68,68,0.2); }
 
-  /* ── Charts (mini bar) ── */
-  .mini-bar {
-    display: flex; align-items: flex-end; gap: 2px;
-    height: 36px;
-  }
-  .mini-bar-col {
-    flex: 1; background: var(--accent); border-radius: 2px 2px 0 0;
-    opacity: 0.7; min-height: 2px;
-    transition: opacity .2s;
-  }
-  .mini-bar-col:hover { opacity: 1; }
-
-  /* ── Empty state ── */
+  /* ── Empty state & Toast ── */
   .empty-state { text-align: center; padding: 50px 20px; color: var(--text3); }
   .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
-  .empty-state p { font-size: 13px; }
-
-  /* ── Toast ── */
   #toast {
-    position: fixed; bottom: 22px; right: 22px;
-    background: var(--surface2); border: 1px solid var(--border2);
-    border-radius: 8px; padding: 11px 18px;
-    font-size: 12px; color: var(--text);
-    z-index: 9999; opacity: 0;
-    transition: opacity .25s; pointer-events: none;
+    position: fixed; bottom: 22px; right: 22px; background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 11px 18px; font-size: 12px; color: var(--text);
+    z-index: 9999; opacity: 0; transition: opacity .25s; pointer-events: none;
     max-width: 320px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
   #toast.show { opacity: 1; }
 
-  /* ── Section title ── */
+  /* ── Dashboard layout ── */
   .section-title {
-    font-size: 10px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 1.5px;
-    color: var(--text3); margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--text3); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
   }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  /* ── Dashboard layout ── */
-  .dash-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px; margin-bottom: 16px;
-  }
+  .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .dash-grid.wide { grid-template-columns: 2fr 1fr; }
-  .dash-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-  }
-  .dash-card h4 {
-    font-size: 10px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 1.5px;
-    color: var(--text3); margin-bottom: 14px;
-  }
+  .dash-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .dash-card h4 { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
 
-  /* ── Rank list ── */
-  .rank-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 7px 0;
-    border-bottom: 1px solid rgba(38,48,64,0.5);
-    gap: 10px;
-  }
+  .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(38,48,64,0.5); gap: 10px; }
   .rank-item:last-child { border-bottom: none; }
   .rank-num { font-size: 10px; color: var(--text3); font-family: 'IBM Plex Mono', monospace; min-width: 18px; }
   .rank-name { font-size: 11px; color: var(--text); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -434,28 +346,21 @@
   .rank-bar-wrap { width: 80px; height: 4px; background: var(--border); border-radius: 2px; }
   .rank-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); }
 
-  /* ── Alert box ── */
-  .alert-box {
-    border-radius: 8px; padding: 12px 16px;
-    font-size: 12px; margin-bottom: 12px;
-    display: flex; gap: 10px; align-items: flex-start;
-  }
+  .alert-box { border-radius: 8px; padding: 12px 16px; font-size: 12px; margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; }
   .alert-box.warn { background: var(--yellow-bg); border: 1px solid rgba(245,158,11,0.2); color: var(--warn); }
   .alert-box.info { background: var(--purple-bg); border: 1px solid rgba(124,92,252,0.2); color: var(--accent3); }
   .alert-box.danger { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); color: var(--danger); }
 
-  /* ── Legend ── */
   .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text3); }
   .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
 
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
   @media (max-width: 900px) {
-    .grid-2,.grid-3,.grid-4,.grid-5,.dash-grid,.dash-grid.wide { grid-template-columns: 1fr; }
+    .grid-2,.grid-4,.dash-grid,.dash-grid.wide { grid-template-columns: 1fr; }
     .container { padding: 14px; }
     .tab-btn { padding: 11px 12px; font-size: 10px; }
   }
@@ -463,7 +368,6 @@
 </head>
 <body>
 
-<!-- ══════════════ LOGIN ══════════════ -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">EYMAS</div>
@@ -483,7 +387,6 @@
   </div>
 </div>
 
-<!-- ══════════════ HEADER ══════════════ -->
 <header>
   <div class="logo">
     EYMAS <span class="logo-sep">·</span>
@@ -496,156 +399,58 @@
   </div>
 </header>
 
-<!-- ══════════════ TAB NAV ══════════════ -->
 <nav class="tab-nav">
-  <button class="tab-btn active" onclick="showTab('dashboard')" id="tab-dashboard">
-    📊 Dashboard
-  </button>
-  <button class="tab-btn" onclick="showTab('carga')" id="tab-carga">
-    📂 Carga
-  </button>
-  <button class="tab-btn" onclick="showTab('compras')" id="tab-compras">
-    🛒 Compras <span class="tab-badge" id="badge-compras" style="display:none">0</span>
-  </button>
-  <button class="tab-btn" onclick="showTab('ventas')" id="tab-ventas">
-    💹 Ventas
-  </button>
-  <button class="tab-btn" onclick="showTab('config')" id="tab-config">
-    ⚙ Config
-    <span class="tab-badge" id="badge-excl">0</span>
-  </button>
+  <button class="tab-btn active" onclick="showTab('dashboard')" id="tab-dashboard">📊 Dashboard</button>
+  <button class="tab-btn" onclick="showTab('carga')" id="tab-carga">📂 Carga</button>
+  <button class="tab-btn" onclick="showTab('compras')" id="tab-compras">🛒 Compras <span class="tab-badge" id="badge-compras" style="display:none">0</span></button>
+  <button class="tab-btn" onclick="showTab('ventas')" id="tab-ventas">💹 Ventas</button>
+  <button class="tab-btn" onclick="showTab('config')" id="tab-config">⚙ Config <span class="tab-badge" id="badge-excl" style="background:var(--text3);color:white">0</span></button>
 </nav>
 
-<!-- ══════════════════════════════════════
-  TAB: DASHBOARD
-══════════════════════════════════════ -->
 <div class="tab-content active" id="content-dashboard">
   <div class="container">
-
     <div id="dash-empty" class="empty-state">
       <div class="icon">📊</div>
-      <p>Carga los reportes de inventario y ventas para ver el dashboard.</p>
-      <br>
+      <p>Carga los reportes de inventario y ventas para ver el dashboard.</p><br>
       <button class="btn btn-primary" onclick="showTab('carga')">Ir a Carga de Archivos</button>
     </div>
 
     <div id="dash-content" style="display:none">
-
-      <!-- KPIs principales -->
       <div class="section-title">KPIs Principales</div>
       <div class="kpi-grid" id="kpi-main-grid">
-        <div class="kpi-card" style="--kpi-color:var(--accent)">
-          <div class="kpi-label">Total Claves</div>
-          <div class="kpi-value" id="kpi-total-claves">0</div>
-          <div class="kpi-sub">en el reporte activo</div>
-          <div class="kpi-icon">🔑</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--warn)">
-          <div class="kpi-label">A Comprar</div>
-          <div class="kpi-value" id="kpi-a-comprar">0</div>
-          <div class="kpi-sub">claves con pedido &gt; 0</div>
-          <div class="kpi-icon">🛒</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--danger)">
-          <div class="kpi-label">Con Rezago</div>
-          <div class="kpi-value" id="kpi-rezago">0</div>
-          <div class="kpi-sub">bloqueadas sin compra</div>
-          <div class="kpi-icon">🚫</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent3)">
-          <div class="kpi-label">Fantasmas</div>
-          <div class="kpi-value" id="kpi-ghost">0</div>
-          <div class="kpi-sub">vendidos sin inventario</div>
-          <div class="kpi-icon">👻</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--success)">
-          <div class="kpi-label">Piezas a Pedir</div>
-          <div class="kpi-value" id="kpi-piezas">0</div>
-          <div class="kpi-sub">unidades totales</div>
-          <div class="kpi-icon">📦</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent2)">
-          <div class="kpi-label">Inversión Est.</div>
-          <div class="kpi-value" id="kpi-inversion">$0</div>
-          <div class="kpi-sub">costo estimado pedido</div>
-          <div class="kpi-icon">💰</div>
-        </div>
+        <div class="kpi-card" style="--kpi-color:var(--accent)"><div class="kpi-label">Total Claves</div><div class="kpi-value" id="kpi-total-claves">0</div><div class="kpi-sub">en el reporte activo</div><div class="kpi-icon">🔑</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--warn)"><div class="kpi-label">A Comprar</div><div class="kpi-value" id="kpi-a-comprar">0</div><div class="kpi-sub">claves con pedido &gt; 0</div><div class="kpi-icon">🛒</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--danger)"><div class="kpi-label">Con Rezago</div><div class="kpi-value" id="kpi-rezago">0</div><div class="kpi-sub">bloqueadas sin compra</div><div class="kpi-icon">🚫</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent3)"><div class="kpi-label">Fantasmas</div><div class="kpi-value" id="kpi-ghost">0</div><div class="kpi-sub">vendidos sin inventario</div><div class="kpi-icon">👻</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--success)"><div class="kpi-label">Piezas a Pedir</div><div class="kpi-value" id="kpi-piezas">0</div><div class="kpi-sub">unidades totales</div><div class="kpi-icon">📦</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent2)"><div class="kpi-label">Inversión Est.</div><div class="kpi-value" id="kpi-inversion">$0</div><div class="kpi-sub">costo estimado pedido</div><div class="kpi-icon">💰</div></div>
       </div>
 
-      <!-- KPIs de ventas -->
       <div class="section-title">Análisis de Ventas</div>
       <div class="kpi-grid">
-        <div class="kpi-card" style="--kpi-color:var(--accent)">
-          <div class="kpi-label">Total Ventas (Período)</div>
-          <div class="kpi-value" id="kpi-ven-total">0</div>
-          <div class="kpi-sub" id="kpi-ven-periodo">piezas en período</div>
-          <div class="kpi-icon">📈</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--warn)">
-          <div class="kpi-label">Promedio Diario</div>
-          <div class="kpi-value" id="kpi-ven-diaria">0</div>
-          <div class="kpi-sub">piezas/día (todas claves)</div>
-          <div class="kpi-icon">📅</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--success)">
-          <div class="kpi-label">Cobertura Promedio</div>
-          <div class="kpi-value" id="kpi-cob-prom">0d</div>
-          <div class="kpi-sub">días promedio de stock</div>
-          <div class="kpi-icon">🛡</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--danger)">
-          <div class="kpi-label">Críticos (&lt;5d)</div>
-          <div class="kpi-value" id="kpi-criticos">0</div>
-          <div class="kpi-sub">claves en cobertura crítica</div>
-          <div class="kpi-icon">⚠️</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent2)">
-          <div class="kpi-label">Claves sin Movimiento</div>
-          <div class="kpi-value" id="kpi-sin-mov">0</div>
-          <div class="kpi-sub">sin ventas en período</div>
-          <div class="kpi-icon">💤</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent3)">
-          <div class="kpi-label">Sin Descripción</div>
-          <div class="kpi-value" id="kpi-no-desc">0</div>
-          <div class="kpi-sub">claves sin info de descripción</div>
-          <div class="kpi-icon">📝</div>
-        </div>
+        <div class="kpi-card" style="--kpi-color:var(--accent)"><div class="kpi-label">Total Ventas (Período)</div><div class="kpi-value" id="kpi-ven-total">0</div><div class="kpi-sub" id="kpi-ven-periodo">piezas en período</div><div class="kpi-icon">📈</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--warn)"><div class="kpi-label">Promedio Diario</div><div class="kpi-value" id="kpi-ven-diaria">0</div><div class="kpi-sub">piezas/día (todas claves)</div><div class="kpi-icon">📅</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--success)"><div class="kpi-label">Cobertura Promedio</div><div class="kpi-value" id="kpi-cob-prom">0d</div><div class="kpi-sub">días promedio de stock</div><div class="kpi-icon">🛡</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--danger)"><div class="kpi-label">Críticos (&lt;5d)</div><div class="kpi-value" id="kpi-criticos">0</div><div class="kpi-sub">claves en cobertura crítica</div><div class="kpi-icon">⚠️</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent2)"><div class="kpi-label">Claves sin Movimiento</div><div class="kpi-value" id="kpi-sin-mov">0</div><div class="kpi-sub">sin ventas en período</div><div class="kpi-icon">💤</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent3)"><div class="kpi-label">Sin Descripción</div><div class="kpi-value" id="kpi-no-desc">0</div><div class="kpi-sub">claves sin info de descripción</div><div class="kpi-icon">📝</div></div>
       </div>
 
-      <!-- Tops -->
       <div class="dash-grid wide">
-        <div class="dash-card">
-          <h4>🏆 Top 10 — Mayor Demanda (Vta/Mes)</h4>
-          <div id="dash-top-demand"></div>
-        </div>
-        <div class="dash-card">
-          <h4>⚠️ Cobertura Crítica (&lt;7 días)</h4>
-          <div id="dash-top-criticos"></div>
-        </div>
+        <div class="dash-card"><h4>🏆 Top 10 — Mayor Demanda (Vta/Mes)</h4><div id="dash-top-demand"></div></div>
+        <div class="dash-card"><h4>⚠️ Cobertura Crítica (&lt;7 días)</h4><div id="dash-top-criticos"></div></div>
       </div>
 
       <div class="dash-grid">
-        <div class="dash-card">
-          <h4>💰 Top 10 — Mayor Inversión Requerida</h4>
-          <div id="dash-top-inversion"></div>
-        </div>
-        <div class="dash-card">
-          <h4>🏷 Distribución por Clase</h4>
-          <div id="dash-clase-dist"></div>
-        </div>
+        <div class="dash-card"><h4>💰 Top 10 — Mayor Inversión Requerida</h4><div id="dash-top-inversion"></div></div>
+        <div class="dash-card"><h4>🏷 Distribución por Clase</h4><div id="dash-clase-dist"></div></div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-  TAB: CARGA
-══════════════════════════════════════ -->
 <div class="tab-content" id="content-carga">
   <div class="container">
-
     <div class="panel">
       <div class="panel-header" onclick="togglePanel('panel-upload')">
         <h3><span class="icon">📂</span>Carga de Reportes</h3>
@@ -654,7 +459,7 @@
       <div class="panel-body" id="panel-upload">
         <div class="alert-box info" style="margin-bottom:16px">
           <span>ℹ️</span>
-          <span>Los archivos deben nombrarse como <code>ventasMMDDAÑO.xlsx</code> e <code>inventariosMMDDAÑO.xlsx</code>. El sistema acepta cualquier nombre de archivo .xlsx o .xls.</span>
+          <span>Los archivos deben nombrarse como <code>ventasMMDDAÑO.xlsx</code> e <code>inventariosMMDDAÑO.xlsx</code> (Acepta .xls y .xlsx).</span>
         </div>
         <div class="grid-2">
           <div>
@@ -682,22 +487,10 @@
         <div style="margin-top:20px">
           <div class="section-title">Parámetros de Compra</div>
           <div class="grid-4" style="margin-bottom:16px">
-            <div class="form-group">
-              <label>⏱ Días en llegar</label>
-              <input type="number" id="dias-llegada" value="5" min="1" max="90">
-            </div>
-            <div class="form-group">
-              <label>📅 Días de cobertura</label>
-              <input type="number" id="dias-cobertura" value="30" min="1" max="365">
-            </div>
-            <div class="form-group">
-              <label>📊 Días de historial</label>
-              <input type="number" id="dias-historial" value="35" min="1" max="365">
-            </div>
-            <div class="form-group">
-              <label>🔍 Filtro por clase</label>
-              <input type="text" id="filtro-clase" placeholder="COIMTI, RETRUS…" oninput="applyLiveFilters()">
-            </div>
+            <div class="form-group"><label>⏱ Días en llegar</label><input type="number" id="dias-llegada" value="5" min="1" max="90"></div>
+            <div class="form-group"><label>📅 Días de cobertura</label><input type="number" id="dias-cobertura" value="30" min="1" max="365"></div>
+            <div class="form-group"><label>📊 Días de historial</label><input type="number" id="dias-historial" value="35" min="1" max="365"></div>
+            <div class="form-group"><label>🔍 Filtro por clase</label><input type="text" id="filtro-clase" placeholder="COIMTI, RETRUS…" oninput="applyLiveFilters()"></div>
           </div>
 
           <div style="margin-bottom:14px">
@@ -721,31 +514,22 @@
 
           <div style="display:flex;gap:10px;justify-content:flex-end">
             <button class="btn btn-secondary" onclick="resetAll()">↺ Limpiar todo</button>
-            <button class="btn btn-primary" id="btn-generar" onclick="generateReport()" disabled>
-              ▶ Generar Reporte
-            </button>
+            <button class="btn btn-secondary" id="btn-generar" onclick="generateReport()">▶ Generar Reporte</button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-  TAB: COMPRAS
-══════════════════════════════════════ -->
 <div class="tab-content" id="content-compras">
   <div class="container">
-
     <div id="compras-empty" class="empty-state">
       <div class="icon">🛒</div>
       <p>Genera el reporte primero desde la pestaña <strong>Carga</strong>.</p>
     </div>
 
     <div id="compras-content" style="display:none">
-
-      <!-- Leyenda -->
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>A comprar</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--danger)"></div>Rezago activo</div>
@@ -754,62 +538,26 @@
         <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>Fantasma (sin inventario)</div>
       </div>
 
-      <!-- Alertas -->
-      <div id="alert-ghost" class="alert-box info" style="display:none">
-        <span>👻</span>
-        <span id="alert-ghost-txt"></span>
-      </div>
-      <div id="alert-nodesc" class="alert-box warn" style="display:none">
-        <span>📝</span>
-        <span id="alert-nodesc-txt"></span>
-      </div>
+      <div id="alert-ghost" class="alert-box info" style="display:none"><span>👻</span><span id="alert-ghost-txt"></span></div>
+      <div id="alert-nodesc" class="alert-box warn" style="display:none"><span>📝</span><span id="alert-nodesc-txt"></span></div>
 
-      <!-- Stats compras -->
       <div class="kpi-grid" style="margin-bottom:16px">
-        <div class="kpi-card" style="--kpi-color:var(--warn)">
-          <div class="kpi-label">Claves a Comprar</div>
-          <div class="kpi-value" id="sc-a-comprar">0</div>
-          <div class="kpi-sub">pedido &gt; 0 piezas</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--danger)">
-          <div class="kpi-label">Con Rezago</div>
-          <div class="kpi-value" id="sc-rezago">0</div>
-          <div class="kpi-sub">bloqueadas</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent3)">
-          <div class="kpi-label">Fantasmas</div>
-          <div class="kpi-value" id="sc-ghost">0</div>
-          <div class="kpi-sub">sin inventario</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--warn)">
-          <div class="kpi-label">Sin Descripción</div>
-          <div class="kpi-value" id="sc-nodesc">0</div>
-          <div class="kpi-sub">requieren revisión</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--success)">
-          <div class="kpi-label">Total Piezas</div>
-          <div class="kpi-value" id="sc-piezas">0</div>
-          <div class="kpi-sub">unidades a pedir</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent2)">
-          <div class="kpi-label">Inversión Total</div>
-          <div class="kpi-value" id="sc-inversion">$0</div>
-          <div class="kpi-sub">costo estimado</div>
-        </div>
+        <div class="kpi-card" style="--kpi-color:var(--warn)"><div class="kpi-label">Claves a Comprar</div><div class="kpi-value" id="sc-a-comprar">0</div><div class="kpi-sub">pedido &gt; 0 piezas</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--danger)"><div class="kpi-label">Con Rezago</div><div class="kpi-value" id="sc-rezago">0</div><div class="kpi-sub">bloqueadas</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent3)"><div class="kpi-label">Fantasmas</div><div class="kpi-value" id="sc-ghost">0</div><div class="kpi-sub">sin inventario</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--warn)"><div class="kpi-label">Sin Descripción</div><div class="kpi-value" id="sc-nodesc">0</div><div class="kpi-sub">requieren revisión</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--success)"><div class="kpi-label">Total Piezas</div><div class="kpi-value" id="sc-piezas">0</div><div class="kpi-sub">unidades a pedir</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent2)"><div class="kpi-label">Inversión Total</div><div class="kpi-value" id="sc-inversion">$0</div><div class="kpi-sub">costo estimado</div></div>
       </div>
 
-      <!-- Tabla compras -->
       <div class="panel">
         <div class="panel-header">
           <h3><span class="icon">📋</span>Reporte de Pedidos</h3>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-secondary btn-sm" onclick="exportCSV('compras')">⬇ CSV</button>
-          </div>
+          <button class="btn btn-primary btn-sm" style="color:black; border:none;" onclick="exportXLSX('compras')">⬇ EXCEL (.xlsx)</button>
         </div>
         <div class="panel-body">
           <div class="filter-bar">
-            <input type="text" class="filter-input search" id="search-compras"
-              placeholder="🔍 Buscar clave o descripción…" oninput="filterCompras()">
+            <input type="text" class="filter-input search" id="search-compras" placeholder="🔍 Buscar clave o descripción…" oninput="filterCompras()">
             <select class="filter-select" id="filter-plaza-c" onchange="filterCompras()">
               <option value="">Todas las plazas</option>
               <option value="chetumal">Chetumal</option>
@@ -823,84 +571,43 @@
               <option value="nodesc">Sin descripción</option>
               <option value="ok">Stock suficiente</option>
             </select>
-            <select class="filter-select" id="filter-clase-c" onchange="filterCompras()">
-              <option value="">Todas las clases</option>
-            </select>
+            <select class="filter-select" id="filter-clase-c" onchange="filterCompras()"><option value="">Todas las clases</option></select>
           </div>
           <div class="table-wrapper">
-            <table id="table-compras">
-              <thead id="thead-compras"></thead>
-              <tbody id="tbody-compras"></tbody>
-            </table>
+            <table id="table-compras"><thead id="thead-compras"></thead><tbody id="tbody-compras"></tbody></table>
           </div>
-          <div class="empty-state" id="empty-compras" style="display:none">
-            <div class="icon">🔍</div>
-            <p>No hay resultados con los filtros actuales.</p>
-          </div>
+          <div class="empty-state" id="empty-compras" style="display:none"><div class="icon">🔍</div><p>No hay resultados con los filtros actuales.</p></div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-  TAB: VENTAS
-══════════════════════════════════════ -->
 <div class="tab-content" id="content-ventas">
   <div class="container">
-
     <div id="ventas-empty" class="empty-state">
       <div class="icon">💹</div>
       <p>Genera el reporte primero desde la pestaña <strong>Carga</strong>.</p>
     </div>
 
     <div id="ventas-content" style="display:none">
-
-      <!-- KPIs ventas -->
       <div class="kpi-grid" style="margin-bottom:16px">
-        <div class="kpi-card" style="--kpi-color:var(--accent)">
-          <div class="kpi-label">Total Piezas Vendidas</div>
-          <div class="kpi-value" id="sv-total">0</div>
-          <div class="kpi-sub" id="sv-periodo">en el período</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--warn)">
-          <div class="kpi-label">Promedio Diario</div>
-          <div class="kpi-value" id="sv-diaria">0</div>
-          <div class="kpi-sub">piezas/día globales</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--success)">
-          <div class="kpi-label">Claves Activas</div>
-          <div class="kpi-value" id="sv-activas">0</div>
-          <div class="kpi-sub">con ventas en período</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--danger)">
-          <div class="kpi-label">Claves sin Movimiento</div>
-          <div class="kpi-value" id="sv-sin-mov">0</div>
-          <div class="kpi-sub">0 ventas en período</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent2)">
-          <div class="kpi-label">Cobertura Promedio</div>
-          <div class="kpi-value" id="sv-cob">0d</div>
-          <div class="kpi-sub">días de stock promedio</div>
-        </div>
-        <div class="kpi-card" style="--kpi-color:var(--accent3)">
-          <div class="kpi-label">Claves Críticas</div>
-          <div class="kpi-value" id="sv-criticas">0</div>
-          <div class="kpi-sub">&lt;5 días de cobertura</div>
-        </div>
+        <div class="kpi-card" style="--kpi-color:var(--accent)"><div class="kpi-label">Total Piezas Vendidas</div><div class="kpi-value" id="sv-total">0</div><div class="kpi-sub" id="sv-periodo">en el período</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--warn)"><div class="kpi-label">Promedio Diario</div><div class="kpi-value" id="sv-diaria">0</div><div class="kpi-sub">piezas/día globales</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--success)"><div class="kpi-label">Claves Activas</div><div class="kpi-value" id="sv-activas">0</div><div class="kpi-sub">con ventas en período</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--danger)"><div class="kpi-label">Claves sin Movimiento</div><div class="kpi-value" id="sv-sin-mov">0</div><div class="kpi-sub">0 ventas en período</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent2)"><div class="kpi-label">Cobertura Promedio</div><div class="kpi-value" id="sv-cob">0d</div><div class="kpi-sub">días de stock promedio</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--accent3)"><div class="kpi-label">Claves Críticas</div><div class="kpi-value" id="sv-criticas">0</div><div class="kpi-sub">&lt;5 días de cobertura</div></div>
       </div>
 
-      <!-- Tabla ventas -->
       <div class="panel">
         <div class="panel-header">
           <h3><span class="icon">💹</span>Análisis de Ventas por Clave</h3>
-          <button class="btn btn-secondary btn-sm" onclick="exportCSV('ventas')">⬇ CSV</button>
+          <button class="btn btn-primary btn-sm" style="color:black; border:none;" onclick="exportXLSX('ventas')">⬇ EXCEL (.xlsx)</button>
         </div>
         <div class="panel-body">
           <div class="filter-bar">
-            <input type="text" class="filter-input search" id="search-ventas"
-              placeholder="🔍 Buscar clave o descripción…" oninput="filterVentas()">
+            <input type="text" class="filter-input search" id="search-ventas" placeholder="🔍 Buscar clave o descripción…" oninput="filterVentas()">
             <select class="filter-select" id="filter-plaza-v" onchange="filterVentas()">
               <option value="">Todas las plazas</option>
               <option value="chetumal">Chetumal</option>
@@ -912,33 +619,20 @@
               <option value="inactivo">Sin ventas</option>
               <option value="critico">Cobertura crítica</option>
             </select>
-            <select class="filter-select" id="filter-clase-v" onchange="filterVentas()">
-              <option value="">Todas las clases</option>
-            </select>
+            <select class="filter-select" id="filter-clase-v" onchange="filterVentas()"><option value="">Todas las clases</option></select>
           </div>
           <div class="table-wrapper">
-            <table id="table-ventas">
-              <thead id="thead-ventas"></thead>
-              <tbody id="tbody-ventas"></tbody>
-            </table>
+            <table id="table-ventas"><thead id="thead-ventas"></thead><tbody id="tbody-ventas"></tbody></table>
           </div>
-          <div class="empty-state" id="empty-ventas" style="display:none">
-            <div class="icon">🔍</div>
-            <p>No hay resultados con los filtros actuales.</p>
-          </div>
+          <div class="empty-state" id="empty-ventas" style="display:none"><div class="icon">🔍</div><p>No hay resultados con los filtros actuales.</p></div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-  TAB: CONFIG
-══════════════════════════════════════ -->
 <div class="tab-content" id="content-config">
   <div class="container">
-
     <div class="panel">
       <div class="panel-header" onclick="togglePanel('panel-excl')">
         <h3><span class="icon">🚫</span>Claves Excluidas <span id="excl-count" style="background:var(--red-bg);color:var(--danger);padding:1px 7px;border-radius:8px;font-size:9px;margin-left:6px">0</span></h3>
@@ -946,7 +640,7 @@
       </div>
       <div class="panel-body" id="panel-excl">
         <p style="font-size:11px;color:var(--text3);margin-bottom:12px">
-          Las claves excluidas no aparecerán en ningún reporte. Haz clic en una etiqueta para reincorporarla. Se guardan permanentemente en este navegador.
+          Las claves excluidas no aparecerán en ningún reporte. Haz clic en una etiqueta para reincorporarla. Se guardan permanentemente.
         </p>
         <div class="excluded-tags" id="excluded-tags"></div>
         <div style="margin-top:14px;display:flex;gap:8px">
@@ -954,35 +648,11 @@
         </div>
       </div>
     </div>
-
-    <div class="panel">
-      <div class="panel-header" onclick="togglePanel('panel-about')">
-        <h3><span class="icon">ℹ️</span>Acerca del Sistema</h3>
-        <span class="collapse-btn">▼</span>
-      </div>
-      <div class="panel-body" id="panel-about">
-        <div style="font-size:12px;color:var(--text2);line-height:1.8">
-          <p><strong style="color:var(--accent)">EYMAS · DRP_SYSTEMS</strong> — Sistema de Pedidos Inteligente</p>
-          <br>
-          <p>🟢 <strong>Lógica de compra:</strong> Se calcula la venta diaria promedio en el período histórico seleccionado. La necesidad total = venta diaria × (días cobertura + días llegada). Piezas a pedir = MAX(0, TECHO(necesidad − stock actual)).</p>
-          <br>
-          <p>🔴 <strong>Rezago:</strong> Si hay rezago activo en cualquier ubicación de la plaza, no se genera pedido.</p>
-          <br>
-          <p>👻 <strong>Fantasmas:</strong> Claves que aparecen en ventas pero NO en inventario (auditoria/garantías). Se señalan en el reporte pero no se genera pedido para ellas.</p>
-          <br>
-          <p>📝 <strong>Sin descripción:</strong> Claves con campo de descripción vacío. Se marcan con borde amarillo en el reporte.</p>
-          <br>
-          <p>🔑 <strong>Búsqueda parcial:</strong> El filtro por clave funciona como "contiene". Escribe <code>PC</code> para encontrar <code>PC03008900000000</code>.</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
 <div id="toast"></div>
 
-<!-- SheetJS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
@@ -990,7 +660,7 @@
 //  CONSTANTES Y CONFIG
 // ═══════════════════════════════════════════════
 const CLAVE_SECRETA = "Dani1234";
-const LS_EXCLUDED = 'EYMAS_excluded_v2'; // nueva key para evitar conflictos
+const LS_EXCLUDED = 'EYMAS_excluded_v3';
 
 const PLAZAS = {
   chetumal: {
@@ -1004,11 +674,7 @@ const PLAZAS = {
     label:   'Cancún'
   }
 };
-const BODEGA_CHETUM_ALIASES = ['COCTMBNAPO','COCTMTNAPO','COCTMTBODEGA','BNAPO'];
 
-// ═══════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════
 let rawInventario = [];
 let rawVentas     = [];
 let reportData    = [];
@@ -1017,11 +683,8 @@ let filtVentas    = [];
 let sortCompras   = { col: null, dir: 1 };
 let sortVentas    = { col: null, dir: 1 };
 
-// EXCLUDED: siempre leer desde localStorage
 function getExcluded() {
-  try {
-    return JSON.parse(localStorage.getItem(LS_EXCLUDED) || '[]');
-  } catch(e) { return []; }
+  try { return JSON.parse(localStorage.getItem(LS_EXCLUDED) || '[]'); } catch(e) { return []; }
 }
 function saveExcluded(arr) {
   localStorage.setItem(LS_EXCLUDED, JSON.stringify(arr));
@@ -1039,20 +702,16 @@ function verificarAcceso() {
     showToast('🔑 Acceso concedido. ¡Bienvenido!');
   } else {
     document.getElementById('login-error').style.display = 'block';
-    input.value = '';
-    input.focus();
+    input.value = ''; input.focus();
   }
 }
 window.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('EYMAS_logged') === 'true') {
-    document.getElementById('login-screen').style.display = 'none';
-  }
-  renderExcluded();
-  updateExclBadge();
+  if (sessionStorage.getItem('EYMAS_logged') === 'true') { document.getElementById('login-screen').style.display = 'none'; }
+  renderExcluded(); updateExclBadge();
 });
 
 // ═══════════════════════════════════════════════
-//  TABS
+//  TABS & UI HELPERS
 // ═══════════════════════════════════════════════
 function showTab(id) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -1060,18 +719,13 @@ function showTab(id) {
   document.getElementById('content-' + id).classList.add('active');
   document.getElementById('tab-' + id).classList.add('active');
 }
-
-// ═══════════════════════════════════════════════
-//  UI HELPERS
-// ═══════════════════════════════════════════════
 function togglePanel(id) {
   const p = document.getElementById(id);
   if (p) p.closest('.panel').classList.toggle('collapsed');
 }
-function showToast(msg, duration=3200) {
+function showToast(msg, duration=4000) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), duration);
 }
 function updateChip(input, plaza) {
@@ -1079,22 +733,30 @@ function updateChip(input, plaza) {
   if (input.checked) chip.classList.add(plaza === 'chetumal' ? 'sel-chetum' : 'sel-cancun');
   else { chip.classList.remove('sel-chetum'); chip.classList.remove('sel-cancun'); }
 }
-function fmt(n) {
-  if (typeof n !== 'number' || isNaN(n)) return '—';
-  return n.toLocaleString('es-MX');
-}
-function fmtMoney(n) {
-  if (!n || isNaN(n)) return '—';
-  return '$' + n.toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2});
-}
-function fmtDec(n, d=2) {
-  if (typeof n !== 'number' || isNaN(n)) return '—';
-  return n.toFixed(d);
-}
+function fmt(n) { return (typeof n !== 'number' || isNaN(n)) ? '—' : n.toLocaleString('es-MX'); }
+function fmtMoney(n) { return (!n || isNaN(n)) ? '—' : '$' + n.toLocaleString('es-MX', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function fmtDec(n, d=2) { return (typeof n !== 'number' || isNaN(n)) ? '—' : n.toFixed(d); }
 
 // ═══════════════════════════════════════════════
-//  FILE LOADING
+//  FILE LOADING & DATE PARSING 
 // ═══════════════════════════════════════════════
+function parseDateRobust(fechaRAW) {
+  if (fechaRAW instanceof Date) return fechaRAW;
+  if (typeof fechaRAW === 'number') {
+    const parsed = XLSX.SSF.parse_date_code(fechaRAW);
+    return new Date(parsed.y, parsed.m - 1, parsed.d);
+  }
+  if (typeof fechaRAW === 'string') {
+    const str = fechaRAW.split(' ')[0];
+    const parts = str.split(/[\/\-]/);
+    if (parts.length >= 3) {
+      if (parts[2].length === 4) return new Date(parseInt(parts[2]), parseInt(parts[1])-1, parseInt(parts[0]));
+      if (parts[0].length === 4) return new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    }
+  }
+  return new Date(fechaRAW);
+}
+
 function loadFile(type, input) {
   const file = input.files[0];
   if (!file) return;
@@ -1104,24 +766,25 @@ function loadFile(type, input) {
       const wb = XLSX.read(e.target.result, {type:'array', cellDates: true});
       const ws = wb.Sheets[wb.SheetNames[0]];
       const data = XLSX.utils.sheet_to_json(ws, {defval: ''});
+      
       if (type === 'inv') {
         rawInventario = normalizeInv(data);
+        if(rawInventario.length === 0) throw new Error("No se encontraron columnas válidas de inventario (CLAVE, STOCK).");
         document.getElementById('zone-inv').classList.add('loaded');
         document.getElementById('fname-inv').textContent = '✓ ' + file.name + ' (' + rawInventario.length + ' filas)';
         document.getElementById('dot-inv').classList.add('active');
         document.getElementById('lbl-inv').textContent = rawInventario.length + ' reg.';
-        showToast('✅ Inventario cargado: ' + rawInventario.length + ' registros');
       } else {
         rawVentas = normalizeVen(data);
+        if(rawVentas.length === 0) throw new Error("No se encontraron columnas válidas de ventas (CLAVE, VENTA, FECHA).");
         document.getElementById('zone-ven').classList.add('loaded');
         document.getElementById('fname-ven').textContent = '✓ ' + file.name + ' (' + rawVentas.length + ' filas)';
         document.getElementById('dot-ven').classList.add('active');
         document.getElementById('lbl-ven').textContent = rawVentas.length + ' reg.';
-        showToast('✅ Ventas cargadas: ' + rawVentas.length + ' registros');
       }
       checkEnableBtn();
     } catch(err) {
-      showToast('❌ Error leyendo archivo: ' + err.message);
+      showToast('❌ ' + err.message);
       console.error(err);
     }
   };
@@ -1133,21 +796,22 @@ function normalizeInv(rows) {
     const keys = Object.keys(r);
     const get = (patterns) => {
       for (const p of patterns) {
-        const k = keys.find(k => k.toUpperCase().replace(/\s/g,'').includes(p.toUpperCase()));
+        const pClean = p.toUpperCase().replace(/[^A-Z0-9]/g,'');
+        const k = keys.find(k => String(k).toUpperCase().replace(/[^A-Z0-9]/g,'').includes(pClean));
         if (k !== undefined) return r[k];
       }
       return '';
     };
     return {
-      CLASE:      String(get(['CLASE','CLASS'])||'').trim().toUpperCase(),
-      CLAVE:      String(get(['CLAVE','KEY','SKU'])||'').trim().toUpperCase(),
-      DESCRIPCION:String(get(['DESCRIPCION','DESCRIP','DESC','NOMBRE'])||'').trim(),
-      UBICACION:  String(get(['UBICACI','UBICACION','BODEGA','ALMACEN','LOCATION'])||'').trim().toUpperCase(),
-      STOCK:      parseFloat(String(get(['STOCK','EXISTENCIA','EXIST','CANTIDAD'])||'0').replace(/,/g,'')) || 0,
-      COSTO:      parseFloat(String(get(['COSTO','COST','PRECIO'])||'0').replace(/,/g,'')) || 0,
-      REZAGO:     parseFloat(String(get(['REZAGO','REZA'])||'0').replace(/,/g,'')) || 0,
+      CLASE:       String(get(['CLASE','CLASS'])||'').trim().toUpperCase(),
+      CLAVE:       String(get(['CLAVE','KEY','SKU'])||'').trim().toUpperCase(),
+      DESCRIPCION: String(get(['DESCRIPCION','DESCRIP','DESC','NOMBRE'])||'').trim(),
+      UBICACION:   String(get(['UBICACI','UBICACION','BODEGA','ALMACEN','LOCATION'])||'').trim().toUpperCase(),
+      STOCK:       parseFloat(String(get(['STOCK','EXISTENCIA','EXIST','CANTIDAD'])||'0').replace(/,/g,'')) || 0,
+      COSTO:       parseFloat(String(get(['COSTO','COST','PRECIO'])||'0').replace(/,/g,'')) || 0,
+      REZAGO:      parseFloat(String(get(['REZAGO','REZA'])||'0').replace(/,/g,'')) || 0,
     };
-  }).filter(r => r.CLAVE);
+  }).filter(r => r.CLAVE !== '');
 }
 
 function normalizeVen(rows) {
@@ -1155,56 +819,43 @@ function normalizeVen(rows) {
     const keys = Object.keys(r);
     const get = (patterns) => {
       for (const p of patterns) {
-        const k = keys.find(k => k.toUpperCase().replace(/\s/g,'').includes(p.toUpperCase()));
+        const pClean = p.toUpperCase().replace(/[^A-Z0-9]/g,'');
+        const k = keys.find(k => String(k).toUpperCase().replace(/[^A-Z0-9]/g,'').includes(pClean));
         if (k !== undefined) return r[k];
       }
       return '';
     };
 
     let fechaRAW = get(['FECHA','DATE']);
-    let fechaObj = null;
-    if (fechaRAW instanceof Date) {
-      fechaObj = fechaRAW;
-    } else if (typeof fechaRAW === 'number') {
-      const parsed = XLSX.SSF.parse_date_code(fechaRAW);
-      fechaObj = new Date(parsed.y, parsed.m - 1, parsed.d);
-    } else if (typeof fechaRAW === 'string' && fechaRAW.includes('/')) {
-      const partes = fechaRAW.split(' ')[0].split('/');
-      if (partes.length >= 3) {
-        fechaObj = new Date(parseInt(partes[2],10), parseInt(partes[1],10)-1, parseInt(partes[0],10));
-      } else {
-        fechaObj = new Date(fechaRAW);
-      }
-    } else {
-      fechaObj = new Date(fechaRAW);
-    }
-    const esValida = fechaObj instanceof Date && !isNaN(fechaObj.getTime());
+    let fechaObj = parseDateRobust(fechaRAW);
+    if (isNaN(fechaObj.getTime())) fechaObj = new Date(); // Fallback para no perder la fila si la fecha viene muy corrupta
+
     return {
-      FECHA:    esValida ? fechaObj : null,
-      UBICACION:String(get(['UBICACI','UBICACION','BODEGA','ALMACEN','LOCATION'])||'').trim().toUpperCase(),
-      CLAVE:    String(get(['CLAVE','KEY','SKU'])||'').trim().toUpperCase(),
-      COSTO:    parseFloat(String(get(['COSTO','COST'])||'0').replace(/,/g,'')) || 0,
-      VENTA:    parseFloat(String(get(['VENTA','QTY','CANTIDAD','PIEZAS','CANT'])||'1').replace(/,/g,'')) || 1,
+      FECHA:     fechaObj,
+      UBICACION: String(get(['UBICACI','UBICACION','BODEGA','ALMACEN','LOCATION'])||'').trim().toUpperCase(),
+      CLAVE:     String(get(['CLAVE','KEY','SKU'])||'').trim().toUpperCase(),
+      COSTO:     parseFloat(String(get(['COSTO','COST'])||'0').replace(/,/g,'')) || 0,
+      VENTA:     parseFloat(String(get(['VENTA','QTY','CANTIDAD','PIEZAS','CANT'])||'1').replace(/,/g,'')) || 1,
     };
-  }).filter(r => r.CLAVE && r.FECHA !== null);
+  }).filter(r => r.CLAVE !== '');
 }
 
 function checkEnableBtn() {
-  document.getElementById('btn-generar').disabled = !(rawInventario.length && rawVentas.length);
+  const btn = document.getElementById('btn-generar');
+  if (rawInventario.length > 0 && rawVentas.length > 0) {
+    btn.classList.add('btn-primary');
+    btn.classList.remove('btn-secondary');
+  } else {
+    btn.classList.add('btn-secondary');
+    btn.classList.remove('btn-primary');
+  }
 }
 
 // ═══════════════════════════════════════════════
-//  FILTROS LIVE (solo display, no regenera)
+//  CORE LOGIC & REPORT GENERATION
 // ═══════════════════════════════════════════════
-function applyLiveFilters() {
-  // Se aplican al filtrar las tablas ya generadas, no regenera el reporte completo
-  filterCompras();
-  filterVentas();
-}
+function applyLiveFilters() { filterCompras(); filterVentas(); }
 
-// ═══════════════════════════════════════════════
-//  CORE LOGIC
-// ═══════════════════════════════════════════════
 function getSelectedPlazas() {
   const plazas = [];
   if (document.getElementById('chip-chetumal').querySelector('input').checked) plazas.push('chetumal');
@@ -1212,44 +863,37 @@ function getSelectedPlazas() {
   return plazas;
 }
 
-function getUbicaciones(selectedPlazas) {
-  const ubs = new Set();
-  for (const p of selectedPlazas) {
-    PLAZAS[p].tiendas.forEach(u => ubs.add(u));
-    PLAZAS[p].bodega.forEach(u => ubs.add(u));
-  }
-  return ubs;
-}
-
 function generateReport() {
+  if (!rawInventario || rawInventario.length === 0) {
+    showToast('❌ Por favor, carga el archivo de INVENTARIO correctamente.'); return;
+  }
+  if (!rawVentas || rawVentas.length === 0) {
+    showToast('❌ Por favor, carga el archivo de VENTAS correctamente.'); return;
+  }
+
   const diasLlegada   = parseInt(document.getElementById('dias-llegada').value) || 5;
   const diasCobertura = parseInt(document.getElementById('dias-cobertura').value) || 30;
   const diasHist      = parseInt(document.getElementById('dias-historial').value) || 35;
   const filtroClase   = document.getElementById('filtro-clase').value.trim().toUpperCase();
   const filtroClave   = document.getElementById('filtro-clave-param').value.trim();
 
-  // BÚSQUEDA PARCIAL: split por coma, cada fragmento se usa como "contains"
-  const claveFragmentos = filtroClave
-    ? filtroClave.split(',').map(s => s.trim().toUpperCase()).filter(Boolean)
-    : [];
-
+  const claveFragmentos = filtroClave ? filtroClave.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
   const selectedPlazas = getSelectedPlazas();
+  
   if (!selectedPlazas.length) { showToast('⚠ Selecciona al menos una plaza'); return; }
 
-  const ubs = getUbicaciones(selectedPlazas);
+  const ubs = new Set();
+  for (const p of selectedPlazas) {
+    PLAZAS[p].tiendas.forEach(u => ubs.add(u));
+    PLAZAS[p].bodega.forEach(u => ubs.add(u));
+  }
 
-  // Fecha de corte exacta en días
   const hoy = new Date();
   const fechaCorte = new Date(hoy);
   fechaCorte.setDate(fechaCorte.getDate() - diasHist);
   fechaCorte.setHours(0, 0, 0, 0);
 
-  // Ventas filtradas por plaza y período
-  const ventasFiltradas = rawVentas.filter(v =>
-    ubs.has(v.UBICACION) && v.FECHA >= fechaCorte
-  );
-
-  // Mapa: CLAVE → { UBICACION: totalUnidades }
+  const ventasFiltradas = rawVentas.filter(v => ubs.has(v.UBICACION) && v.FECHA >= fechaCorte);
   const ventasMap = {};
   for (const v of ventasFiltradas) {
     if (!ventasMap[v.CLAVE]) ventasMap[v.CLAVE] = {};
@@ -1257,14 +901,8 @@ function generateReport() {
   }
 
   const excluded = getExcluded();
-
-  // Inventario de plazas seleccionadas
   const invFilt = rawInventario.filter(i => ubs.has(i.UBICACION));
-  
-  // Set de claves en inventario
   const invClaveSet = new Set(invFilt.map(i => i.CLAVE));
-
-  // Todos los productos únicos: inventario + ventas (para detectar fantasmas)
   const claveSet = new Set([...invClaveSet]);
   for (const v of ventasFiltradas) claveSet.add(v.CLAVE);
 
@@ -1274,24 +912,19 @@ function generateReport() {
     if (excluded.includes(clave)) continue;
 
     const invRows = invFilt.filter(i => i.CLAVE === clave);
-    const esFantasma = invRows.length === 0; // aparece en ventas pero no en inventario
-
-    // Meta info: puede venir del inventario o ser vacía para fantasmas
+    const esFantasma = invRows.length === 0; 
     const meta = invRows[0] || { CLASE:'', DESCRIPCION:'', COSTO: 0 };
     const CLASE       = meta.CLASE;
     const DESCRIPCION = meta.DESCRIPCION || '';
     const sinDesc     = DESCRIPCION.trim() === '';
     const COSTO       = invRows.find(r => r.COSTO > 0)?.COSTO || meta.COSTO || 0;
 
-    // FILTRO POR CLASE (búsqueda parcial)
     if (filtroClase) {
-      // split por coma también para clase
       const claseFrags = filtroClase.split(',').map(s => s.trim()).filter(Boolean);
       const claseMatch = claseFrags.some(f => CLASE.includes(f) || f.includes(CLASE));
       if (!claseMatch && CLASE !== filtroClase) continue;
     }
 
-    // FILTRO POR CLAVE (búsqueda parcial — contiene)
     if (claveFragmentos.length) {
       const match = claveFragmentos.some(f => clave.includes(f));
       if (!match) continue;
@@ -1304,8 +937,6 @@ function generateReport() {
       const rezagoTotal = invPlaza.reduce((s, i) => s + i.REZAGO, 0);
       const tieneRezago = rezagoTotal > 0;
       const stockTotal  = invPlaza.reduce((s, i) => s + i.STOCK, 0);
-      const stockPorUb  = {};
-      for (const i of invPlaza) stockPorUb[i.UBICACION] = (stockPorUb[i.UBICACION]||0) + i.STOCK;
 
       const ubsTiendasSet = new Set(PLAZAS[plaza].tiendas);
       const venPlaza = ventasMap[clave] || {};
@@ -1317,45 +948,30 @@ function generateReport() {
       const necesidad    = ventaDiaria * (diasCobertura + diasLlegada);
 
       let piezasAPedir = 0;
-      if (!esFantasma) {
-        if (tieneRezago) {
-          piezasAPedir = 0;
-        } else {
-          piezasAPedir = Math.max(0, Math.ceil(necesidad - stockTotal));
-        }
+      if (!esFantasma && !tieneRezago) {
+        piezasAPedir = Math.max(0, Math.ceil(necesidad - stockTotal));
       }
 
-      const diasCoberturaActual = ventaDiaria > 0
-        ? Math.floor(stockTotal / ventaDiaria)
-        : (stockTotal > 0 ? 9999 : 0);
+      const diasCoberturaActual = ventaDiaria > 0 ? Math.floor(stockTotal / ventaDiaria) : (stockTotal > 0 ? 9999 : 0);
 
       reportData.push({
         CLAVE, CLASE, DESCRIPCION, COSTO, PLAZA: plaza,
-        sinDesc, esFantasma,
-        stockTotal, stockPorUb,
-        rezagoTotal, tieneRezago,
-        totalVentasPeriodo,
-        ventaDiaria:         +ventaDiaria.toFixed(4),
-        ventaMensual:        +ventaMensual.toFixed(2),
-        necesidad:           +necesidad.toFixed(2),
-        piezasAPedir,
-        diasCoberturaActual,
+        sinDesc, esFantasma, stockTotal, rezagoTotal, tieneRezago,
+        totalVentasPeriodo, ventaDiaria: +ventaDiaria.toFixed(4),
+        ventaMensual: +ventaMensual.toFixed(2), necesidad: +necesidad.toFixed(2),
+        piezasAPedir, diasCoberturaActual,
       });
     }
   }
 
-  // Ordenar por piezasAPedir desc, luego fantasmas, luego clave
   reportData.sort((a,b) => {
     if (b.piezasAPedir !== a.piezasAPedir) return b.piezasAPedir - a.piezasAPedir;
     if (b.esFantasma !== a.esFantasma) return b.esFantasma ? 1 : -1;
     return a.CLAVE.localeCompare(b.CLAVE);
   });
 
-  // Actualizar UI
   updateAllViews(diasHist);
-  showToast('✅ Reporte generado: ' + reportData.length + ' registros');
-
-  // Ir a compras automáticamente
+  showToast('✅ Reporte generado exitosamente (' + reportData.length + ' registros encontrados)');
   showTab('compras');
 }
 
@@ -1363,8 +979,6 @@ function generateReport() {
 //  ACTUALIZAR VISTAS
 // ═══════════════════════════════════════════════
 function updateAllViews(diasHist) {
-  diasHist = diasHist || parseInt(document.getElementById('dias-historial').value) || 35;
-
   const toComprar     = reportData.filter(r => r.piezasAPedir > 0 && !r.esFantasma);
   const conRezago     = reportData.filter(r => r.tieneRezago && !r.esFantasma);
   const fantasmas     = reportData.filter(r => r.esFantasma);
@@ -1379,16 +993,9 @@ function updateAllViews(diasHist) {
   const cobPromArr    = reportData.filter(r => r.diasCoberturaActual < 9999 && r.diasCoberturaActual > 0);
   const cobProm       = cobPromArr.length ? Math.round(cobPromArr.reduce((s,r) => s+r.diasCoberturaActual,0)/cobPromArr.length) : 0;
 
-  // Badge tab compras
   const badgeC = document.getElementById('badge-compras');
-  if (toComprar.length > 0) {
-    badgeC.textContent = toComprar.length;
-    badgeC.style.display = '';
-  } else {
-    badgeC.style.display = 'none';
-  }
+  if (toComprar.length > 0) { badgeC.textContent = toComprar.length; badgeC.style.display = ''; } else { badgeC.style.display = 'none'; }
 
-  // ── Dashboard
   document.getElementById('dash-empty').style.display = 'none';
   document.getElementById('dash-content').style.display = '';
 
@@ -1397,7 +1004,7 @@ function updateAllViews(diasHist) {
   document.getElementById('kpi-rezago').textContent       = fmt(conRezago.length);
   document.getElementById('kpi-ghost').textContent        = fmt(fantasmas.length);
   document.getElementById('kpi-piezas').textContent       = fmt(totalPiezas);
-  document.getElementById('kpi-inversion').textContent    = fmtMoney(totalInv).replace('$','$');
+  document.getElementById('kpi-inversion').textContent    = fmtMoney(totalInv);
   document.getElementById('kpi-ven-total').textContent    = fmt(Math.round(totalVen));
   document.getElementById('kpi-ven-periodo').textContent  = `piezas en ${diasHist} días`;
   document.getElementById('kpi-ven-diaria').textContent   = fmtDec(ventaDiaria, 1);
@@ -1406,40 +1013,33 @@ function updateAllViews(diasHist) {
   document.getElementById('kpi-sin-mov').textContent      = fmt(sinMovimiento.length);
   document.getElementById('kpi-no-desc').textContent      = fmt(sinDesc.length + fantasmas.length);
 
-  // Top demand
   const topDemand = [...reportData].sort((a,b) => b.ventaMensual-a.ventaMensual).slice(0,10);
   const maxDem = topDemand[0]?.ventaMensual || 1;
   document.getElementById('dash-top-demand').innerHTML = topDemand.map((r,i) => `
     <div class="rank-item">
-      <span class="rank-num">${i+1}</span>
-      <span class="rank-name" title="${r.CLAVE}">${r.DESCRIPCION || r.CLAVE}</span>
+      <span class="rank-num">${i+1}</span><span class="rank-name" title="${r.CLAVE}">${r.DESCRIPCION || r.CLAVE}</span>
       <div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:${(r.ventaMensual/maxDem*100).toFixed(0)}%"></div></div>
       <span class="rank-val">${fmtDec(r.ventaMensual,1)}/mes</span>
     </div>`).join('') || '<p style="color:var(--text3);font-size:11px">Sin datos</p>';
 
-  // Cobertura crítica
   const topCrit = [...reportData].filter(r => r.diasCoberturaActual < 9999 && !r.esFantasma).sort((a,b) => a.diasCoberturaActual-b.diasCoberturaActual).slice(0,10);
   document.getElementById('dash-top-criticos').innerHTML = topCrit.map((r,i) => `
     <div class="rank-item">
-      <span class="rank-num">${i+1}</span>
-      <span class="rank-name" title="${r.CLAVE}">${r.DESCRIPCION || r.CLAVE}</span>
+      <span class="rank-num">${i+1}</span><span class="rank-name" title="${r.CLAVE}">${r.DESCRIPCION || r.CLAVE}</span>
       <span class="badge ${r.diasCoberturaActual < 5 ? 'badge-red' : r.diasCoberturaActual < 15 ? 'badge-yellow' : 'badge-green'}">${r.diasCoberturaActual}d</span>
     </div>`).join('') || '<p style="color:var(--text3);font-size:11px">Sin claves críticas 🎉</p>';
 
-  // Top inversión
   const topInv = [...reportData].filter(r => r.piezasAPedir > 0).sort((a,b) => (b.piezasAPedir*b.COSTO)-(a.piezasAPedir*a.COSTO)).slice(0,10);
   const maxInv = topInv[0] ? topInv[0].piezasAPedir * topInv[0].COSTO : 1;
   document.getElementById('dash-top-inversion').innerHTML = topInv.map((r,i) => {
     const inv = r.piezasAPedir * r.COSTO;
     return `<div class="rank-item">
-      <span class="rank-num">${i+1}</span>
-      <span class="rank-name" title="${r.CLAVE}">${r.DESCRIPCION || r.CLAVE}</span>
+      <span class="rank-num">${i+1}</span><span class="rank-name" title="${r.CLAVE}">${r.DESCRIPCION || r.CLAVE}</span>
       <div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:${(inv/maxInv*100).toFixed(0)}%;background:var(--accent2)"></div></div>
       <span class="rank-val" style="color:var(--accent2)">${fmtMoney(inv)}</span>
     </div>`;
   }).join('') || '<p style="color:var(--text3);font-size:11px">Sin pedidos generados</p>';
 
-  // Dist por clase
   const claseCounts = {};
   for (const r of reportData) { claseCounts[r.CLASE] = (claseCounts[r.CLASE]||0)+1; }
   const claseArr = Object.entries(claseCounts).sort((a,b)=>b[1]-a[1]).slice(0,12);
@@ -1451,7 +1051,6 @@ function updateAllViews(diasHist) {
       <span class="rank-val" style="color:var(--accent3)">${cnt}</span>
     </div>`).join('') || '<p style="color:var(--text3);font-size:11px">Sin datos de clase</p>';
 
-  // ── Compras tab
   document.getElementById('compras-empty').style.display = 'none';
   document.getElementById('compras-content').style.display = '';
 
@@ -1462,28 +1061,21 @@ function updateAllViews(diasHist) {
   document.getElementById('sc-piezas').textContent      = fmt(totalPiezas);
   document.getElementById('sc-inversion').textContent   = fmtMoney(totalInv);
 
-  // Alertas
   if (fantasmas.length) {
     document.getElementById('alert-ghost').style.display = '';
-    document.getElementById('alert-ghost-txt').textContent =
-      `${fantasmas.length} clave(s) fantasma detectadas: aparecen en ventas pero no en inventario. Posiblemente auditoría o garantías. Se muestran en el reporte pero no generan pedido.`;
-  } else {
-    document.getElementById('alert-ghost').style.display = 'none';
-  }
+    document.getElementById('alert-ghost-txt').textContent = `${fantasmas.length} clave(s) fantasma detectadas (sin inventario pero con ventas). Se muestran en el reporte pero no generan pedido.`;
+  } else { document.getElementById('alert-ghost').style.display = 'none'; }
+  
   if (sinDesc.length) {
     document.getElementById('alert-nodesc').style.display = '';
-    document.getElementById('alert-nodesc-txt').textContent =
-      `${sinDesc.length} clave(s) sin descripción encontradas. Pueden requerir revisión o actualización en el catálogo.`;
-  } else {
-    document.getElementById('alert-nodesc').style.display = 'none';
-  }
+    document.getElementById('alert-nodesc-txt').textContent = `${sinDesc.length} clave(s) sin descripción (Borde amarillo).`;
+  } else { document.getElementById('alert-nodesc').style.display = 'none'; }
 
   populateClaseFilters();
   filtCompras = [...reportData];
   filtVentas  = [...reportData];
   renderCompras();
 
-  // ── Ventas tab
   document.getElementById('ventas-empty').style.display = 'none';
   document.getElementById('ventas-content').style.display = '';
 
@@ -1499,34 +1091,32 @@ function updateAllViews(diasHist) {
 }
 
 // ═══════════════════════════════════════════════
-//  TABLE: COMPRAS
+//  RENDER COMPRAS
 // ═══════════════════════════════════════════════
 function renderCompras() {
   const thead = document.getElementById('thead-compras');
   const tbody = document.getElementById('tbody-compras');
-
   const cols = [
-    { key:'CLAVE',              label:'Clave',          sortable:true },
-    { key:'DESCRIPCION',        label:'Descripción',    sortable:true },
-    { key:'CLASE',              label:'Clase',          sortable:true },
-    { key:'PLAZA',              label:'Plaza',          sortable:true },
-    { key:'stockTotal',         label:'Stock',          sortable:true },
-    { key:'rezagoTotal',        label:'Rezago',         sortable:true },
-    { key:'totalVentasPeriodo', label:'Vtas/Per',       sortable:true },
-    { key:'ventaDiaria',        label:'Vta/Día',        sortable:true },
-    { key:'ventaMensual',       label:'Vta/Mes',        sortable:true },
-    { key:'diasCoberturaActual',label:'Días Cob.',      sortable:true },
-    { key:'necesidad',          label:'Necesidad',      sortable:true },
-    { key:'piezasAPedir',       label:'✦ A PEDIR',      sortable:true },
-    { key:'COSTO',              label:'Costo U.',       sortable:true },
-    { key:'_total',             label:'Total $',        sortable:true },
-    { key:'_flags',             label:'Flags',          sortable:false },
-    { key:'_actions',           label:'',               sortable:false },
+    { key:'CLAVE',              label:'Clave',         sortable:true },
+    { key:'DESCRIPCION',        label:'Descripción',   sortable:true },
+    { key:'CLASE',              label:'Clase',         sortable:true },
+    { key:'PLAZA',              label:'Plaza',         sortable:true },
+    { key:'stockTotal',         label:'Stock',         sortable:true },
+    { key:'rezagoTotal',        label:'Rezago',        sortable:true },
+    { key:'totalVentasPeriodo', label:'Vtas/Per',      sortable:true },
+    { key:'ventaDiaria',        label:'Vta/Día',       sortable:true },
+    { key:'ventaMensual',       label:'Vta/Mes',       sortable:true },
+    { key:'diasCoberturaActual',label:'Días Cob.',     sortable:true },
+    { key:'necesidad',          label:'Necesidad',     sortable:true },
+    { key:'piezasAPedir',       label:'✦ A PEDIR',     sortable:true },
+    { key:'COSTO',              label:'Costo U.',      sortable:true },
+    { key:'_total',             label:'Total $',       sortable:true },
+    { key:'_flags',             label:'Flags',         sortable:false },
+    { key:'_actions',           label:'',              sortable:false },
   ];
 
   thead.innerHTML = '<tr>' + cols.map(c => {
-    let cls = '';
-    if (c.key === sortCompras.col) cls = sortCompras.dir > 0 ? 'sort-asc' : 'sort-desc';
+    let cls = (c.key === sortCompras.col) ? (sortCompras.dir > 0 ? 'sort-asc' : 'sort-desc') : '';
     return `<th class="${cls}" ${c.sortable ? `onclick="sortTable('compras','${c.key}')"` : ''}>${c.label}</th>`;
   }).join('') + '</tr>';
 
@@ -1539,44 +1129,16 @@ function renderCompras() {
 
   tbody.innerHTML = filtCompras.map(r => {
     const totalCost = r.piezasAPedir * r.COSTO;
-    let rowClass = '';
-    if (r.esFantasma)       rowClass = 'row-ghost';
-    else if (r.tieneRezago) rowClass = 'row-rezago';
-    else if (r.piezasAPedir > 0) rowClass = 'row-comprar';
-    else if (r.sinDesc)     rowClass = 'row-nodesc';
-    else                    rowClass = 'row-ok';
-
-    const piezasHtml = r.esFantasma
-      ? `<span class="comprar-cell" style="color:var(--accent3)">👻</span>`
-      : r.tieneRezago
-        ? `<span class="comprar-cell rezago">🚫 Rezago</span>`
-        : r.piezasAPedir > 0
-          ? `<span class="comprar-cell pos">${fmt(r.piezasAPedir)}</span>`
-          : `<span class="comprar-cell zero">—</span>`;
-
-    const diasCob = r.esFantasma ? '<span class="badge badge-purple">N/A</span>'
-      : r.diasCoberturaActual >= 9999 ? '<span class="badge badge-gray">∞</span>'
-      : r.diasCoberturaActual < 5  ? `<span class="badge badge-red">${r.diasCoberturaActual}d</span>`
-      : r.diasCoberturaActual < 15 ? `<span class="badge badge-yellow">${r.diasCoberturaActual}d</span>`
-      : `<span class="badge badge-green">${r.diasCoberturaActual}d</span>`;
-
-    const plazaBadge = r.PLAZA === 'chetumal'
-      ? '<span class="badge badge-blue">CTM</span>'
-      : '<span class="badge badge-teal">CUN</span>';
-
-    const rezagoBadge = r.rezagoTotal > 0
-      ? `<span class="badge badge-red">${fmt(r.rezagoTotal)}</span>`
-      : `<span style="color:var(--text3)">—</span>`;
-
-    // Flags
+    let rowClass = r.esFantasma ? 'row-ghost' : r.tieneRezago ? 'row-rezago' : r.piezasAPedir > 0 ? 'row-comprar' : r.sinDesc ? 'row-nodesc' : 'row-ok';
+    const piezasHtml = r.esFantasma ? `<span class="comprar-cell" style="color:var(--accent3)">👻</span>` : r.tieneRezago ? `<span class="comprar-cell rezago">🚫 Rezago</span>` : r.piezasAPedir > 0 ? `<span class="comprar-cell pos">${fmt(r.piezasAPedir)}</span>` : `<span class="comprar-cell zero">—</span>`;
+    const diasCob = r.esFantasma ? '<span class="badge badge-purple">N/A</span>' : r.diasCoberturaActual >= 9999 ? '<span class="badge badge-gray">∞</span>' : r.diasCoberturaActual < 5  ? `<span class="badge badge-red">${r.diasCoberturaActual}d</span>` : r.diasCoberturaActual < 15 ? `<span class="badge badge-yellow">${r.diasCoberturaActual}d</span>` : `<span class="badge badge-green">${r.diasCoberturaActual}d</span>`;
+    const plazaBadge = r.PLAZA === 'chetumal' ? '<span class="badge badge-blue">CTM</span>' : '<span class="badge badge-teal">CUN</span>';
+    const rezagoBadge = r.rezagoTotal > 0 ? `<span class="badge badge-red">${fmt(r.rezagoTotal)}</span>` : `<span style="color:var(--text3)">—</span>`;
     let flags = '';
-    if (r.esFantasma) flags += '<span class="badge badge-purple" title="Vendido sin inventario">👻 Fantasma</span> ';
-    if (r.sinDesc && !r.esFantasma) flags += '<span class="badge badge-yellow" title="Sin descripción">📝 Sin desc</span> ';
-    if (r.tieneRezago) flags += '<span class="badge badge-red" title="Rezago activo">⚠ Rezago</span> ';
-
-    const descDisplay = r.DESCRIPCION
-      ? r.DESCRIPCION
-      : `<span style="color:var(--text3);font-style:italic">Sin descripción</span>`;
+    if (r.esFantasma) flags += '<span class="badge badge-purple">👻 Fantasma</span> ';
+    if (r.sinDesc && !r.esFantasma) flags += '<span class="badge badge-yellow">📝 Sin desc</span> ';
+    if (r.tieneRezago) flags += '<span class="badge badge-red">⚠ Rezago</span> ';
+    const descDisplay = r.DESCRIPCION ? r.DESCRIPCION : `<span style="color:var(--text3);font-style:italic">Sin descripción</span>`;
 
     return `<tr class="${rowClass}">
       <td><code style="font-size:10px;color:var(--text2)">${r.CLAVE}</code></td>
@@ -1594,62 +1156,17 @@ function renderCompras() {
       <td class="num" style="color:var(--text3)">${r.COSTO > 0 ? fmtMoney(r.COSTO) : '—'}</td>
       <td class="num" style="font-weight:600">${r.piezasAPedir > 0 ? fmtMoney(totalCost) : '—'}</td>
       <td style="white-space:nowrap">${flags || '<span style="color:var(--text3)">—</span>'}</td>
-      <td>
-        <button class="btn btn-danger btn-sm" onclick="excludeKey('${r.CLAVE}')" title="Excluir clave">🚫</button>
-      </td>
+      <td><button class="btn btn-danger btn-sm" onclick="excludeKey('${r.CLAVE}')" title="Excluir clave">🚫</button></td>
     </tr>`;
   }).join('');
 }
 
-function filterCompras() {
-  const q       = document.getElementById('search-compras').value.toLowerCase();
-  const plaza   = document.getElementById('filter-plaza-c').value;
-  const estado  = document.getElementById('filter-estado-c').value;
-  const clase   = document.getElementById('filter-clase-c').value;
-
-  filtCompras = reportData.filter(r => {
-    // Búsqueda parcial: si escribe "PC", atrapa "PC03008900000"
-    if (q && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
-    if (plaza  && r.PLAZA !== plaza)  return false;
-    if (clase  && r.CLASE !== clase)  return false;
-    if (estado === 'comprar'  && (r.piezasAPedir <= 0 || r.esFantasma)) return false;
-    if (estado === 'rezago'   && !r.tieneRezago) return false;
-    if (estado === 'ghost'    && !r.esFantasma)  return false;
-    if (estado === 'nodesc'   && (!r.sinDesc || r.esFantasma)) return false;
-    if (estado === 'ok'       && (r.piezasAPedir > 0 || r.tieneRezago || r.esFantasma)) return false;
-    return true;
-  });
-  renderCompras();
-}
-
-function sortTable(tabla, col) {
-  const s = tabla === 'compras' ? sortCompras : sortVentas;
-  if (s.col === col) s.dir *= -1;
-  else { s.col = col; s.dir = 1; }
-
-  const getVal = (r) => {
-    if (col === '_total') return r.piezasAPedir * r.COSTO;
-    return r[col];
-  };
-
-  const arr = tabla === 'compras' ? filtCompras : filtVentas;
-  arr.sort((a,b) => {
-    const va = getVal(a), vb = getVal(b);
-    if (typeof va === 'number' && typeof vb === 'number') return (va - vb) * s.dir;
-    return String(va||'').localeCompare(String(vb||'')) * s.dir;
-  });
-
-  if (tabla === 'compras') renderCompras();
-  else renderVentas();
-}
-
 // ═══════════════════════════════════════════════
-//  TABLE: VENTAS
+//  RENDER VENTAS
 // ═══════════════════════════════════════════════
 function renderVentas() {
   const thead = document.getElementById('thead-ventas');
   const tbody = document.getElementById('tbody-ventas');
-
   const cols = [
     { key:'CLAVE',              label:'Clave',         sortable:true },
     { key:'DESCRIPCION',        label:'Descripción',   sortable:true },
@@ -1664,8 +1181,7 @@ function renderVentas() {
   ];
 
   thead.innerHTML = '<tr>' + cols.map(c => {
-    let cls = '';
-    if (c.key === sortVentas.col) cls = sortVentas.dir > 0 ? 'sort-asc' : 'sort-desc';
+    let cls = (c.key === sortVentas.col) ? (sortVentas.dir > 0 ? 'sort-asc' : 'sort-desc') : '';
     return `<th class="${cls}" ${c.sortable ? `onclick="sortTable('ventas','${c.key}')"` : ''}>${c.label}</th>`;
   }).join('') + '</tr>';
 
@@ -1677,26 +1193,10 @@ function renderVentas() {
   document.getElementById('empty-ventas').style.display = 'none';
 
   tbody.innerHTML = filtVentas.map(r => {
-    const plazaBadge = r.PLAZA === 'chetumal'
-      ? '<span class="badge badge-blue">CTM</span>'
-      : '<span class="badge badge-teal">CUN</span>';
-
-    const diasCob = r.esFantasma ? '<span class="badge badge-purple">N/A</span>'
-      : r.diasCoberturaActual >= 9999 ? '<span class="badge badge-gray">∞</span>'
-      : r.diasCoberturaActual < 5  ? `<span class="badge badge-red">${r.diasCoberturaActual}d</span>`
-      : r.diasCoberturaActual < 15 ? `<span class="badge badge-yellow">${r.diasCoberturaActual}d</span>`
-      : `<span class="badge badge-green">${r.diasCoberturaActual}d</span>`;
-
-    let estadoBadge = '';
-    if (r.esFantasma)            estadoBadge = '<span class="badge badge-purple">👻 Fantasma</span>';
-    else if (r.tieneRezago)      estadoBadge = '<span class="badge badge-red">⚠ Rezago</span>';
-    else if (r.piezasAPedir > 0) estadoBadge = '<span class="badge badge-yellow">🛒 Comprar</span>';
-    else if (r.totalVentasPeriodo === 0) estadoBadge = '<span class="badge badge-gray">💤 Sin mov.</span>';
-    else                         estadoBadge = '<span class="badge badge-green">✓ OK</span>';
-
-    const descDisplay = r.DESCRIPCION
-      ? r.DESCRIPCION
-      : `<span style="color:var(--text3);font-style:italic">Sin descripción</span>`;
+    const plazaBadge = r.PLAZA === 'chetumal' ? '<span class="badge badge-blue">CTM</span>' : '<span class="badge badge-teal">CUN</span>';
+    const diasCob = r.esFantasma ? '<span class="badge badge-purple">N/A</span>' : r.diasCoberturaActual >= 9999 ? '<span class="badge badge-gray">∞</span>' : r.diasCoberturaActual < 5  ? `<span class="badge badge-red">${r.diasCoberturaActual}d</span>` : r.diasCoberturaActual < 15 ? `<span class="badge badge-yellow">${r.diasCoberturaActual}d</span>` : `<span class="badge badge-green">${r.diasCoberturaActual}d</span>`;
+    let estadoBadge = r.esFantasma ? '<span class="badge badge-purple">👻 Fantasma</span>' : r.tieneRezago ? '<span class="badge badge-red">⚠ Rezago</span>' : r.piezasAPedir > 0 ? '<span class="badge badge-yellow">🛒 Comprar</span>' : r.totalVentasPeriodo === 0 ? '<span class="badge badge-gray">💤 Sin mov.</span>' : '<span class="badge badge-green">✓ OK</span>';
+    const descDisplay = r.DESCRIPCION ? r.DESCRIPCION : `<span style="color:var(--text3);font-style:italic">Sin descripción</span>`;
 
     return `<tr>
       <td><code style="font-size:10px;color:var(--text2)">${r.CLAVE}</code></td>
@@ -1713,14 +1213,37 @@ function renderVentas() {
   }).join('');
 }
 
+// ═══════════════════════════════════════════════
+//  FILTERS & SORTING
+// ═══════════════════════════════════════════════
+function filterCompras() {
+  const q = document.getElementById('search-compras').value.toLowerCase();
+  const plaza = document.getElementById('filter-plaza-c').value;
+  const estado = document.getElementById('filter-estado-c').value;
+  const clase = document.getElementById('filter-clase-c').value;
+
+  filtCompras = reportData.filter(r => {
+    if (q && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
+    if (plaza  && r.PLAZA !== plaza)  return false;
+    if (clase  && r.CLASE !== clase)  return false;
+    if (estado === 'comprar'  && (r.piezasAPedir <= 0 || r.esFantasma)) return false;
+    if (estado === 'rezago'   && !r.tieneRezago) return false;
+    if (estado === 'ghost'    && !r.esFantasma)  return false;
+    if (estado === 'nodesc'   && (!r.sinDesc || r.esFantasma)) return false;
+    if (estado === 'ok'       && (r.piezasAPedir > 0 || r.tieneRezago || r.esFantasma)) return false;
+    return true;
+  });
+  renderCompras();
+}
+
 function filterVentas() {
-  const q      = document.getElementById('search-ventas').value.toLowerCase();
-  const plaza  = document.getElementById('filter-plaza-v').value;
-  const mov    = document.getElementById('filter-mov-v').value;
-  const clase  = document.getElementById('filter-clase-v').value;
+  const q = document.getElementById('search-ventas').value.toLowerCase();
+  const plaza = document.getElementById('filter-plaza-v').value;
+  const mov = document.getElementById('filter-mov-v').value;
+  const clase = document.getElementById('filter-clase-v').value;
 
   filtVentas = reportData.filter(r => {
-    if (q     && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
+    if (q && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
     if (plaza && r.PLAZA !== plaza)  return false;
     if (clase && r.CLASE !== clase)  return false;
     if (mov === 'activo'   && r.totalVentasPeriodo === 0)  return false;
@@ -1731,17 +1254,29 @@ function filterVentas() {
   renderVentas();
 }
 
-// ═══════════════════════════════════════════════
-//  CLASE FILTER POPULATE
-// ═══════════════════════════════════════════════
+function sortTable(tabla, col) {
+  const s = tabla === 'compras' ? sortCompras : sortVentas;
+  if (s.col === col) s.dir *= -1; else { s.col = col; s.dir = 1; }
+  const getVal = (r) => (col === '_total') ? (r.piezasAPedir * r.COSTO) : r[col];
+  const arr = tabla === 'compras' ? filtCompras : filtVentas;
+  
+  arr.sort((a,b) => {
+    const va = getVal(a), vb = getVal(b);
+    if (typeof va === 'number' && typeof vb === 'number') return (va - vb) * s.dir;
+    return String(va||'').localeCompare(String(vb||'')) * s.dir;
+  });
+  if (tabla === 'compras') renderCompras(); else renderVentas();
+}
+
 function populateClaseFilters() {
   const clases = [...new Set(reportData.map(r => r.CLASE).filter(Boolean))].sort();
   const opts   = '<option value="">Todas las clases</option>' + clases.map(c => `<option value="${c}">${c}</option>`).join('');
-  ['filter-clase-c','filter-clase-v'].forEach(id => document.getElementById(id).innerHTML = opts);
+  document.getElementById('filter-clase-c').innerHTML = opts;
+  document.getElementById('filter-clase-v').innerHTML = opts;
 }
 
 // ═══════════════════════════════════════════════
-//  EXCLUDE KEYS — con localStorage correcto
+//  EXCLUDED KEYS
 // ═══════════════════════════════════════════════
 function excludeKey(clave) {
   const excluded = getExcluded();
@@ -1750,58 +1285,45 @@ function excludeKey(clave) {
     saveExcluded(excluded);
     updateExclBadge();
     renderExcluded();
-    // Quitar de reportData
     reportData = reportData.filter(r => r.CLAVE !== clave);
     filtCompras = filtCompras.filter(r => r.CLAVE !== clave);
     filtVentas  = filtVentas.filter(r => r.CLAVE !== clave);
-    renderCompras();
-    renderVentas();
-    showToast('🚫 Clave excluida: ' + clave);
+    renderCompras(); renderVentas();
+    showToast('🚫 Clave excluida y ocultada: ' + clave);
   }
 }
 
 function unexcludeKey(clave) {
   const excluded = getExcluded().filter(k => k !== clave);
   saveExcluded(excluded);
-  updateExclBadge();
-  renderExcluded();
-  showToast('✅ Clave reincorporada: ' + clave + '. Regenera el reporte para verla.');
+  updateExclBadge(); renderExcluded();
+  showToast('✅ Clave reincorporada: ' + clave + '. (Vuelve a Generar Reporte para verla).');
 }
 
 function clearAllExcluded() {
-  if (!confirm('¿Limpiar todas las claves excluidas?')) return;
+  if (!confirm('¿Limpiar todas las exclusiones?')) return;
   saveExcluded([]);
-  updateExclBadge();
-  renderExcluded();
-  showToast('🗑 Todas las exclusiones eliminadas');
+  updateExclBadge(); renderExcluded();
+  showToast('🗑 Todas las exclusiones limpiadas.');
 }
 
 function renderExcluded() {
   const excluded  = getExcluded();
-  const cnt       = document.getElementById('excl-count');
+  document.getElementById('excl-count').textContent = excluded.length;
   const container = document.getElementById('excluded-tags');
-  cnt.textContent = excluded.length;
-  if (!excluded.length) {
-    container.innerHTML = '<span style="color:var(--text3);font-size:11px">No hay claves excluidas.</span>';
-    return;
-  }
-  container.innerHTML = excluded.map(k =>
-    `<div class="excluded-tag" onclick="unexcludeKey('${k}')" title="Clic para reincorporar">
-      ${k} <span>✕</span>
-    </div>`
-  ).join('');
+  if (!excluded.length) { container.innerHTML = '<span style="color:var(--text3);font-size:11px">No hay claves excluidas.</span>'; return; }
+  container.innerHTML = excluded.map(k => `<div class="excluded-tag" onclick="unexcludeKey('${k}')" title="Clic para reincorporar">${k} <span>✕</span></div>`).join('');
 }
 
 function updateExclBadge() {
   const n = getExcluded().length;
   document.getElementById('badge-excl').textContent = n;
-  document.getElementById('badge-excl').style.display = n > 0 ? '' : 'none';
 }
 
 // ═══════════════════════════════════════════════
-//  EXPORT CSV
+//  EXPORT XLSX (Excel Verdadero con Nombre de Fecha)
 // ═══════════════════════════════════════════════
-function exportCSV(tipo) {
+function exportXLSX(tipo) {
   const data = tipo === 'compras' ? filtCompras : filtVentas;
   if (!data.length) { showToast('⚠ No hay datos para exportar'); return; }
 
@@ -1809,53 +1331,45 @@ function exportCSV(tipo) {
   if (tipo === 'compras') {
     headers = ['CLAVE','DESCRIPCION','CLASE','PLAZA','STOCK_TOTAL','REZAGO','VENTAS_PERIODO','VENTA_DIARIA','VENTA_MENSUAL','DIAS_COBERTURA_ACT','NECESIDAD','PIEZAS_A_PEDIR','COSTO_UNIT','TOTAL_INVERSION','FANTASMA','SIN_DESCRIPCION'];
     rows = data.map(r => [
-      r.CLAVE,
-      '"' + (r.DESCRIPCION||'').replace(/"/g,'""') + '"',
-      r.CLASE, r.PLAZA,
+      r.CLAVE, r.DESCRIPCION || '', r.CLASE, r.PLAZA,
       r.esFantasma ? '—' : r.stockTotal, r.rezagoTotal,
-      r.totalVentasPeriodo, r.ventaDiaria.toFixed(4),
-      r.ventaMensual.toFixed(2),
+      r.totalVentasPeriodo, parseFloat(r.ventaDiaria.toFixed(4)), parseFloat(r.ventaMensual.toFixed(2)),
       r.diasCoberturaActual >= 9999 ? 'SIN VENTAS' : r.diasCoberturaActual,
-      r.esFantasma ? '—' : r.necesidad.toFixed(2),
-      r.piezasAPedir, r.COSTO > 0 ? r.COSTO.toFixed(2) : '—',
-      r.piezasAPedir > 0 ? (r.piezasAPedir * r.COSTO).toFixed(2) : '—',
-      r.esFantasma ? 'SI' : 'NO',
-      r.sinDesc ? 'SI' : 'NO'
+      r.esFantasma ? '—' : parseFloat(r.necesidad.toFixed(2)),
+      r.piezasAPedir, r.COSTO > 0 ? parseFloat(r.COSTO.toFixed(2)) : '—',
+      r.piezasAPedir > 0 ? parseFloat((r.piezasAPedir * r.COSTO).toFixed(2)) : '—',
+      r.esFantasma ? 'SI' : 'NO', r.sinDesc ? 'SI' : 'NO'
     ]);
   } else {
     headers = ['CLAVE','DESCRIPCION','CLASE','PLAZA','VENTAS_PERIODO','VENTA_DIARIA','VENTA_MENSUAL','STOCK_TOTAL','DIAS_COBERTURA_ACT','ESTADO'];
     rows = data.map(r => {
       let estado = 'OK';
-      if (r.esFantasma) estado = 'FANTASMA';
-      else if (r.tieneRezago) estado = 'REZAGO';
-      else if (r.piezasAPedir > 0) estado = 'A_COMPRAR';
-      else if (r.totalVentasPeriodo === 0) estado = 'SIN_MOVIMIENTO';
+      if (r.esFantasma) estado = 'FANTASMA'; else if (r.tieneRezago) estado = 'REZAGO'; else if (r.piezasAPedir > 0) estado = 'A_COMPRAR'; else if (r.totalVentasPeriodo === 0) estado = 'SIN_MOVIMIENTO';
       return [
-        r.CLAVE,
-        '"' + (r.DESCRIPCION||'').replace(/"/g,'""') + '"',
-        r.CLASE, r.PLAZA,
-        r.totalVentasPeriodo, r.ventaDiaria.toFixed(4),
-        r.ventaMensual.toFixed(2),
-        r.esFantasma ? '—' : r.stockTotal,
-        r.diasCoberturaActual >= 9999 ? 'SIN VENTAS' : r.diasCoberturaActual,
-        estado
+        r.CLAVE, r.DESCRIPCION || '', r.CLASE, r.PLAZA,
+        r.totalVentasPeriodo, parseFloat(r.ventaDiaria.toFixed(4)), parseFloat(r.ventaMensual.toFixed(2)),
+        r.esFantasma ? '—' : r.stockTotal, r.diasCoberturaActual >= 9999 ? 'SIN VENTAS' : r.diasCoberturaActual, estado
       ];
     });
   }
 
-  const csv  = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url;
-  a.download = tipo + '_' + new Date().toISOString().slice(0,10) + '.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('⬇ CSV exportado: ' + tipo);
+  const wsData = [headers, ...rows];
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Reporte_" + tipo);
+
+  // Formato: ventas03062026.xlsx
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const dateStr = pad(d.getDate()) + pad(d.getMonth()+1) + d.getFullYear();
+  const filename = tipo + dateStr + '.xlsx';
+
+  XLSX.writeFile(wb, filename);
+  showToast('⬇ Archivo Excel exportado: ' + filename);
 }
 
 // ═══════════════════════════════════════════════
-//  RESET
+//  RESET Y DRAG & DROP
 // ═══════════════════════════════════════════════
 function resetAll() {
   rawInventario = []; rawVentas = []; reportData = []; filtCompras = []; filtVentas = [];
@@ -1864,20 +1378,13 @@ function resetAll() {
   ['dot-inv','dot-ven'].forEach(id => document.getElementById(id).classList.remove('active'));
   document.getElementById('lbl-inv').textContent = 'Sin inventario';
   document.getElementById('lbl-ven').textContent = 'Sin ventas';
-  document.getElementById('dash-empty').style.display = '';
-  document.getElementById('dash-content').style.display = 'none';
-  document.getElementById('compras-empty').style.display = '';
-  document.getElementById('compras-content').style.display = 'none';
-  document.getElementById('ventas-empty').style.display = '';
-  document.getElementById('ventas-content').style.display = 'none';
+  document.getElementById('dash-empty').style.display = ''; document.getElementById('dash-content').style.display = 'none';
+  document.getElementById('compras-empty').style.display = ''; document.getElementById('compras-content').style.display = 'none';
+  document.getElementById('ventas-empty').style.display = ''; document.getElementById('ventas-content').style.display = 'none';
   document.getElementById('badge-compras').style.display = 'none';
-  checkEnableBtn();
-  showToast('↺ Datos limpiados');
+  checkEnableBtn(); showToast('↺ Datos del reporte limpiados');
 }
 
-// ═══════════════════════════════════════════════
-//  DRAG & DROP
-// ═══════════════════════════════════════════════
 ['zone-inv','zone-ven'].forEach(zoneId => {
   const zone = document.getElementById(zoneId);
   zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
@@ -1889,43 +1396,13 @@ function resetAll() {
     const type = zoneId === 'zone-inv' ? 'inv' : 'ven';
     const inputEl = document.getElementById('file-' + type);
     try {
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      inputEl.files = dt.files;
-      loadFile(type, inputEl);
-    } catch(e) {
-      // DataTransfer not supported everywhere — fallback
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        const wb = XLSX.read(ev.target.result, {type:'array', cellDates: true});
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const data = XLSX.utils.sheet_to_json(ws, {defval: ''});
-        if (type === 'inv') {
-          rawInventario = normalizeInv(data);
-          document.getElementById('zone-inv').classList.add('loaded');
-          document.getElementById('fname-inv').textContent = '✓ ' + file.name;
-          document.getElementById('dot-inv').classList.add('active');
-          document.getElementById('lbl-inv').textContent = rawInventario.length + ' reg.';
-        } else {
-          rawVentas = normalizeVen(data);
-          document.getElementById('zone-ven').classList.add('loaded');
-          document.getElementById('fname-ven').textContent = '✓ ' + file.name;
-          document.getElementById('dot-ven').classList.add('active');
-          document.getElementById('lbl-ven').textContent = rawVentas.length + ' reg.';
-        }
-        checkEnableBtn();
-      };
-      reader.readAsArrayBuffer(file);
-    }
+      const dt = new DataTransfer(); dt.items.add(file); inputEl.files = dt.files; loadFile(type, inputEl);
+    } catch(e) { showToast("Usa el botón de carga si arrastrar falla en tu navegador."); }
   });
 });
-
-// ═══════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════
-renderExcluded();
-updateExclBadge();
 </script>
 </body>
 </html>
+
+```
 

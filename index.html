@@ -1207,6 +1207,9 @@ function loadFile(type, input) {
         document.getElementById('dot-rec').classList.add('active-purple');
         document.getElementById('lbl-rec').textContent = rawRecepciones.length + ' recepciones';
         document.getElementById('btn-rec-analizar').disabled = false;
+        
+        populateRecFilters(); // <── AÑADE ESTA LÍNEA AQUÍ
+        
         showToast('✅ Recepciones cargadas: ' + rawRecepciones.length + ' registros');
         runAnalysis();
       }
@@ -1333,6 +1336,37 @@ function normalizeRec(rows) {
 function checkEnableBtn() {
   populateParameterDropdowns();
   document.getElementById('btn-generar').disabled = !(rawInventario.length && rawVentas.length);
+}
+
+  function populateRecFilters() {
+  if (!rawRecepciones.length) return;
+
+  // 1. Llenar la lista de Proveedores
+  const proveedores = [...new Set(rawRecepciones.map(r => r.PROVEEDOR).filter(Boolean))].sort();
+  const provSelect = document.getElementById('rec-proveedor');
+  if (provSelect) {
+    provSelect.innerHTML = '<option value="">Todos los proveedores</option>' + 
+      proveedores.map(p => `<option value="${p}">${p}</option>`).join('');
+  }
+
+  // 2. Llenar la lista de Clases
+  const clases = [...new Set(rawRecepciones.map(r => r.CLASE).filter(Boolean))].sort();
+  const claseSelect = document.getElementById('rec-clase');
+  if (claseSelect) {
+    claseSelect.innerHTML = '<option value="">Todas las clases</option>' + 
+      clases.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+
+  // 3. Auto-llenar el calendario interactivo con las fechas del Excel
+  const fechas = rawRecepciones.map(r => r.FECHA_COMPRA).filter(Boolean).sort((a,b) => a - b);
+  if (fechas.length > 0) {
+    // Convierte la fecha al formato YYYY-MM-DD que requiere el calendario
+    const minDate = fechas[0].toISOString().split('T')[0];
+    const maxDate = fechas[fechas.length - 1].toISOString().split('T')[0];
+    
+    document.getElementById('rec-fecha-desde').value = minDate;
+    document.getElementById('rec-fecha-hasta').value = maxDate;
+  }
 }
 
 function calcularHistorial() {

@@ -322,8 +322,24 @@
   .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
   .alert-body strong { display: block; font-weight: 600; margin-bottom: 3px; }
   .alert-body p { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 2px; }
-
   .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  
+  /* ── Estilos para Alertas Interactivas ── */
+  .alert-box { transition: background 0.2s, border-color 0.2s; }
+  .alert-box.clickable { cursor: pointer; }
+  .alert-box.clickable:hover { filter: brightness(1.1); }
+  .alert-header { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; }
+  .alert-text-wrapper { flex: 1; }
+  .alert-chevron { margin-left: 16px; margin-top: 2px; font-size: 12px; transition: transform 0.3s ease; opacity: 0.8; }
+  .alert-chevron.open { transform: rotate(180deg); }
+  
+  .alert-content { display: none; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.15); cursor: default; }
+  .alert-content.show { display: block; animation: fadeIn 0.3s ease; }
+  
+  .alert-table { width: 100%; font-size: 11px; text-align: left; border-collapse: collapse; background: var(--bg); border-radius: 6px; overflow: hidden; }
+  .alert-table th { background: rgba(0,0,0,0.4); padding: 8px 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; }
+  .alert-table td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text); font-family: 'IBM Plex Mono', monospace; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ── Excluded tags ── */
   .excluded-tags { display: flex; flex-wrap: wrap; gap: 8px; min-height: 32px; }
@@ -805,15 +821,6 @@
           <p>Carga al menos un archivo para ver el análisis de calidad de datos.</p>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="panel" id="panel-cruce" style="display:none">
-    <div class="panel-header" onclick="togglePanel('panel-cruce')">
-      <h3><span class="icon">🔀</span>Cruce: Inventario vs Recepciones</h3>
-      <span class="collapse-btn">▼</span>
-    </div>
-    <div class="panel-body" id="cruce-body">
     </div>
   </div>
 
@@ -1396,62 +1403,126 @@ function runAnalysis() {
     const sinStock = rawInventario.filter(r => r.STOCK === 0 && r.REZAGO === 0);
     const conRezago = rawInventario.filter(r => r.REZAGO > 0);
     const sinCosto = rawInventario.filter(r => r.COSTO === 0);
-    const ubicDesconocidas = [...new Set(rawInventario.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
+    const ubsInvs = [...new Set(rawInventario.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
     const duplas = detectarDuplicadosInv();
 
-    if (duplas.length) alerts.push({ type:'warn', icon:'⚠️', title:`${duplas.length} claves con registros duplicados en inventario`, desc:'El mismo Invtid aparece más de una vez con la misma locación. Esto puede inflar el stock.' });
-    if (sinCosto.length > 0) alerts.push({ type:'warn', icon:'💰', title:`${sinCosto.length} registros con costo $0 en inventario`, desc:'Claves sin costo asignado. La estimación de inversión será incorrecta para estas.' });
-    if (conRezago.length) alerts.push({ type:'danger', icon:'🔴', title:`${conRezago.length} claves con rezago activo`, desc:`InvRez > 0. Estas claves no generarán pedido aunque haya stock agotado. Revisar si conviene liquidar o depurar.` });
-    if (ubicDesconocidas.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones no reconocidas: ${ubicDesconocidas.slice(0,5).join(', ')}`, desc:'Estas ubicaciones no están mapeadas a ninguna plaza. Sus datos serán ignorados en el reporte.' });
-    if (sinStock.length > rawInventario.length * 0.3) alerts.push({ type:'info', icon:'📦', title:`${sinStock.length} SKUs con stock 0 y sin rezago`, desc:'Más del 30% del inventario está en cero. Puede ser normal si son productos descontinuados o sin reorden.' });
+    if (duplas.length) alerts.push({ type:'warn', icon:'⚠️', title:`${duplas.length} claves duplicadas en inventario`, desc:'El mismo Invtid aparece más de una vez en la misma locación.', data: duplas.map(c=>({CLAVE:c})), cols:[{key:'CLAVE', label:'Clave Duplicada'}] });
+    if (sinCosto.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCosto.length} registros con costo $0 en inventario`, desc:'Claves sin costo asignado. Revisa si Recepciones logró rescatar el valor.', data: sinCosto, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'UBICACION', label:'Locación'}] });
+    if (conRezago.length) alerts.push({ type:'danger', icon:'🔴', title:`${conRezago.length} claves con rezago activo`, desc:'Estas claves no generarán pedido por políticas de seguridad.', data: conRezago, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'REZAGO', label:'Pzs Rezago', isNum:true}] });
+    if (ubsInvs.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones no reconocidas: ${ubsInvs.join(', ')}`, desc:'Ubicaciones fuera del alcance mapeado.', data: ubsInvs.map(u=>({UBICACION:u})), cols:[{key:'UBICACION', label:'Locación No Reconocida'}] });
+    if (sinStock.length > rawInventario.length * 0.3) alerts.push({ type:'info', icon:'📦', title:`${sinStock.length} SKUs con stock 0 y sin rezago`, desc:'Normal si son productos descontinuados. Haz clic para revisar la lista.', data: sinStock, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}] });
   }
 
   // ── ANÁLISIS VENTAS ──
   if (rawVentas.length) {
-    const ubDesconocidas = [...new Set(rawVentas.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
+    const ubVen = [...new Set(rawVentas.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
     const sinVenta = rawVentas.filter(r => r.VENTA <= 0);
     const fechas = rawVentas.map(r => r.FECHA).filter(Boolean).sort((a,b)=>a-b);
     const diasRango = fechas.length > 1 ? Math.round((fechas[fechas.length-1] - fechas[0]) / 86400000) : 0;
-    const clavesSoloVentas = [...new Set(rawVentas.map(r => r.CLAVE))].filter(c => !rawInventario.find(i => i.CLAVE === c));
+    
+    // Extracción de claves exclusivas de ventas
+    const clavesVentaPuras = [...new Set(rawVentas.map(r => r.CLAVE))].filter(c => !rawInventario.find(i => i.CLAVE === c));
+    const clavesSoloVentasDatos = clavesVentaPuras.map(c => rawVentas.find(v => v.CLAVE === c));
 
-    if (ubDesconocidas.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones desconocidas en ventas: ${ubDesconocidas.slice(0,4).join(', ')}`, desc:'Ventas en estas locaciones no se contabilizarán en ninguna plaza.' });
-    if (sinVenta.length) alerts.push({ type:'info', icon:'🔢', title:`${sinVenta.length} registros con QtyShip ≤ 0`, desc:'Pueden ser devoluciones o ajustes negativos. Revisar si deben filtrarse.' });
-    if (diasRango > 0) alerts.push({ type:'success', icon:'📅', title:`Historial de ventas: ${diasRango} días (${fmtDate(fechas[0])} → ${fmtDate(fechas[fechas.length-1])})`, desc:'Rango detectado automáticamente. Ajusta el parámetro "Días de historial" según necesites.' });
-    if (clavesSoloVentas.length > 0 && rawInventario.length) alerts.push({ type:'warn', icon:'🔍', title:`${clavesSoloVentas.length} claves en ventas sin registro en inventario`, desc:'Productos que se vendieron pero ya no aparecen en inventario. Puede ser normal en claves dadas de baja.' });
+    if (ubVen.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones desconocidas en ventas: ${ubVen.join(', ')}`, data: ubVen.map(u=>({UBICACION:u})), cols:[{key:'UBICACION', label:'Locación'}] });
+    if (sinVenta.length) alerts.push({ type:'info', icon:'🔢', title:`${sinVenta.length} registros con QtyShip ≤ 0`, desc:'Posibles devoluciones. Serán ignoradas.', data: sinVenta, cols:[{key:'FECHA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'VENTA', label:'Piezas', isNum:true}] });
+    if (diasRango > 0) alerts.push({ type:'success', icon:'📅', title:`Historial de ventas: ${diasRango} días (${fmtDate(fechas[0])} → ${fmtDate(fechas[fechas.length-1])})`, desc:'El sistema detectó este rango automáticamente. No expandible.' }); // Este no lleva data (no se expande)
+    if (clavesSoloVentasDatos.length > 0 && rawInventario.length) alerts.push({ type:'warn', icon:'🔍', title:`${clavesSoloVentasDatos.length} claves vendidas sin registro en inventario`, desc:'Productos que se vendieron pero ya no aparecen en el archivo de inventario actual.', data: clavesSoloVentasDatos, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'UBICACION', label:'Última Ubicación'}] });
   }
 
   // ── ANÁLISIS RECEPCIONES ──
   if (rawRecepciones.length) {
     const sinPiezas = rawRecepciones.filter(r => r.PIEZAS <= 0);
     const sinCostoRec = rawRecepciones.filter(r => r.COSTO_UNIT === 0);
-    const descDiferentes = [];
+    const sinOC = rawRecepciones.filter(r => !r.OC || r.OC === '—');
+    
+    let noEnInvDatos = [];
+    let descDiferentes = [];
+
     if (rawInventario.length) {
-      const claveRec = [...new Set(rawRecepciones.map(r => r.CLAVE))];
-      for (const clave of claveRec) {
-        const invRow = rawInventario.find(i => i.CLAVE === clave);
-        const recRow = rawRecepciones.find(r => r.CLAVE === clave && r.DESCRIPCION);
-        if (invRow && recRow && invRow.DESCRIPCION && recRow.DESCRIPCION &&
-            invRow.DESCRIPCION.toLowerCase() !== recRow.DESCRIPCION.toLowerCase()) {
-          descDiferentes.push({ clave, inv: invRow.DESCRIPCION, rec: recRow.DESCRIPCION });
+      const clavesInv = new Set(rawInventario.map(r => r.CLAVE));
+      
+      // Recepciones que no existen en inventario
+      const noEnInv = [...new Set(rawRecepciones.map(r => r.CLAVE))].filter(c => !clavesInv.has(c));
+      noEnInvDatos = noEnInv.map(c => rawRecepciones.find(r => r.CLAVE === c));
+
+      // Descripciones que difieren
+      const descDiffClaves = new Set();
+      for (const r of rawRecepciones) {
+        const inv = rawInventario.find(i => i.CLAVE === r.CLAVE);
+        if (inv && r.DESCRIPCION && inv.DESCRIPCION && inv.DESCRIPCION.toLowerCase() !== r.DESCRIPCION.toLowerCase() && !descDiffClaves.has(r.CLAVE)) {
+          descDiffClaves.add(r.CLAVE);
+          descDiferentes.push({ clave: r.CLAVE, inv: inv.DESCRIPCION, rec: r.DESCRIPCION });
         }
       }
     }
-    if (sinPiezas.length) alerts.push({ type:'warn', icon:'📦', title:`${sinPiezas.length} recepciones con RcptQty ≤ 0`, desc:'Posibles devoluciones a proveedor o ajustes. Verificar.' });
-    if (sinCostoRec.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCostoRec.length} recepciones con UnitCost = $0`, desc:'Mercancía ingresada sin costo registrado. Puede afectar valuación de inventario.' });
-    if (descDiferentes.length) alerts.push({ type:'purple', icon:'🔄', title:`${descDiferentes.length} claves con descripción distinta entre recepción e inventario`, desc:'TranDesc (al momento del ingreso) difiere de Descr actual. Esto es normal si se actualizó la descripción en Dynamics. El sistema usa la descripción del inventario como la vigente.' });
-    if (rawInventario.length) buildCrucePanel(descDiferentes);
+
+    if (sinPiezas.length) alerts.push({ type:'warn', icon:'📦', title:`${sinPiezas.length} recepciones con RcptQty ≤ 0`, data: sinPiezas, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'PROVEEDOR', label:'Proveedor'}] });
+    if (sinCostoRec.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCostoRec.length} recepciones con UnitCost = $0`, data: sinCostoRec, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'OC', label:'OC'}] });
+    if (sinOC.length > rawRecepciones.length * 0.1) alerts.push({ type:'info', icon:'📋', title:`${sinOC.length} recepciones sin orden de compra (PONbr)`, data: sinOC, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'USUARIO', label:'Usuario'}] });
+    if (noEnInvDatos.length) alerts.push({ type:'warn', icon:'🔍', title:`${noEnInvDatos.length} claves recibidas que no existen en el inventario actual`, data: noEnInvDatos, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción Ingresada'}, {key:'PROVEEDOR', label:'Proveedor'}] });
+    if (descDiferentes.length) alerts.push({ type:'purple', icon:'🔄', title:`Cruce: ${descDiferentes.length} descripciones de Recepción difieren del Inventario`, desc:'TranDesc vs Descr. El sistema usa la del Inventario como la oficial.', data: descDiferentes, cols:[{key:'clave', label:'Clave'}, {key:'inv', label:'Desc. Vigente (Inv)'}, {key:'rec', label:'Desc. de Ingreso (Rec)'}] });
   }
 
-  if (!alerts.length) alerts.push({ type:'success', icon:'✅', title:'Sin problemas detectados', desc:'Los datos parecen consistentes. Puedes generar el reporte con confianza.' });
-  container.innerHTML = alerts.map(a => `
-    <div class="alert-box ${a.type}">
-      <div class="alert-icon">${a.icon}</div>
-      <div class="alert-body">
-        <strong>${a.title}</strong>
-        ${a.desc ? `<p>${a.desc}</p>` : ''}
+  if (!alerts.length) alerts.push({ type:'success', icon:'✅', title:'Sin problemas detectados', desc:'Los datos parecen consistentes.' });
+
+  // CONSTRUCCIÓN DEL RENDERIZADO INTERACTIVO
+  container.innerHTML = alerts.map((a, index) => {
+    const hasData = a.data && a.data.length > 0;
+    let tableHtml = '';
+    
+    if (hasData) {
+      const displayData = a.data.slice(0, 100); // Límite para no congelar la app
+      const hasMore = a.data.length > 100;
+      
+      tableHtml = `
+      <div class="alert-content" id="alert-content-${index}" onclick="event.stopPropagation()">
+        <div style="max-height: 250px; overflow-y: auto; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+          <table class="alert-table">
+            <thead><tr>${a.cols.map(c => `<th>${c.label}</th>`).join('')}</tr></thead>
+            <tbody>
+              ${displayData.map(row => `<tr>${a.cols.map(c => {
+                  let val = row[c.key];
+                  if(c.isMoney) val = fmtMoney(val);
+                  else if(c.isNum) val = fmt(val);
+                  else if(c.isDate) val = fmtDate(val);
+                  return `<td>${val || '—'}</td>`;
+              }).join('')}</tr>`).join('')}
+              ${hasMore ? `<tr><td colspan="${a.cols.length}" style="text-align:center; color:var(--text3); font-style:italic;">... mostrando 100 de ${fmt(a.data.length)} registros ...</td></tr>` : ''}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+    }
+
+    return `
+      <div class="alert-box ${a.type} ${hasData ? 'clickable' : ''}" ${hasData ? `onclick="toggleAlert(${index})"` : ''}>
+        <div class="alert-icon">${a.icon}</div>
+        <div style="flex:1; width: 100%;">
+          <div class="alert-header">
+            <div class="alert-text-wrapper">
+              <strong>${a.title}</strong>
+              ${a.desc ? `<p style="margin-bottom:0">${a.desc}</p>` : ''}
+            </div>
+            ${hasData ? `<div class="alert-chevron" id="alert-chev-${index}">▼</div>` : ''}
+          </div>
+          ${tableHtml}
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
+}
+
+// Mantenemos la pequeña función auxiliar
+function detectarDuplicadosInv() {
+  const seen = {};
+  const dups = [];
+  for (const r of rawInventario) {
+    const key = r.CLAVE + '|' + r.UBICACION;
+    if (seen[key]) dups.push(r.CLAVE);
+    seen[key] = true;
+  }
+  return [...new Set(dups)];
 }
 
 function detectarDuplicadosInv() {

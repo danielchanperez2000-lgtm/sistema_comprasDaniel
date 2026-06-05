@@ -1886,10 +1886,13 @@ function analizarRecepciones() {
   const filtroClase = document.getElementById('rec-clase').value.trim().toUpperCase();
 
   let data = rawRecepciones.filter(r => {
-    if (fechaDesde && r.FECHA_COMPRA && r.FECHA_COMPRA < new Date(fechaDesde)) return false;
+    // Al forzar T00:00:00 evitamos que JavaScript mueva el día por el huso horario
+    if (fechaDesde && r.FECHA_COMPRA && r.FECHA_COMPRA < new Date(fechaDesde + 'T00:00:00')) return false;
     if (fechaHasta && r.FECHA_COMPRA && r.FECHA_COMPRA > new Date(fechaHasta + 'T23:59:59')) return false;
-    if (filtroProveedor && !r.PROVEEDOR.includes(filtroProveedor)) return false;
-    if (filtroClase && !r.CLASE.includes(filtroClase)) return false;
+    
+    // Ahora que es un Select, hacemos coincidencia exacta (!==) en lugar de un .includes()
+    if (filtroProveedor && r.PROVEEDOR !== filtroProveedor) return false;
+    if (filtroClase && r.CLASE !== filtroClase) return false;
     return true;
   });
 

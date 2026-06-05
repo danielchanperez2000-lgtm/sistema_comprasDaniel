@@ -1389,6 +1389,20 @@ function calcularHistorial() {
 // ═══════════════════════════════════════════════
 //  ANÁLISIS DE CALIDAD DE DATOS
 // ═══════════════════════════════════════════════
+function toggleAlert(index) {
+  const content = document.getElementById(`alert-content-${index}`);
+  const chev = document.getElementById(`alert-chev-${index}`);
+  if (!content || !chev) return;
+  
+  if (content.classList.contains('show')) {
+    content.classList.remove('show');
+    chev.classList.remove('open');
+  } else {
+    content.classList.add('show');
+    chev.classList.add('open');
+  }
+}
+  
 function runAnalysis() {
   const container = document.getElementById('analisis-contenido');
   const alerts = [];

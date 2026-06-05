@@ -477,7 +477,6 @@
       <span class="collapse-btn">▼</span>
     </div>
     <div class="panel-body">
-      
       <div class="grid-3" style="margin-bottom:20px">
         <div class="form-group">
           <label>⏱ Días en llegar el pedido</label>
@@ -493,7 +492,8 @@
         </div>
       </div>
 
-      <div class="grid-2" style="margin-bottom:20px; background:var(--surface2); border:1px solid var(--border); padding:16px; border-radius:8px;">
+      <!-- BLOQUE 1: Grupos y Clases (Juntos visualmente) -->
+      <div class="grid-2" style="margin-bottom:16px; background:var(--surface2); border:1px solid var(--border); padding:16px; border-radius:8px;">
         <div class="form-group">
           <label style="display:flex;justify-content:space-between;align-items:center;">
             <span>🗂 Grupo de Revisión</span>
@@ -504,8 +504,32 @@
           </select>
         </div>
         <div class="form-group">
-          <label>🔍 Filtro por clase (Manual)</label>
-          <input type="text" id="filtro-clase" placeholder="Ej: OEPCLO, RETRUS…">
+          <label>🔍 Filtro por Clase (Manual)</label>
+          <div style="display:flex; gap:8px;">
+            <!-- Select dinámico para añadir clases -->
+            <select id="select-clase-helper" style="width:140px; cursor:pointer;" onchange="appendFilter('filtro-clase', this.value); this.value='';">
+              <option value="">+ Añadir...</option>
+            </select>
+            <input type="text" id="filtro-clase" placeholder="Ej: OEPCLO, RETRUS (separar por coma)" style="flex:1;">
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: Marcas y Claves -->
+      <div class="grid-2" style="margin-bottom:20px; background:var(--surface2); border:1px solid var(--border); padding:16px; border-radius:8px;">
+        <div class="form-group">
+          <label>🏷️ Filtro por Marca (Prefijo)</label>
+          <div style="display:flex; gap:8px;">
+            <!-- Select dinámico para añadir marcas -->
+            <select id="select-marca-helper" style="width:140px; cursor:pointer;" onchange="appendFilter('filtro-marca', this.value); this.value='';">
+              <option value="">+ Añadir...</option>
+            </select>
+            <input type="text" id="filtro-marca" placeholder="Ej: VO, GN, GA (separar por coma)" style="flex:1; text-transform:uppercase;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>🔑 Filtro por Clave (Invtid)</label>
+          <input type="text" id="filtro-clave-param" placeholder="Ej: SLSTMUSB3B000000, PC240747 (separar por coma)" style="width:100%; text-transform:uppercase;">
         </div>
       </div>
 
@@ -520,10 +544,7 @@
           </label>
         </div>
       </div>
-      <div style="margin-bottom:16px">
-        <label style="font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px">🔑 Filtro por Clave (Invtid)</label>
-        <input type="text" id="filtro-clave-param" placeholder="Ej: SLSTMUSB3B000000, PC240747… (separar por coma)" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;">
-      </div>
+      
       <div style="display:flex;gap:12px;justify-content:flex-end;align-items:center">
         <button class="btn btn-secondary" onclick="resetAll()">↺ Limpiar todo</button>
         <button class="btn btn-primary" id="btn-generar" onclick="generateReport()" disabled>▶ Generar Reporte</button>
@@ -908,6 +929,8 @@ let recFilteredData = [];
 let excludedKeys = JSON.parse(localStorage.getItem('DRP_SYSTEMS_excluded') || '[]');
 // Nueva variable para Grupos de Revisión
 let reviewGroups = JSON.parse(localStorage.getItem('DRP_SYSTEMS_grupos') || '[]');
+// NUEVO: Mapa para guardar el costo de la compra más reciente
+let costosHistoricosMap = {};
 
 let sortCol = null, sortDir = 1;
 let recSortCol = null, recSortDir = 1;
@@ -936,6 +959,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderExcluded();
   setupDragDrop();
   renderGruposSelect();
+  calcularHistorial();
 });
 
 // ═══════════════════════════════════════════════
@@ -1282,10 +1306,21 @@ function normalizeRec(rows) {
       CLASE:        String(m.CLASE || '').trim().toUpperCase(),
     });
   }
+  
+  // NUEVO: Ordenar por fecha y actualizar el mapa de costos históricos
+  out.sort((a,b) => (a.FECHA_COMPRA || 0) - (b.FECHA_COMPRA || 0));
+  costosHistoricosMap = {}; 
+  for (const r of out) {
+    if (r.COSTO_UNIT > 0) {
+      costosHistoricosMap[r.CLAVE] = r.COSTO_UNIT;
+    }
+  }
+  
   return out;
 }
 
 function checkEnableBtn() {
+  populateParameterDropdowns();
   document.getElementById('btn-generar').disabled = !(rawInventario.length && rawVentas.length);
 }
 
@@ -1437,15 +1472,68 @@ function getPlazaOfUb(ub) {
   return null;
 }
 
+// ═══════════════════════════════════════════════
+//  ALIMENTADORES DE FILTROS DINÁMICOS
+// ═══════════════════════════════════════════════
+function populateParameterDropdowns() {
+  const clasesSet = new Set();
+  const marcasSet = new Set();
+
+  const procesar = (arr) => {
+    for (const r of arr) {
+      if (r.CLASE) clasesSet.add(r.CLASE);
+      // Extrae la marca forzosamente si no viene en el reporte
+      let marca = r.MARCA || (r.CLAVE ? r.CLAVE.substring(0,2).toUpperCase() : '');
+      if (marca && marca !== '—') marcasSet.add(marca);
+    }
+  };
+
+  procesar(rawInventario);
+  procesar(rawVentas);
+
+  const clases = [...clasesSet].sort();
+  const marcas = [...marcasSet].sort();
+
+  const selClase = document.getElementById('select-clase-helper');
+  if (selClase) {
+    selClase.innerHTML = '<option value="">+ Añadir...</option>' + clases.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+  const selMarca = document.getElementById('select-marca-helper');
+  if (selMarca) {
+    selMarca.innerHTML = '<option value="">+ Añadir...</option>' + marcas.map(m => `<option value="${m}">${m}</option>`).join('');
+  }
+}
+
+function appendFilter(inputId, val) {
+  if (!val) return;
+  const input = document.getElementById(inputId);
+  let current = input.value.trim();
+  
+  if (current) {
+    // Evita duplicados en la caja de texto
+    const arr = current.split(',').map(s => s.trim().toUpperCase());
+    if (!arr.includes(val.toUpperCase())) {
+       input.value = current + ', ' + val;
+    }
+  } else {
+    input.value = val;
+  }
+}
+
 function generateReport() {
   const diasLlegada   = parseInt(document.getElementById('dias-llegada').value) || 5;
   const diasCobertura = parseInt(document.getElementById('dias-cobertura').value) || 30;
   const diasHist      = parseInt(document.getElementById('dias-historial').value) || 35;
+  
+  // Captura de filtros dinámicos múltiples
   const filtroClave   = document.getElementById('filtro-clave-param').value.trim();
   const filtroClase   = document.getElementById('filtro-clase').value.trim().toUpperCase();
-  const filtroGrupoId = document.getElementById('filtro-grupo').value; // Extrae ID de Grupo seleccionado
+  const filtroMarca   = document.getElementById('filtro-marca').value.trim().toUpperCase();
+  const filtroGrupoId = document.getElementById('filtro-grupo').value; 
 
   const clavesFiltro = filtroClave ? filtroClave.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
+  const clasesFiltro = filtroClase ? filtroClase.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
+  const marcasFiltro = filtroMarca ? filtroMarca.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
   
   // Extraemos prefijos del Grupo de Revisión (si aplica)
   let grupoPrefijos = [];
@@ -1492,30 +1580,45 @@ function generateReport() {
     const invMeta = invRows[0];
     const CLASE = invMeta ? invMeta.CLASE : (rawVentas.find(v=>v.CLAVE===clave)?.CLASE || '');
     const DESCRIPCION = invMeta ? invMeta.DESCRIPCION : (rawVentas.find(v=>v.CLAVE===clave)?.DESCRIPCION || '');
-    const COSTO = invRows.find(r => r.COSTO > 0)?.COSTO || 0;
-    const MARCA = invMeta?.MARCA || '';
-
-    // Filtrar por Clave Específica (si aplica)
-    if (clavesFiltro.length && !clavesFiltro.some(f => clave.includes(f))) continue;
     
-    // Filtrar por Grupo de Revisión (múltiples prefijos)
+    // 1. SOLUCIÓN AL COSTO $0.00: Si inventario y ventas no tienen costo, búscalo en Recepciones
+    let COSTO = invRows.find(r => r.COSTO > 0)?.COSTO || rawVentas.find(v=>v.CLAVE===clave && v.COSTO_TOTAL>0)?.COSTO_TOTAL || 0;
+    if (COSTO === 0) {
+      COSTO = costosHistoricosMap[clave] || 0; 
+    }
+
+    // 2. SOLUCIÓN A LA MARCA: Extraer las primeras 2 letras de la clave forzosamente si no hay dato
+    let MARCA = invMeta?.MARCA || rawVentas.find(v=>v.CLAVE===clave)?.MARCA || '';
+    if (!MARCA || MARCA === '—') {
+      MARCA = clave.substring(0, 2).toUpperCase();
+    }
+
+    // --- BLOQUE DE FILTROS DINÁMICOS MULTIPLES ---
+    
+    // Filtro por Clave Específica 
+    if (clavesFiltro.length > 0 && !clavesFiltro.some(f => clave.includes(f))) continue;
+    
+    // Filtro por Grupo de Revisión 
     if (grupoPrefijos.length > 0) {
-      const matchGrupo = grupoPrefijos.some(prefijo => CLASE.includes(prefijo) || prefijo.includes(CLASE));
+      const matchGrupo = grupoPrefijos.some(prefijo => 
+        CLASE.includes(prefijo) || 
+        prefijo.includes(CLASE) ||
+        clave.startsWith(prefijo) 
+      );
       if (!matchGrupo) continue;
     }
 
-    // Filtrar por Clase Manual (si no está vacío)
-    if (filtroClase) {
-      const claseFrags = filtroClase.split(',').map(s => s.trim()).filter(Boolean);
-      const claseMatch = claseFrags.some(f => CLASE.includes(f) || f.includes(CLASE));
-      // Permitimos que pase si coincide con el Grupo O el filtro manual coincide
-      if (!claseMatch && CLASE !== filtroClase) continue;
-    }
+    // Filtro por Clase Manual 
+    if (clasesFiltro.length > 0 && !clasesFiltro.some(f => CLASE.includes(f))) continue;
+
+    // Filtro por Marca / Prefijo Manual
+    if (marcasFiltro.length > 0 && !marcasFiltro.some(f => MARCA === f || clave.startsWith(f))) continue;
 
     if (excludedKeys.includes(clave)) continue;
 
     resultByKey[clave] = { CLAVE: clave, CLASE, DESCRIPCION, COSTO, MARCA, plazas: {} };
 
+    // --- CÁLCULOS POR PLAZA ---
     for (const plaza of selectedPlazas) {
       const ubsInventarioSet = new Set([...PLAZAS[plaza].tiendas, ...PLAZAS[plaza].bodega]);
       const invPlaza = invRows.filter(i => ubsInventarioSet.has(i.UBICACION));
@@ -1851,7 +1954,14 @@ function sortRecTable(col) {
   else { recSortCol = col; recSortDir = 1; }
   recFilteredData.sort((a,b) => {
     const va = a[col], vb = b[col];
-    if (va instanceof Date && vb instanceof Date) return (va - vb) * recSortDir;
+    
+    // Validar fechas de forma segura para evitar fallos si una es null
+    if (col === 'FECHA_COMPRA') {
+      const dateA = va instanceof Date ? va.getTime() : 0;
+      const dateB = vb instanceof Date ? vb.getTime() : 0;
+      return (dateA - dateB) * recSortDir;
+    }
+
     if (typeof va === 'number') return (va - vb) * recSortDir;
     return String(va||'').localeCompare(String(vb||'')) * recSortDir;
   });

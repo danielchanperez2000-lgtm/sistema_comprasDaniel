@@ -491,6 +491,11 @@
           <input type="number" id="dias-historial" value="35" readonly style="background-color: var(--surface2); cursor: not-allowed; opacity: 0.8;">
         </div>
       </div>
+      <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); display: flex; gap: 10px;">
+        <button class="btn btn-secondary btn-sm" onclick="exportarConfig()">💾 Descargar Mis Grupos</button>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('file-config').click()">📂 Cargar Configuración</button>
+        <input type="file" id="file-config" accept=".json" style="display:none;" onchange="importarConfig(this)">
+      </div>
 
       <!-- BLOQUE 1: Grupos y Clases (Juntos visualmente) -->
       <div class="grid-2" style="margin-bottom:16px; background:var(--surface2); border:1px solid var(--border); padding:16px; border-radius:8px;">
@@ -2193,6 +2198,60 @@ function setupDragDrop() {
       loadFile(type, inputEl);
     });
   });
+}
+  // ═══════════════════════════════════════════════
+//  EXPORTAR / IMPORTAR CONFIGURACIÓN LOCAL
+// ═══════════════════════════════════════════════
+function exportarConfig() {
+  // Juntamos ambos datos
+  const config = {
+    grupos: JSON.parse(localStorage.getItem('DRP_SYSTEMS_grupos') || '[]'),
+    excluidas: JSON.parse(localStorage.getItem('DRP_SYSTEMS_excluded') || '[]')
+  };
+  
+  // Lo convertimos a un archivo descargable
+  const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'config_deerdcp.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('💾 Configuración descargada correctamente');
+}
+
+function importarConfig(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const config = JSON.parse(e.target.result);
+      
+      // Validamos que el archivo tenga la estructura correcta
+      if (config.grupos) {
+        localStorage.setItem('DRP_SYSTEMS_grupos', JSON.stringify(config.grupos));
+        reviewGroups = config.grupos;
+      }
+      if (config.excluidas) {
+        localStorage.setItem('DRP_SYSTEMS_excluded', JSON.stringify(config.excluidas));
+        excludedKeys = config.excluidas;
+      }
+
+      // Actualizamos la interfaz
+      renderGruposList();
+      renderGruposSelect();
+      renderExcluded();
+      
+      showToast('✅ Configuración cargada con éxito');
+    } catch (err) {
+      showToast('❌ Error: Archivo de configuración inválido');
+    }
+    // Limpiamos el input por si quieres cargar otro
+    input.value = ''; 
+  };
+  reader.readAsText(file);
 }
 </script>
 </body>

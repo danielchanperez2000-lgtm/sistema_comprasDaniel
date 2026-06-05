@@ -682,6 +682,7 @@
       <div class="grid-4" style="margin-bottom:16px">
         <div class="form-group">
           <label>📅 Fecha Desde</label>
+          <!-- type="date" invoca el calendario interactivo nativo del navegador -->
           <input type="date" id="rec-fecha-desde">
         </div>
         <div class="form-group">
@@ -690,17 +691,22 @@
         </div>
         <div class="form-group">
           <label>🏢 Proveedor (VendId)</label>
-          <input type="text" id="rec-proveedor" placeholder="PCHMAYOREO…">
+          <select id="rec-proveedor" style="cursor:pointer;">
+            <option value="">Todos los proveedores</option>
+          </select>
         </div>
         <div class="form-group">
           <label>📦 Clase (ClassID)</label>
-          <input type="text" id="rec-clase" placeholder="PEIMMP, OEME00…">
+          <select id="rec-clase" style="cursor:pointer;">
+            <option value="">Todas las clases</option>
+          </select>
         </div>
       </div>
       <div style="display:flex;gap:12px;justify-content:flex-end">
         <button class="btn btn-secondary" onclick="resetRecFilters()">↺ Limpiar filtros</button>
         <button class="btn btn-purple" id="btn-rec-analizar" onclick="analizarRecepciones()" disabled>🔬 Analizar Recepciones</button>
       </div>
+    </div>
     </div>
   </div>
 

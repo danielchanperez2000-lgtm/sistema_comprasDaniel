@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema de Pedidos · DEERDCP SYSTEMS</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Pedidos · DEERDCP SYSTEMS</title>
+  
+  <link rel="icon" type="image/png" href="favicon.png">
+  
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0d1117;
@@ -68,8 +71,13 @@
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     padding: 0 32px;
-    gap: 4px;
+    gap: 10px;
+    width: 100%;
+    margin: 0 auto;
   }
   .tab-btn {
     padding: 12px 20px;
@@ -336,10 +344,26 @@
   .alert-content { display: none; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.15); cursor: default; }
   .alert-content.show { display: block; animation: fadeIn 0.3s ease; }
   
-  .alert-table { width: 100%; font-size: 11px; text-align: left; border-collapse: collapse; background: var(--bg); border-radius: 6px; overflow: hidden; }
-  .alert-table th { background: rgba(0,0,0,0.4); padding: 8px 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; }
-  .alert-table td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text); font-family: 'IBM Plex Mono', monospace; }
+    /* ── Tablas Interactivas (Auditoría y KPIs) ── */
+  .alert-table { width: 100%; border-collapse: collapse; margin-bottom: 0; }
+  .alert-table th { 
+    text-align: left; 
+    padding: 12px 16px; 
+    border-bottom: 2px solid var(--border); 
+    color: var(--text2); 
+    font-size: 11px; 
+    text-transform: uppercase; 
+    background: var(--surface); /* Fondo SÓLIDO para ocultar las filas debajo */
+    position: sticky; 
+    top: 0; 
+    z-index: 10; 
+  }
+  .alert-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text); font-family: 'IBM Plex Mono', monospace; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .volumen-container { width: 100%; display: flex; align-items: center; }
+  .volumen-bar { background: var(--surface2); height: 8px; border-radius: 4px; flex-grow: 1; }
+  .volumen-fill { background: var(--accent2); height: 100%; border-radius: 4px; }
 
   /* ── Excluded tags ── */
   .excluded-tags { display: flex; flex-wrap: wrap; gap: 8px; min-height: 32px; }
@@ -393,6 +417,26 @@
     .container { padding: 16px; }
     .tabs-nav { padding: 0 16px; }
   }
+    /* 1. Le quitamos el límite de ancho a TODA la pestaña de pedidos */
+  #tab-pedidos .container {
+      max-width: 100% !important;
+      padding: 24px 32px !important;
+  }
+
+  /* 2. Le ponemos un "freno" SOLO a los parámetros de arriba para que se mantengan centrados y no se deformen */
+  #panel-params, #panel-excl {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  /* 3. Forzamos a que la tabla de resultados use todo el espacio y no parta los textos */
+  #result-table {
+      width: 100%;
+  }
+  #result-table th, #result-table td {
+      white-space: nowrap;
+  }
 </style>
 </head>
 <body>
@@ -443,50 +487,371 @@
     <div class="status-dot"><div class="dot" id="dot-inv"></div><span id="lbl-inv">Sin inventario</span></div>
     <div class="status-dot"><div class="dot" id="dot-ven"></div><span id="lbl-ven">Sin ventas</span></div>
     <div class="status-dot"><div class="dot" id="dot-rec"></div><span id="lbl-rec">Sin recepciones</span></div>
+    
+    <button class="btn btn-danger btn-sm" onclick="logout()" style="margin-left:12px;">🔒 Salir</button>
   </div>
 </header>
 
 <div class="tabs-nav">
-  <button class="tab-btn active" onclick="switchTab('pedidos',this)">📋 Pedidos</button>
+  <p style="color:var(--text2);font-size:12px;font-weight:600;letter-spacing:1.5px;margin-right:18px;">
+      🚀 BIENVENIDO · CENTRO DE CONTROL OPERATIVO
+  </p>
+  <button class="tab-btn active" onclick="switchTab('carga',this)">⭐ Carga de Reportes</button>
+  <button class="tab-btn" onclick="switchTab('kpis',this)">📊 Dashboard KPIs</button>
+  <button class="tab-btn" onclick="switchTab('pedidos',this)">🛒 Compras</button>
   <button class="tab-btn" onclick="switchTab('recepciones',this)">📥 Recepciones</button>
-  <button class="tab-btn" onclick="switchTab('analisis',this)">🔬 Análisis de Datos</button>
-  <button class="tab-btn" onclick="switchTab('columnas',this)">🗂 Mapa de Columnas</button>
+  <button class="tab-btn" onclick="switchTab('ventas',this)">📈 Ventas</button>
+  <button class="tab-btn" onclick="switchTab('inventarios',this)">📦 Inventario</button>
+  <button class="tab-btn" onclick="switchTab('analisis',this)">📋 Auditoría</button>
+  <button class="tab-btn" onclick="switchTab('columnas',this)">🔍 Mapa de Columnas</button>
+  <button class="tab-btn" onclick="switchTab('configuracion',this)">⚙️ Configuración</button>
 </div>
 
-<div id="tab-pedidos" class="tab-pane active">
-<div class="container">
-
-  <div class="panel" id="panel-upload">
-    <div class="panel-header" onclick="togglePanel('panel-upload')">
-      <h3><span class="icon">📂</span>Carga de Reportes (Dynamics)</h3>
-      <span class="collapse-btn">▼</span>
-    </div>
-    <div class="panel-body">
-      <div class="grid-2">
-        <div>
-          <div class="upload-zone" id="zone-inv" onclick="document.getElementById('file-inv').click()">
-            <input type="file" id="file-inv" accept=".xlsx,.xls" onchange="loadFile('inv',this)">
-            <div class="upload-icon">📦</div>
-            <h4>Reporte de Inventario</h4>
-            <p>Existencia por claseTotal — Dynamics</p>
-            <div class="upload-cols">ClassID · Invtid · Descr · SiteId · QtyAvail · LastCost · TotCost · LUpd_DateTime · StkBasePrc · InvRez · Unidad · Plaza · Marca</div>
-            <div class="file-name" id="fname-inv"></div>
+<div id="tab-carga" class="tab-pane active">
+  <div class="container">
+    <div class="panel">
+      <div class="panel-header">
+        <h3><span class="icon">📂</span>Carga Maestra de Datos (Dynamics)</h3>
+      </div>
+      <div class="panel-body">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:20px">
+          Sube o arrastra tus archivos actualizados para alimentar todo el sistema. Sin esto, el sistema no funcionara.
+        </p>
+        <div class="grid-3">
+          <div>
+            <div class="upload-zone" id="zone-inv">
+              <input type="file" id="file-inv" accept=".xlsx,.xls" onchange="loadFile('inv',this)">
+              <div class="upload-icon">📦</div>
+              <h4>Reporte de Inventario</h4>
+              <p>SUBIR DOCUMENTO XLSX</p>
+              <div class="file-name" id="fname-inv"></div>
+            </div>
           </div>
-        </div>
-        <div>
-          <div class="upload-zone" id="zone-ven" onclick="document.getElementById('file-ven').click()">
-            <input type="file" id="file-ven" accept=".xlsx,.xls" onchange="loadFile('ven',this)">
-            <div class="upload-icon">💹</div>
-            <h4>Reporte de Ventas</h4>
-            <p>Consulta ventas por fecha — Dynamics</p>
-            <div class="upload-cols">Crtd_DateTime · SiteId · Shipperid · ClassID · Invtid · TotMerch · TotCost · QtyShip · Descr · Marca · Unidad · Plaza</div>
-            <div class="file-name" id="fname-ven"></div>
+          <div>
+            <div class="upload-zone" id="zone-ven">
+              <input type="file" id="file-ven" accept=".xlsx,.xls" onchange="loadFile('ven',this)">
+              <div class="upload-icon">💹</div>
+              <h4>Reporte de Ventas</h4>
+              <p>SUBIR DOCUMENTO XLSX</p>
+              <div class="file-name" id="fname-ven"></div>
+            </div>
+          </div>
+          <div>
+            <div class="upload-zone" id="zone-rec">
+              <input type="file" id="file-rec" accept=".xlsx,.xls" onchange="loadFile('rec',this)">
+              <div class="upload-icon">📥</div>
+              <h4>Reporte de Recepciones</h4>
+              <p>SUBIR DOCUMENTO XLSX</p>
+              <div class="file-name" id="fname-rec"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
+<div id="tab-kpis" class="tab-pane">
+  <div class="container">
+    
+    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px;">OBJETIVOS MÁXIMOS DE INVENTARIO</div>
+    <div class="grid-3" id="kpi-global-container" style="margin-bottom:30px;"></div>
+
+    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px;">ÍNDICES DE INVENTARIO (ACTUAL VS OBJETIVOS)</div>
+    <div class="grid-2" style="margin-bottom:30px;">
+      <div class="panel">
+        <div class="panel-header"><h3><span class="icon">🏙</span> CHETUMAL</h3></div>
+        <div class="table-wrapper"><table class="alert-table"><thead id="kpi-ctm-head"></thead><tbody id="kpi-ctm-body"></tbody></table></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><h3><span class="icon">🌴</span> CANCÚN</h3></div>
+        <div class="table-wrapper"><table class="alert-table"><thead id="kpi-cun-head"></thead><tbody id="kpi-cun-body"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+        <h3><span class="icon">⚖️</span> DISTRIBUCIÓN DEL INVENTARIO GLOBAL POR FAMILIAS (CLASES)</h3>
+        <select id="select-plaza-dist" onchange="renderDistribution(this.value)" style="background:var(--bg); color:var(--text); border:1px solid var(--border); padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">
+          <option value="total">🌐 TOTAL</option>
+          <option value="ctm">🏛️ Chetumal</option>
+          <option value="cun">🌴 Cancún</option>
+        </select>
+      </div>
+      <div class="table-wrapper">
+        <table class="alert-table" style="table-layout: fixed; width: 100%;">
+          <thead>
+            <tr>
+              <th style="width: 15%; text-align: center;">Clase / Familia</th>
+              <th style="width: 25%; text-align: right;">Inventario Total ($)</th>
+              <th style="width: 15%; text-align: right;">Peso (%)</th>
+              <th style="width: 45%; padding-left: 30px;">Barra de Volumen</th>
+            </tr>
+          </thead>
+          <tbody id="kpi-familias-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px; margin-top:30px;">KPIs CRUZADOS DE EFICIENCIA OPERATIVA</div>
+<div class="grid-2" style="margin-bottom:30px;">
+  <div class="panel">
+    <div class="panel-header"><h3><span class="icon">🔄</span> Índice de Rotación (Global)</h3></div>
+    <div class="panel-body" style="text-align:center;">
+        <div class="value" id="kpi-rotacion" style="font-size:32px; color:var(--accent);">0.00</div>
+        <div class="sub">Vueltas al inventario (Periodo: 90 días)</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3><span class="icon">📅</span> Días de Inventario Promedio</h3></div>
+    <div class="panel-body" style="text-align:center;">
+        <div class="value" id="kpi-dias-inv" style="font-size:32px; color:var(--accent2);">0</div>
+        <div class="sub">Días promedio de cobertura</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-inventarios" class="tab-pane">
+  <div class="container" style="max-width: 100% !important; padding: 24px 32px !important;">
+    
+    <!-- BARRA DE FILTROS MAESTRA (AHORA CONTROLA TODO EL MÓDULO) -->
+    <div class="panel" style="margin-bottom: 20px; border-color: var(--accent);">
+      <div class="panel-body" style="padding: 12px 20px; background: rgba(0, 212, 170, 0.05);">
+        
+        <!-- Contenedor Flex para alinear títulos arriba de inputs -->
+        <div class="filter-bar" style="margin-bottom: 0; display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap;">
+          
+          <!-- Búsqueda -->
+          <div style="display:flex; flex-direction:column; gap:6px; flex:1; min-width:200px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Término de búsqueda</span>
+            <input type="text" id="inv-search-input" placeholder="🔍 Buscar por clave o descripción…" oninput="filtrarInventarios()" style="width:100%;">
+          </div>
+          
+          <!-- Plaza / Ubicación -->
+          <div style="display:flex; flex-direction:column; gap:6px; min-width:180px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Filtro por Ubicación</span>
+            <select id="inv-filter-plaza" onchange="filtrarInventarios()" style="width:100%;">
+              <option value="">🌍 Todas las ubicaciones</option>
+            </select>
+          </div>
+          
+          <!-- Clase -->
+          <div style="display:flex; flex-direction:column; gap:6px; min-width:180px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Filtro por Familia (Clase)</span>
+            <select id="inv-filter-clase" onchange="filtrarInventarios()" style="width:100%;">
+              <option value="">Todas las clases</option>
+            </select>
+          </div>
+          
+          <!-- Estado -->
+          <div style="display:flex; flex-direction:column; gap:6px; min-width:180px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Filtro por Estado</span>
+            <select id="inv-filter-estado" onchange="filtrarInventarios()" style="width:100%;">
+              <option value="">Todos los estados</option>
+              <option value="con-stock">📦 Con Existencia</option>
+              <option value="en-ceros">∅   Sin Existencia</option>
+              <option value="rezago">🔴 Rezagados</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar" id="inv-stats-bar">
+      <div class="stat-card">
+        <div class="label">SKUs Activos</div>
+        <div class="value accent" id="inv-stat-skus">0</div>
+        <div class="sub">Con existencia física</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Valor Total Inventario</div>
+        <div class="value success" id="inv-stat-valor">$0.00</div>
+        <div class="sub">Costo acumulado (sin IVA)</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Volumen Total</div>
+        <div class="value blue" id="inv-stat-piezas">0</div>
+        <div class="sub">Unidades en almacén</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Capital en Rezago</div>
+        <div class="value danger" id="inv-stat-rezago">$0.00</div>
+        <div class="sub">Dinero en SKUs sin venta</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 20px;">
+      <div class="panel">
+        <div class="panel-header"><h3><span class="icon">📈</span> Top 10 Familias con Mayor Inversión</h3></div>
+        <div class="table-wrapper">
+          <table class="alert-table" style="margin-bottom:0;">
+            <thead><tr><th>Familia (Clase)</th><th class="num">Inversión Total ($)</th><th class="num">Part. (%)</th></tr></thead>
+            <tbody id="inv-top-clases-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><h3><span class="icon">🔴</span> Top 10 Claves con Mayor Rezago ($)</h3></div>
+        <div class="table-wrapper">
+          <table class="alert-table" style="margin-bottom:0;">
+            <thead><tr><th>Clave</th><th>Descripción</th><th class="num">Pzs Rezago</th><th class="num">Valor Rezago ($)</th></tr></thead>
+            <tbody id="inv-top-rezago-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3><span class="icon">📋</span> Detalle de Existencias Filtradas</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-wrapper">
+          <table id="inv-master-table" class="alert-table">
+            <thead>
+              <tr>
+                <th>Clave</th>
+                <th>Descripción</th>
+                <th>Clase</th>
+                <th>Marca</th>
+                <th>Ubicación</th>
+                <th class="num">Costo Unit.</th>
+                <th class="num">Stock</th>
+                <th class="num">Costo Total</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="inv-master-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="tab-ventas" class="tab-pane">
+  <div class="container" style="max-width: 100% !important; padding: 24px 32px !important;">
+    
+    <!-- BARRA DE FILTROS MAESTRA -->
+    <div class="panel" style="margin-bottom: 20px; border-color: var(--accent2);">
+      <div class="panel-body" style="padding: 12px 20px; background: rgba(0, 153, 255, 0.05);">
+        
+        <!-- Contenedor Flex para alinear títulos arriba de inputs -->
+        <div class="filter-bar" style="margin-bottom: 0; display:flex; gap:16px; align-items:flex-end;">
+          
+          <div style="display:flex; flex-direction:column; gap:6px; flex:1; min-width:200px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Término de búsqueda</span>
+            <input type="text" id="ven-search-input" placeholder="🔍 Buscar clave, ticket o descripción..." oninput="filtrarVentas()" style="width:100%;">
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:6px; min-width:180px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Filtro por Ubicación</span>
+            <select id="ven-filter-plaza" onchange="filtrarVentas()" style="width:100%;">
+              <option value="">🌍 Todas las ubicaciones</option>
+            </select>
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:6px; min-width:180px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Filtro por Familia (Clase)</span>
+            <select id="ven-filter-clase" onchange="filtrarVentas()" style="width:100%;">
+              <option value="">Todas las clases</option>
+            </select>
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:10px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:1px;">Rango de Fechas Operativas</span>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <span style="font-size:11px; color:var(--text3);">DESDE:</span>
+              <input type="date" id="ven-filter-desde" onchange="filtrarVentas()" style="padding: 5px 8px; font-size:12px;">
+              <span style="font-size:11px; color:var(--text3);">HASTA:</span>
+              <input type="date" id="ven-filter-hasta" onchange="filtrarVentas()" style="padding: 5px 8px; font-size:12px;">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- BARRA DE ESTADÍSTICAS (AHORA CON PERIODOS ESTRICTOS "RODANTES") -->
+    <div class="stats-bar" id="ven-stats-bar">
+      <div class="stat-card">
+        <div class="label">📅 Últimos 7 Días</div>
+        <div class="value accent" id="ven-stat-semana">$0.00</div>
+        <div class="sub">Venta acumulada (7 días)</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">🏙️ Últimos 30 Días</div>
+        <div class="value success" id="ven-stat-mes">$0.00</div>
+        <div class="sub">Venta acumulada (30 días)</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">📊 Últimos 90 Días</div>
+        <div class="value blue" id="ven-stat-trimestre">$0.00</div>
+        <div class="sub">Venta acumulada (90 días)</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">📈 Venta Anual (YTD)</div>
+        <div class="value purple" id="ven-stat-anio">$0.00</div>
+        <div class="sub" id="ven-lbl-anio">Acumulado del año vigente</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 20px;">
+      <div class="panel">
+        <div class="panel-header"><h3><span class="icon">🚀</span> Top 10 Artículos Más Vendidos (Piezas)</h3></div>
+        <div class="table-wrapper">
+          <table class="alert-table" style="margin-bottom:0;">
+            <thead><tr><th>Clave</th><th>Descripción</th><th class="num">Piezas Vendidas</th><th class="num">Importe Total ($)</th></tr></thead>
+            <tbody id="ven-top-volumen-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><h3><span class="icon">💰</span> Top 10 Clases por Facturación ($)</h3></div>
+        <div class="table-wrapper">
+          <table class="alert-table" style="margin-bottom:0;">
+            <thead><tr><th>Familia (Clase)</th><th class="num">Monto Facturado ($)</th><th class="num">Part. Ventas (%)</th></tr></thead>
+            <tbody id="ven-top-rentabilidad-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3><span class="icon">📋</span> Historial de Transacciones Filtradas</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-wrapper">
+          <table id="ven-master-table" class="alert-table" style="table-layout: fixed; width: 100%;">
+            <thead>
+              <tr>
+                <th style="width: 10%;">Fecha</th>
+                <th style="width: 10%;">Ticket</th>
+                <th style="width: 12%;">Clave</th>
+                <th style="width: 28%;">Descripción</th>
+                <th style="width: 10%;">Ubicación</th>
+                <th style="width: 10%;">Clase</th>
+                <th style="width: 10%; text-align: right;">Piezas</th>
+                <th style="width: 10%; text-align: right;">Total Venta</th>
+              </tr>
+            </thead>
+            <tbody id="ven-master-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="tab-pedidos" class="tab-pane">
+<div class="container">
   <div class="panel" id="panel-params">
     <div class="panel-header" onclick="togglePanel('panel-params')">
       <h3><span class="icon">⚙️</span>Parámetros de Compra</h3>
@@ -513,7 +878,6 @@
         <input type="file" id="file-config" accept=".json" style="display:none;" onchange="importarConfig(this)">
       </div>
 
-      <!-- BLOQUE 1: Grupos y Clases (Juntos visualmente) -->
       <div class="grid-2" style="margin-bottom:16px; background:var(--surface2); border:1px solid var(--border); padding:16px; border-radius:8px;">
         <div class="form-group">
           <label style="display:flex;justify-content:space-between;align-items:center;">
@@ -527,7 +891,6 @@
         <div class="form-group">
           <label>🔍 Filtro por Clase (Manual)</label>
           <div style="display:flex; gap:8px;">
-            <!-- Select dinámico para añadir clases -->
             <select id="select-clase-helper" style="width:140px; cursor:pointer;" onchange="appendFilter('filtro-clase', this.value); this.value='';">
               <option value="">+ Añadir...</option>
             </select>
@@ -536,12 +899,10 @@
         </div>
       </div>
 
-      <!-- BLOQUE 2: Marcas y Claves -->
       <div class="grid-2" style="margin-bottom:20px; background:var(--surface2); border:1px solid var(--border); padding:16px; border-radius:8px;">
         <div class="form-group">
           <label>🏷️ Filtro por Marca (Prefijo)</label>
           <div style="display:flex; gap:8px;">
-            <!-- Select dinámico para añadir marcas -->
             <select id="select-marca-helper" style="width:140px; cursor:pointer;" onchange="appendFilter('filtro-marca', this.value); this.value='';">
               <option value="">+ Añadir...</option>
             </select>
@@ -640,7 +1001,7 @@
         </select>
       </div>
       <div class="table-wrapper">
-        <table id="result-table">
+        <table id="result-table" class="alert-table">
           <thead id="result-thead"></thead>
           <tbody id="result-tbody"></tbody>
         </table>
@@ -658,37 +1019,6 @@
 <div id="tab-recepciones" class="tab-pane">
 <div class="container">
 
-  <div class="panel" id="panel-rec-upload">
-    <div class="panel-header" onclick="togglePanel('panel-rec-upload')">
-      <h3><span class="icon">📥</span>Carga de Reporte de Recepciones</h3>
-      <span class="collapse-btn">▼</span>
-    </div>
-    <div class="panel-body">
-      <div class="grid-2">
-        <div>
-          <div class="upload-zone" id="zone-rec" onclick="document.getElementById('file-rec').click()">
-            <input type="file" id="file-rec" accept=".xlsx,.xls" onchange="loadFile('rec',this)">
-            <div class="upload-icon">📥</div>
-            <h4>Reporte de Recepciones</h4>
-            <p>Recepciones — Dynamics</p>
-            <div class="upload-cols">Crtd_DateTime · Invtid · RcptQty · SiteId · VendId · Crtd_User · ExtCost · TranDesc · UnitCost · PONbr · ClassID</div>
-            <div class="file-name" id="fname-rec"></div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:16px;justify-content:center;">
-          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;">
-            <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">⚠ Nota sobre Recepciones</div>
-            <p style="font-size:12px;color:var(--text2);line-height:1.6">
-              • Se usa <strong style="color:var(--accent)">RcptQty</strong> como piezas ingresadas (no Qty, por ser duplicado).<br>
-              • <strong style="color:var(--accent)">TranDesc</strong> puede diferir de la descripción actual en inventario.<br>
-              • La fecha de compra (<strong style="color:var(--accent)">Crtd_DateTime</strong>) se distingue de la fecha de venta.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="panel" id="panel-rec-filters">
     <div class="panel-header" onclick="togglePanel('panel-rec-filters')">
       <h3><span class="icon">🔧</span>Filtros de Recepciones</h3>
@@ -698,7 +1028,6 @@
       <div class="grid-4" style="margin-bottom:16px">
         <div class="form-group">
           <label>📅 Fecha Desde</label>
-          <!-- type="date" invoca el calendario interactivo nativo del navegador -->
           <input type="date" id="rec-fecha-desde">
         </div>
         <div class="form-group">
@@ -779,7 +1108,7 @@
         </select>
       </div>
       <div class="table-wrapper">
-        <table id="rec-table">
+        <table id="rec-table" class="alert-table">
           <thead id="rec-thead"></thead>
           <tbody id="rec-tbody"></tbody>
         </table>
@@ -926,6 +1255,63 @@
 </div>
 </div>
 
+<div id="tab-configuracion" class="tab-pane">
+  <div class="container">
+    <div class="panel">
+      <div class="panel-header">
+        <h3><span class="icon">⚙️</span> Configuración Maestra de KPIs e Índices</h3>
+        <button class="btn btn-primary btn-sm" onclick="guardarConfiguracionKPI()">💾 Guardar Cambios</button>
+      </div>
+      <div class="panel-body">
+        <p style="font-size:13px;color:var(--text2);margin-bottom:20px">
+          Administra las metas financieras y las clases (familias) asignadas a cada índice. Separa las clases por coma si un índice evalúa más de una (Ej: TCIP00, TCLB00).
+        </p>
+
+        <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)">
+          🌍 Metas de Inventario Global
+        </div>
+        <div class="grid-2" style="margin-bottom:30px">
+          <div class="form-group">
+            <label>INVENTARIO FINAL DESEADO CHETUMAL (IFD)($)</label>
+            <input type="number" id="config-global-ctm" step="0.01">
+          </div>
+          <div class="form-group">
+            <label>INVENTARIO FINAL DESEADO CANCÚN (IFD)($)</label>
+            <input type="number" id="config-global-cun" step="0.01">
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;">
+            🏙 Índices Chetumal
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="agregarFilaConfig('ctm')">+ Añadir Índice</button>
+        </div>
+        <div class="table-wrapper" style="margin-bottom:30px">
+          <table class="alert-table" style="margin-bottom:0;">
+            <thead><tr><th style="width:25%">Etiqueta (Nombre)</th><th style="width:40%">Clases (Separadas por coma)</th><th style="width:25%">Meta ($)</th><th style="width:10%; text-align:center;">Acción</th></tr></thead>
+            <tbody id="config-ctm-body"></tbody>
+          </table>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:1px;">
+            🌴 Índices Cancún
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="agregarFilaConfig('cun')">+ Añadir Índice</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="alert-table" style="margin-bottom:0;">
+            <thead><tr><th style="width:25%">Etiqueta (Nombre)</th><th style="width:40%">Clases (Separadas por coma)</th><th style="width:25%">Meta ($)</th><th style="width:10%; text-align:center;">Acción</th></tr></thead>
+            <tbody id="config-cun-body"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -946,8 +1332,10 @@ let recFilteredData = [];
 let excludedKeys = JSON.parse(localStorage.getItem('DRP_SYSTEMS_excluded') || '[]');
 // Nueva variable para Grupos de Revisión
 let reviewGroups = JSON.parse(localStorage.getItem('DRP_SYSTEMS_grupos') || '[]');
-// NUEVO: Mapa para guardar el costo de la compra más reciente
+// Mapa para guardar el costo de la compra más reciente
 let costosHistoricosMap = {};
+// Mapa GLOBAL para el filtro por ciudades de la tabla de distribución
+let globalClasesMap = {}; 
 
 let sortCol = null, sortDir = 1;
 let recSortCol = null, recSortDir = 1;
@@ -1046,7 +1434,6 @@ function deleteGrupo(id) {
   reviewGroups = reviewGroups.filter(g => g.id !== id);
   localStorage.setItem('DRP_SYSTEMS_grupos', JSON.stringify(reviewGroups));
   
-  // Si el grupo eliminado estaba seleccionado en el desplegable, lo reseteamos
   if(document.getElementById('filtro-grupo').value === id) {
     document.getElementById('filtro-grupo').value = "";
   }
@@ -1055,7 +1442,6 @@ function deleteGrupo(id) {
   renderGruposSelect();
   showToast('🗑 Grupo eliminado');
 }
-
 
 // ═══════════════════════════════════════════════
 //  TABS
@@ -1177,11 +1563,16 @@ function mapRow(row, colMap) {
 }
 
 // ═══════════════════════════════════════════════
-//  FILE LOADING
+//  FILE LOADING (VERSION BLINDADA CON LOADER)
 // ═══════════════════════════════════════════════
 function loadFile(type, input) {
   const file = input.files[0];
   if (!file) return;
+
+  // 1. Mostrar loader al iniciar la lectura
+  const loader = document.getElementById('loader-global');
+  if (loader) loader.style.display = 'flex';
+
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -1212,17 +1603,19 @@ function loadFile(type, input) {
         document.getElementById('dot-rec').classList.add('active');
         document.getElementById('dot-rec').classList.add('active-purple');
         document.getElementById('lbl-rec').textContent = rawRecepciones.length + ' recepciones';
-        document.getElementById('btn-rec-analizar').disabled = false;
-        
-        populateRecFilters(); // <── AÑADE ESTA LÍNEA AQUÍ
-        
+        document.getElementById('btn-rec-analizar').disabled = false;       
+        populateRecFilters();        
         showToast('✅ Recepciones cargadas: ' + rawRecepciones.length + ' registros');
         runAnalysis();
       }
       checkEnableBtn();
+      
     } catch(err) {
       showToast('❌ Error leyendo archivo: ' + err.message);
       console.error(err);
+    } finally {
+      // 2. Ocultar loader siempre (aunque haya éxito o error)
+      if (loader) loader.style.display = 'none';
     }
   };
   reader.readAsArrayBuffer(file);
@@ -1327,7 +1720,6 @@ function normalizeRec(rows) {
     });
   }
   
-  // NUEVO: Ordenar por fecha y actualizar el mapa de costos históricos
   out.sort((a,b) => (a.FECHA_COMPRA || 0) - (b.FECHA_COMPRA || 0));
   costosHistoricosMap = {}; 
   for (const r of out) {
@@ -1344,10 +1736,9 @@ function checkEnableBtn() {
   document.getElementById('btn-generar').disabled = !(rawInventario.length && rawVentas.length);
 }
 
-  function populateRecFilters() {
+function populateRecFilters() {
   if (!rawRecepciones.length) return;
 
-  // 1. Llenar la lista de Proveedores
   const proveedores = [...new Set(rawRecepciones.map(r => r.PROVEEDOR).filter(Boolean))].sort();
   const provSelect = document.getElementById('rec-proveedor');
   if (provSelect) {
@@ -1355,7 +1746,6 @@ function checkEnableBtn() {
       proveedores.map(p => `<option value="${p}">${p}</option>`).join('');
   }
 
-  // 2. Llenar la lista de Clases
   const clases = [...new Set(rawRecepciones.map(r => r.CLASE).filter(Boolean))].sort();
   const claseSelect = document.getElementById('rec-clase');
   if (claseSelect) {
@@ -1363,30 +1753,24 @@ function checkEnableBtn() {
       clases.map(c => `<option value="${c}">${c}</option>`).join('');
   }
 
-  // 3. Auto-llenar el calendario interactivo con las fechas del Excel
   const fechas = rawRecepciones.map(r => r.FECHA_COMPRA).filter(Boolean).sort((a,b) => a - b);
   if (fechas.length > 0) {
-    // Convierte la fecha al formato YYYY-MM-DD que requiere el calendario
     const minDate = fechas[0].toISOString().split('T')[0];
     const maxDate = fechas[fechas.length - 1].toISOString().split('T')[0];
-    
     document.getElementById('rec-fecha-desde').value = minDate;
     document.getElementById('rec-fecha-hasta').value = maxDate;
   }
 }
 
 function calcularHistorial() {
-  // Obtenemos los valores de los inputs, si están vacíos usamos 0
   const llegada = parseInt(document.getElementById('dias-llegada').value) || 0;
   const cobertura = parseInt(document.getElementById('dias-cobertura').value) || 0;
-  
-  // Sumamos y actualizamos el campo de historial automáticamente
   const totalHistorial = llegada + cobertura;
   document.getElementById('dias-historial').value = totalHistorial;
 }
 
 // ═══════════════════════════════════════════════
-//  ANÁLISIS DE CALIDAD DE DATOS
+//  ANÁLISIS DE CALIDAD DE DATOS (BLINDADO)
 // ═══════════════════════════════════════════════
 function toggleAlert(index) {
   const content = document.getElementById(`alert-content-${index}`);
@@ -1404,138 +1788,150 @@ function toggleAlert(index) {
   
 function runAnalysis() {
   const container = document.getElementById('analisis-contenido');
+  if (!container) return;
+
+  try {
+    if (typeof renderKPIs === 'function') renderKPIs();
+    if (typeof renderInventarios === 'function') renderInventarios();
+    if (typeof renderVentas === 'function') renderVentas();
+    if (typeof calcularKpisCruzados === 'function') calcularKpisCruzados();
+  } catch (e) {
+    console.error("Error al renderizar KPIs desde el análisis:", e);
+  }
+
   const alerts = [];
 
-  if (!rawInventario.length && !rawVentas.length && !rawRecepciones.length) {
+  const hasInv = rawInventario && rawInventario.length > 0;
+  const hasVen = rawVentas && rawVentas.length > 0;
+  const hasRec = rawRecepciones && rawRecepciones.length > 0;
+
+  if (!hasInv && !hasVen && !hasRec) {
     container.innerHTML = '<div class="empty-state"><div class="icon">📊</div><p>Carga al menos un archivo para ver el análisis.</p></div>';
     return;
   }
 
-  // ── ANÁLISIS INVENTARIO ──
-  if (rawInventario.length) {
-    const sinStock = rawInventario.filter(r => r.STOCK === 0 && r.REZAGO === 0);
-    const conRezago = rawInventario.filter(r => r.REZAGO > 0);
-    const sinCosto = rawInventario.filter(r => r.COSTO === 0);
-    const ubsInvs = [...new Set(rawInventario.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
-    const duplas = detectarDuplicadosInv();
+  try {
+    // ── ANÁLISIS INVENTARIO ──
+    if (hasInv) {
+      const sinStock = rawInventario.filter(r => r.STOCK === 0 && r.REZAGO === 0);
+      const conRezago = rawInventario.filter(r => r.REZAGO > 0);
+      const sinCosto = rawInventario.filter(r => r.COSTO === 0);
+      const ubsInvs = [...new Set(rawInventario.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
+      const duplas = detectarDuplicadosInv();
 
-    if (duplas.length) alerts.push({ type:'warn', icon:'⚠️', title:`${duplas.length} claves duplicadas en inventario`, desc:'El mismo Invtid aparece más de una vez en la misma locación.', data: duplas.map(c=>({CLAVE:c})), cols:[{key:'CLAVE', label:'Clave Duplicada'}] });
-    if (sinCosto.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCosto.length} registros con costo $0 en inventario`, desc:'Claves sin costo asignado. Revisa si Recepciones logró rescatar el valor.', data: sinCosto, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'UBICACION', label:'Locación'}] });
-    if (conRezago.length) alerts.push({ type:'danger', icon:'🔴', title:`${conRezago.length} claves con rezago activo`, desc:'Estas claves no generarán pedido por políticas de seguridad.', data: conRezago, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'REZAGO', label:'Pzs Rezago', isNum:true}] });
-    if (ubsInvs.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones no reconocidas: ${ubsInvs.join(', ')}`, desc:'Ubicaciones fuera del alcance mapeado.', data: ubsInvs.map(u=>({UBICACION:u})), cols:[{key:'UBICACION', label:'Locación No Reconocida'}] });
-    if (sinStock.length > rawInventario.length * 0.3) alerts.push({ type:'info', icon:'📦', title:`${sinStock.length} SKUs con stock 0 y sin rezago`, desc:'Normal si son productos descontinuados. Haz clic para revisar la lista.', data: sinStock, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}] });
-  }
-
-  // ── ANÁLISIS VENTAS ──
-  if (rawVentas.length) {
-    const ubVen = [...new Set(rawVentas.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
-    const sinVenta = rawVentas.filter(r => r.VENTA <= 0);
-    const fechas = rawVentas.map(r => r.FECHA).filter(Boolean).sort((a,b)=>a-b);
-    const diasRango = fechas.length > 1 ? Math.round((fechas[fechas.length-1] - fechas[0]) / 86400000) : 0;
+      if (duplas.length) alerts.push({ type:'warn', icon:'⚠️', title:`${duplas.length} claves duplicadas en inventario`, desc:'El mismo Invtid aparece más de una vez en la misma locación.', data: duplas.map(c=>({CLAVE:c})), cols:[{key:'CLAVE', label:'Clave Duplicada'}] });
+      if (sinCosto.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCosto.length} registros con costo $0 en inventario`, desc:'Claves sin costo asignado. Revisa si Recepciones logró rescatar el valor.', data: sinCosto, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'UBICACION', label:'Locación'}] });
+      if (conRezago.length) alerts.push({ type:'danger', icon:'🔴', title:`${conRezago.length} claves con rezago activo`, desc:'Estas claves no generarán pedido por políticas de seguridad.', data: conRezago, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'REZAGO', label:'Pzs Rezago', isNum:true}] });
+      if (ubsInvs.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones no reconocidas: ${ubsInvs.join(', ')}`, desc:'Ubicaciones fuera del alcance mapeado.', data: ubsInvs.map(u=>({UBICACION:u})), cols:[{key:'UBICACION', label:'Locación No Reconocida'}] });
+      if (sinStock.length > rawInventario.length * 0.3) alerts.push({ type:'info', icon:'📦', title:`${sinStock.length} SKUs con stock 0 y sin rezago`, desc:'Normal si son productos descontinuados. Haz clic para revisar la lista.', data: sinStock, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}] });
+    }
     
-    // Extracción de claves exclusivas de ventas
-    const clavesVentaPuras = [...new Set(rawVentas.map(r => r.CLAVE))].filter(c => !rawInventario.find(i => i.CLAVE === c));
-    const clavesSoloVentasDatos = clavesVentaPuras.map(c => rawVentas.find(v => v.CLAVE === c));
-
-    if (ubVen.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones desconocidas en ventas: ${ubVen.join(', ')}`, data: ubVen.map(u=>({UBICACION:u})), cols:[{key:'UBICACION', label:'Locación'}] });
-    if (sinVenta.length) alerts.push({ type:'info', icon:'🔢', title:`${sinVenta.length} registros con QtyShip ≤ 0`, desc:'Posibles devoluciones. Serán ignoradas.', data: sinVenta, cols:[{key:'FECHA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'VENTA', label:'Piezas', isNum:true}] });
-    if (diasRango > 0) alerts.push({ type:'success', icon:'📅', title:`Historial de ventas: ${diasRango} días (${fmtDate(fechas[0])} → ${fmtDate(fechas[fechas.length-1])})`, desc:'El sistema detectó este rango automáticamente. No expandible.' }); // Este no lleva data (no se expande)
-    if (clavesSoloVentasDatos.length > 0 && rawInventario.length) alerts.push({ type:'warn', icon:'🔍', title:`${clavesSoloVentasDatos.length} claves vendidas sin registro en inventario`, desc:'Productos que se vendieron pero ya no aparecen en el archivo de inventario actual.', data: clavesSoloVentasDatos, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'UBICACION', label:'Última Ubicación'}] });
-  }
-
-  // ── ANÁLISIS RECEPCIONES ──
-  if (rawRecepciones.length) {
-    const sinPiezas = rawRecepciones.filter(r => r.PIEZAS <= 0);
-    const sinCostoRec = rawRecepciones.filter(r => r.COSTO_UNIT === 0);
-    const sinOC = rawRecepciones.filter(r => !r.OC || r.OC === '—');
-    
-    let noEnInvDatos = [];
-    let descDiferentes = [];
-
-    if (rawInventario.length) {
-      const clavesInv = new Set(rawInventario.map(r => r.CLAVE));
+    // ── ANÁLISIS VENTAS ──
+    if (hasVen) {
+      const ubVen = [...new Set(rawVentas.map(r => r.UBICACION))].filter(u => !getPlazaOfUb(u));
+      const sinVenta = rawVentas.filter(r => r.VENTA <= 0);
+      const fechas = rawVentas.map(r => r.FECHA).filter(Boolean).sort((a,b)=>a-b);
+      const diasRango = fechas.length > 1 ? Math.round((fechas[fechas.length-1] - fechas[0]) / 86400000) : 0;
       
-      // Recepciones que no existen en inventario
-      const noEnInv = [...new Set(rawRecepciones.map(r => r.CLAVE))].filter(c => !clavesInv.has(c));
-      noEnInvDatos = noEnInv.map(c => rawRecepciones.find(r => r.CLAVE === c));
+      const clavesVentaPuras = [...new Set(rawVentas.map(r => r.CLAVE))].filter(c => !rawInventario.find(i => i.CLAVE === c));
+      const clavesSoloVentasDatos = clavesVentaPuras.map(c => rawVentas.find(v => v.CLAVE === c));
 
-      // Descripciones que difieren
-      const descDiffClaves = new Set();
-      for (const r of rawRecepciones) {
-        const inv = rawInventario.find(i => i.CLAVE === r.CLAVE);
-        if (inv && r.DESCRIPCION && inv.DESCRIPCION && inv.DESCRIPCION.toLowerCase() !== r.DESCRIPCION.toLowerCase() && !descDiffClaves.has(r.CLAVE)) {
-          descDiffClaves.add(r.CLAVE);
-          descDiferentes.push({ clave: r.CLAVE, inv: inv.DESCRIPCION, rec: r.DESCRIPCION });
+      if (ubVen.length) alerts.push({ type:'warn', icon:'📍', title:`Locaciones desconocidas en ventas: ${ubVen.join(', ')}`, data: ubVen.map(u=>({UBICACION:u})), cols:[{key:'UBICACION', label:'Locación'}] });
+      if (sinVenta.length) alerts.push({ type:'info', icon:'🔢', title:`${sinVenta.length} registros con QtyShip ≤ 0`, desc:'Posibles devoluciones. Serán ignoradas.', data: sinVenta, cols:[{key:'FECHA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'VENTA', label:'Piezas', isNum:true}] });
+      if (diasRango > 0) alerts.push({ type:'success', icon:'📅', title:`Historial de ventas: ${diasRango} días (${fmtDate(fechas[0])} → ${fmtDate(fechas[fechas.length-1])})`, desc:'El sistema detectó este rango automáticamente. No expandible.' }); 
+      if (clavesSoloVentasDatos.length > 0 && hasInv) alerts.push({ type:'warn', icon:'🔍', title:`${clavesSoloVentasDatos.length} claves vendidas sin registro en inventario`, desc:'Productos que se vendieron pero ya no aparecen en el archivo de inventario actual.', data: clavesSoloVentasDatos, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción'}, {key:'UBICACION', label:'Última Ubicación'}] });
+    }
+
+    // ── ANÁLISIS RECEPCIONES ──
+    if (hasRec) {
+      const sinPiezas = rawRecepciones.filter(r => r.PIEZAS <= 0);
+      const sinCostoRec = rawRecepciones.filter(r => r.COSTO_UNIT === 0);
+      const sinOC = rawRecepciones.filter(r => !r.OC || r.OC === '—');
+      
+      let noEnInvDatos = [];
+      let descDiferentes = [];
+
+      if (hasInv) {
+        const clavesInv = new Set(rawInventario.map(r => r.CLAVE));
+        const noEnInv = [...new Set(rawRecepciones.map(r => r.CLAVE))].filter(c => !clavesInv.has(c));
+        noEnInvDatos = noEnInv.map(c => rawRecepciones.find(r => r.CLAVE === c));
+
+        const descDiffClaves = new Set();
+        for (const r of rawRecepciones) {
+          const inv = rawInventario.find(i => i.CLAVE === r.CLAVE);
+          if (inv && r.DESCRIPCION && inv.DESCRIPCION && inv.DESCRIPCION.toLowerCase() !== r.DESCRIPCION.toLowerCase() && !descDiffClaves.has(r.CLAVE)) {
+            descDiffClaves.add(r.CLAVE);
+            descDiferentes.push({ clave: r.CLAVE, inv: inv.DESCRIPCION, rec: r.DESCRIPCION });
+          }
         }
       }
+
+      if (sinPiezas.length) alerts.push({ type:'warn', icon:'📦', title:`${sinPiezas.length} recepciones con RcptQty ≤ 0`, data: sinPiezas, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'PROVEEDOR', label:'Proveedor'}] });
+      if (sinCostoRec.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCostoRec.length} recepciones con UnitCost = $0`, data: sinCostoRec, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'OC', label:'OC'}] });
+      if (sinOC.length > rawRecepciones.length * 0.1) alerts.push({ type:'info', icon:'📋', title:`${sinOC.length} recepciones sin orden de compra (PONbr)`, data: sinOC, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'USUARIO', label:'Usuario'}] });
+      if (noEnInvDatos.length) alerts.push({ type:'warn', icon:'🔍', title:`${noEnInvDatos.length} claves recibidas que no existen en el inventario actual`, data: noEnInvDatos, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción Ingresada'}, {key:'PROVEEDOR', label:'Proveedor'}] });
+      if (descDiferentes.length) alerts.push({ type:'purple', icon:'🔄', title:`Cruce: ${descDiferentes.length} descripciones de Recepción difieren del Inventario`, desc:'TranDesc vs Descr. El sistema usa la del Inventario como la oficial.', data: descDiferentes, cols:[{key:'clave', label:'Clave'}, {key:'inv', label:'Desc. Vigente (Inv)'}, {key:'rec', label:'Desc. de Ingreso (Rec)'}] });
     }
 
-    if (sinPiezas.length) alerts.push({ type:'warn', icon:'📦', title:`${sinPiezas.length} recepciones con RcptQty ≤ 0`, data: sinPiezas, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'PROVEEDOR', label:'Proveedor'}] });
-    if (sinCostoRec.length) alerts.push({ type:'warn', icon:'💰', title:`${sinCostoRec.length} recepciones con UnitCost = $0`, data: sinCostoRec, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'OC', label:'OC'}] });
-    if (sinOC.length > rawRecepciones.length * 0.1) alerts.push({ type:'info', icon:'📋', title:`${sinOC.length} recepciones sin orden de compra (PONbr)`, data: sinOC, cols:[{key:'FECHA_COMPRA', label:'Fecha', isDate:true}, {key:'CLAVE', label:'Clave'}, {key:'USUARIO', label:'Usuario'}] });
-    if (noEnInvDatos.length) alerts.push({ type:'warn', icon:'🔍', title:`${noEnInvDatos.length} claves recibidas que no existen en el inventario actual`, data: noEnInvDatos, cols:[{key:'CLAVE', label:'Clave'}, {key:'DESCRIPCION', label:'Descripción Ingresada'}, {key:'PROVEEDOR', label:'Proveedor'}] });
-    if (descDiferentes.length) alerts.push({ type:'purple', icon:'🔄', title:`Cruce: ${descDiferentes.length} descripciones de Recepción difieren del Inventario`, desc:'TranDesc vs Descr. El sistema usa la del Inventario como la oficial.', data: descDiferentes, cols:[{key:'clave', label:'Clave'}, {key:'inv', label:'Desc. Vigente (Inv)'}, {key:'rec', label:'Desc. de Ingreso (Rec)'}] });
-  }
+    if (!alerts.length) alerts.push({ type:'success', icon:'✅', title:'Sin problemas detectados', desc:'Los datos parecen consistentes.' });
 
-  if (!alerts.length) alerts.push({ type:'success', icon:'✅', title:'Sin problemas detectados', desc:'Los datos parecen consistentes.' });
-
-  // CONSTRUCCIÓN DEL RENDERIZADO INTERACTIVO
-  container.innerHTML = alerts.map((a, index) => {
-    const hasData = a.data && a.data.length > 0;
-    let tableHtml = '';
-    
-    if (hasData) {
-      const displayData = a.data.slice(0, 100); // Límite para no congelar la app
-      const hasMore = a.data.length > 100;
+    // ── RENDERIZADO INTERACTIVO ──
+    container.innerHTML = alerts.map((a, index) => {
+      const hasData = a.data && a.data.length > 0;
+      let tableHtml = '';
       
-      tableHtml = `
-      <div class="alert-content" id="alert-content-${index}" onclick="event.stopPropagation()">
-        <div style="max-height: 250px; overflow-y: auto; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
-          <table class="alert-table">
-            <thead><tr>${a.cols.map(c => `<th>${c.label}</th>`).join('')}</tr></thead>
-            <tbody>
-              ${displayData.map(row => `<tr>${a.cols.map(c => {
-                  let val = row[c.key];
-                  if(c.isMoney) val = fmtMoney(val);
-                  else if(c.isNum) val = fmt(val);
-                  else if(c.isDate) val = fmtDate(val);
-                  return `<td>${val || '—'}</td>`;
-              }).join('')}</tr>`).join('')}
-              ${hasMore ? `<tr><td colspan="${a.cols.length}" style="text-align:center; color:var(--text3); font-style:italic;">... mostrando 100 de ${fmt(a.data.length)} registros ...</td></tr>` : ''}
-            </tbody>
-          </table>
+      if (hasData) {
+        const displayData = a.data.slice(0, 100); 
+        const hasMore = a.data.length > 100;
+        
+        tableHtml = `
+        <div class="alert-content" id="alert-content-${index}" onclick="event.stopPropagation()">
+          <div style="max-height: 250px; overflow-y: auto; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+            <table class="alert-table">
+              <thead><tr>${a.cols.map(c => `<th>${c.label}</th>`).join('')}</tr></thead>
+              <tbody>
+                ${displayData.map(row => `<tr>${a.cols.map(c => {
+                    let val = row[c.key];
+                    if(c.isMoney) val = fmtMoney(val);
+                    else if(c.isNum) val = fmt(val);
+                    else if(c.isDate) val = fmtDate(val);
+                    return `<td>${val || '—'}</td>`;
+                }).join('')}</tr>`).join('')}
+                ${hasMore ? `<tr><td colspan="${a.cols.length}" style="text-align:center; color:var(--text3); font-style:italic;">... mostrando 100 de ${fmt(a.data.length)} registros ...</td></tr>` : ''}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+      }
+
+      return `
+        <div class="alert-box ${a.type} ${hasData ? 'clickable' : ''}" ${hasData ? `onclick="toggleAlert(${index})"` : ''}>
+          <div class="alert-icon">${a.icon}</div>
+          <div style="flex:1; width: 100%;">
+            <div class="alert-header">
+              <div class="alert-text-wrapper">
+                <strong>${a.title}</strong>
+                ${a.desc ? `<p style="margin-bottom:0">${a.desc}</p>` : ''}
+              </div>
+              ${hasData ? `<div class="alert-chevron" id="alert-chev-${index}">▼</div>` : ''}
+            </div>
+            ${tableHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  } catch (error) {
+    console.error("Error crítico en la Auditoría de Datos:", error);
+    container.innerHTML = `
+      <div class="alert-box danger">
+        <div class="alert-icon">❌</div>
+        <div class="alert-body">
+          <strong>Error procesando la Auditoría</strong>
+          <p>Un formato inesperado en el Excel detuvo el análisis. Revisa la consola (F12) para más detalles.</p>
         </div>
       </div>`;
-    }
-
-    return `
-      <div class="alert-box ${a.type} ${hasData ? 'clickable' : ''}" ${hasData ? `onclick="toggleAlert(${index})"` : ''}>
-        <div class="alert-icon">${a.icon}</div>
-        <div style="flex:1; width: 100%;">
-          <div class="alert-header">
-            <div class="alert-text-wrapper">
-              <strong>${a.title}</strong>
-              ${a.desc ? `<p style="margin-bottom:0">${a.desc}</p>` : ''}
-            </div>
-            ${hasData ? `<div class="alert-chevron" id="alert-chev-${index}">▼</div>` : ''}
-          </div>
-          ${tableHtml}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// Mantenemos la pequeña función auxiliar
-function detectarDuplicadosInv() {
-  const seen = {};
-  const dups = [];
-  for (const r of rawInventario) {
-    const key = r.CLAVE + '|' + r.UBICACION;
-    if (seen[key]) dups.push(r.CLAVE);
-    seen[key] = true;
   }
-  return [...new Set(dups)];
 }
 
 function detectarDuplicadosInv() {
@@ -1559,7 +1955,7 @@ function buildCrucePanel(descDiferentes) {
     html = '<div class="alert-box success"><div class="alert-icon">✅</div><div class="alert-body"><strong>Descripciones consistentes</strong><p>No se detectaron diferencias entre TranDesc (recepciones) y Descr (inventario).</p></div></div>';
   } else {
     html = `<p style="font-size:12px;color:var(--text2);margin-bottom:12px">Claves donde la descripción al momento del ingreso (TranDesc) difiere de la descripción actual en inventario (Descr). <strong style="color:var(--warn)">El sistema usa la descripción del inventario como la vigente.</strong></p>`;
-    html += '<div class="table-wrapper"><table><thead><tr><th>Clave</th><th>Descripción en Inventario (vigente)</th><th>Descripción en Recepción (TranDesc)</th></tr></thead><tbody>';
+    html += '<div class="table-wrapper"><table class="alert-table"><thead><tr><th>Clave</th><th>Descripción en Inventario (vigente)</th><th>Descripción en Recepción (TranDesc)</th></tr></thead><tbody>';
     for (const d of descDiferentes.slice(0, 50)) {
       html += `<tr>
         <td><code style="font-size:11px">${d.clave}</code></td>
@@ -1611,7 +2007,6 @@ function populateParameterDropdowns() {
   const procesar = (arr) => {
     for (const r of arr) {
       if (r.CLASE) clasesSet.add(r.CLASE);
-      // Extrae la marca forzosamente si no viene en el reporte
       let marca = r.MARCA || (r.CLAVE ? r.CLAVE.substring(0,2).toUpperCase() : '');
       if (marca && marca !== '—') marcasSet.add(marca);
     }
@@ -1639,7 +2034,6 @@ function appendFilter(inputId, val) {
   let current = input.value.trim();
   
   if (current) {
-    // Evita duplicados en la caja de texto
     const arr = current.split(',').map(s => s.trim().toUpperCase());
     if (!arr.includes(val.toUpperCase())) {
        input.value = current + ', ' + val;
@@ -1654,7 +2048,6 @@ function generateReport() {
   const diasCobertura = parseInt(document.getElementById('dias-cobertura').value) || 30;
   const diasHist      = parseInt(document.getElementById('dias-historial').value) || 35;
   
-  // Captura de filtros dinámicos múltiples
   const filtroClave   = document.getElementById('filtro-clave-param').value.trim();
   const filtroClase   = document.getElementById('filtro-clase').value.trim().toUpperCase();
   const filtroMarca   = document.getElementById('filtro-marca').value.trim().toUpperCase();
@@ -1664,7 +2057,6 @@ function generateReport() {
   const clasesFiltro = filtroClase ? filtroClase.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
   const marcasFiltro = filtroMarca ? filtroMarca.split(',').map(s => s.trim().toUpperCase()).filter(Boolean) : [];
   
-  // Extraemos prefijos del Grupo de Revisión (si aplica)
   let grupoPrefijos = [];
   if (filtroGrupoId) {
     const grupoEncontrado = reviewGroups.find(g => g.id === filtroGrupoId);
@@ -1681,7 +2073,6 @@ function generateReport() {
   fechaCorte.setDate(fechaCorte.getDate() - diasHist);
   fechaCorte.setHours(0, 0, 0, 0);
 
-  // Ventas en período — solo CO (Computerama), excluir QS (Quality)
   const ventasFiltradas = rawVentas.filter(v =>
     ubs.has(v.UBICACION) &&
     v.FECHA >= fechaCorte &&
@@ -1710,24 +2101,18 @@ function generateReport() {
     const CLASE = invMeta ? invMeta.CLASE : (rawVentas.find(v=>v.CLAVE===clave)?.CLASE || '');
     const DESCRIPCION = invMeta ? invMeta.DESCRIPCION : (rawVentas.find(v=>v.CLAVE===clave)?.DESCRIPCION || '');
     
-    // 1. SOLUCIÓN AL COSTO $0.00: Si inventario y ventas no tienen costo, búscalo en Recepciones
     let COSTO = invRows.find(r => r.COSTO > 0)?.COSTO || rawVentas.find(v=>v.CLAVE===clave && v.COSTO_TOTAL>0)?.COSTO_TOTAL || 0;
     if (COSTO === 0) {
       COSTO = costosHistoricosMap[clave] || 0; 
     }
 
-    // 2. SOLUCIÓN A LA MARCA: Extraer las primeras 2 letras de la clave forzosamente si no hay dato
     let MARCA = invMeta?.MARCA || rawVentas.find(v=>v.CLAVE===clave)?.MARCA || '';
     if (!MARCA || MARCA === '—') {
       MARCA = clave.substring(0, 2).toUpperCase();
     }
-
-    // --- BLOQUE DE FILTROS DINÁMICOS MULTIPLES ---
     
-    // Filtro por Clave Específica 
     if (clavesFiltro.length > 0 && !clavesFiltro.some(f => clave.includes(f))) continue;
     
-    // Filtro por Grupo de Revisión 
     if (grupoPrefijos.length > 0) {
       const matchGrupo = grupoPrefijos.some(prefijo => 
         CLASE.includes(prefijo) || 
@@ -1737,17 +2122,12 @@ function generateReport() {
       if (!matchGrupo) continue;
     }
 
-    // Filtro por Clase Manual 
     if (clasesFiltro.length > 0 && !clasesFiltro.some(f => CLASE.includes(f))) continue;
-
-    // Filtro por Marca / Prefijo Manual
     if (marcasFiltro.length > 0 && !marcasFiltro.some(f => MARCA === f || clave.startsWith(f))) continue;
-
     if (excludedKeys.includes(clave)) continue;
 
     resultByKey[clave] = { CLAVE: clave, CLASE, DESCRIPCION, COSTO, MARCA, plazas: {} };
 
-    // --- CÁLCULOS POR PLAZA ---
     for (const plaza of selectedPlazas) {
       const ubsInventarioSet = new Set([...PLAZAS[plaza].tiendas, ...PLAZAS[plaza].bodega]);
       const invPlaza = invRows.filter(i => ubsInventarioSet.has(i.UBICACION));
@@ -1826,7 +2206,6 @@ function generateReport() {
   populateClaseFilter();
   showToast('✅ Reporte generado: ' + reportData.length + ' registros');
 
-  document.getElementById('panel-upload').classList.add('collapsed');
   document.getElementById('panel-params').classList.add('collapsed');
 }
 
@@ -1970,11 +2349,8 @@ function analizarRecepciones() {
   const filtroClase = document.getElementById('rec-clase').value.trim().toUpperCase();
 
   let data = rawRecepciones.filter(r => {
-    // Al forzar T00:00:00 evitamos que JavaScript mueva el día por el huso horario
     if (fechaDesde && r.FECHA_COMPRA && r.FECHA_COMPRA < new Date(fechaDesde + 'T00:00:00')) return false;
     if (fechaHasta && r.FECHA_COMPRA && r.FECHA_COMPRA > new Date(fechaHasta + 'T23:59:59')) return false;
-    
-    // Ahora que es un Select, hacemos coincidencia exacta (!==) en lugar de un .includes()
     if (filtroProveedor && r.PROVEEDOR !== filtroProveedor) return false;
     if (filtroClase && r.CLASE !== filtroClase) return false;
     return true;
@@ -2087,7 +2463,6 @@ function sortRecTable(col) {
   recFilteredData.sort((a,b) => {
     const va = a[col], vb = b[col];
     
-    // Validar fechas de forma segura para evitar fallos si una es null
     if (col === 'FECHA_COMPRA') {
       const dateA = va instanceof Date ? va.getTime() : 0;
       const dateB = vb instanceof Date ? vb.getTime() : 0;
@@ -2289,18 +2664,15 @@ function today() { return new Date().toISOString().slice(0,10); }
 //  RESET
 // ═══════════════════════════════════════════════
 function resetAll() {
-  // 1. Restaurar parámetros de tiempo a sus valores por defecto
   document.getElementById('dias-llegada').value = 5;
   document.getElementById('dias-cobertura').value = 30;
-  calcularHistorial(); // Actualiza el campo de historial a 35
+  calcularHistorial();
 
-  // 2. Vaciar todos los filtros de texto y selectores
   document.getElementById('filtro-grupo').value = "";
   document.getElementById('filtro-clase').value = "";
   document.getElementById('filtro-marca').value = "";
   document.getElementById('filtro-clave-param').value = "";
 
-  // 3. Volver a marcar ambas plazas por defecto
   const chkChetumal = document.querySelector('#chip-chetumal input');
   const chkCancun = document.querySelector('#chip-cancun input');
   if (chkChetumal && chkCancun) {
@@ -2310,7 +2682,6 @@ function resetAll() {
     updateChip(chkCancun, 'cancun');
   }
 
-  // 4. Limpiar los filtros rápidos sobre la tabla de resultados
   const searchTabla = document.getElementById('search-tabla');
   if (searchTabla) searchTabla.value = "";
   
@@ -2323,7 +2694,6 @@ function resetAll() {
   const filterClase = document.getElementById('filter-clase-tabla');
   if (filterClase) filterClase.value = "";
 
-  // 5. Ocultar los paneles de resultados anteriores para dejar la pantalla limpia
   document.getElementById('stats-bar').style.display = 'none';
   document.getElementById('panel-result').style.display = 'none';
 
@@ -2354,17 +2724,16 @@ function setupDragDrop() {
     });
   });
 }
-  // ═══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════
 //  EXPORTAR / IMPORTAR CONFIGURACIÓN LOCAL
 // ═══════════════════════════════════════════════
 function exportarConfig() {
-  // Juntamos ambos datos
   const config = {
     grupos: JSON.parse(localStorage.getItem('DRP_SYSTEMS_grupos') || '[]'),
     excluidas: JSON.parse(localStorage.getItem('DRP_SYSTEMS_excluded') || '[]')
   };
   
-  // Lo convertimos a un archivo descargable
   const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -2384,7 +2753,6 @@ function importarConfig(input) {
     try {
       const config = JSON.parse(e.target.result);
       
-      // Validamos que el archivo tenga la estructura correcta
       if (config.grupos) {
         localStorage.setItem('DRP_SYSTEMS_grupos', JSON.stringify(config.grupos));
         reviewGroups = config.grupos;
@@ -2394,7 +2762,6 @@ function importarConfig(input) {
         excludedKeys = config.excluidas;
       }
 
-      // Actualizamos la interfaz
       renderGruposList();
       renderGruposSelect();
       renderExcluded();
@@ -2403,11 +2770,749 @@ function importarConfig(input) {
     } catch (err) {
       showToast('❌ Error: Archivo de configuración inválido');
     }
-    // Limpiamos el input por si quieres cargar otro
     input.value = ''; 
   };
   reader.readAsText(file);
 }
+
+// ═══════════════════════════════════════════════
+//  MOTOR DE KPIs GERENCIALES (DINÁMICO)
+// ═══════════════════════════════════════════════
+const defaultKpiTargets = {
+  global: { chetumal: 2800000, cancun: 1300000 },
+  chetumal: [
+    { label: 'CPLPHI', match: ['CPLPHI'], obj: 250000 },
+    { label: 'TCIP00', match: ['TCIP00'], obj: 460000 },
+    { label: 'TCTE+TCLB', match: ['TCTE00','TCLB00'], obj: 490000 },
+    { label: 'CPLPLO', match: ['CPLPLO'], obj: 300000 },
+    { label: 'CPLPME', match: ['CPLPME'], obj: 200000 },
+    { label: 'PEIMMU', match: ['PEIMMU'], obj: 160000 },
+    { label: 'PEBP00', match: ['PEBP00'], obj: 240000 },
+    { label: 'WEBA00', match: ['WEBA00'], obj: 80000 },
+    { label: 'ALMUSB', match: ['ALMUSB'], obj: 50000 },
+    { label: 'ALMCEL', match: ['ALMCEL'], obj: 35000 }
+  ],
+  cancun: [
+    { label: 'TCIP00+TCLB00', match: ['TCIP00','TCLB00'], obj: 400000 },
+    { label: 'CPLPHI', match: ['CPLPHI'], obj: 100000 },
+    { label: 'CPLPME', match: ['CPLPME'], obj: 100000 },
+    { label: 'CPLPLO', match: ['CPLPLO'], obj: 80000 },
+    { label: 'PEIMMU', match: ['PEIMMU'], obj: 45000 },
+    { label: 'PEBP00', match: ['PEBP00'], obj: 45000 },
+    { label: 'WEBA00', match: ['WEBA00'], obj: 30000 },
+    { label: 'ALMUSB', match: ['ALMUSB'], obj: 28000 },
+    { label: 'ALMCEL', match: ['ALMCEL'], obj: 25000 },
+    { label: 'TAB100', match: ['TAB100'], obj: 23000 }
+  ]
+};
+
+// Se convierte en 'let' para que pueda mutar. Lee del caché, si no hay nada usa el default.
+let KPI_TARGETS = JSON.parse(localStorage.getItem('DRP_SYSTEMS_KPI_TARGETS')) || defaultKpiTargets;
+
+function renderKPIs() {
+  if (!rawInventario || !rawInventario.length) return;
+
+  let invChetumal = 0;
+  let invCancun = 0;
+  let clasesMap = {};
+
+  rawInventario.forEach(r => {
+    if (r.UNIDAD === 'QS') return; 
+    const costoFila = r.TOTCOST || (r.STOCK * r.COSTO);
+    const plaza = getPlazaOfUb(r.UBICACION);
+    const clase = r.CLASE || 'SIN_CLASE';
+
+    if (plaza === 'chetumal') invChetumal += costoFila;
+    if (plaza === 'cancun') invCancun += costoFila;
+
+    if (!clasesMap[clase]) clasesMap[clase] = { total: 0, ctm: 0, cun: 0 };
+    clasesMap[clase].total += costoFila;
+    if (plaza === 'chetumal') clasesMap[clase].ctm += costoFila;
+    if (plaza === 'cancun') clasesMap[clase].cun += costoFila;
+  });
+
+  const invTotalGlobal = invChetumal + invCancun;
+
+  const buildCard = (titulo, actual, objetivo) => {
+    const diff = actual - objetivo;
+    const pct = (diff / objetivo) * 100;
+    const over = actual > objetivo;
+    const barPct = Math.min((actual / objetivo) * 100, 100);
+    
+    return `
+      <div class="panel" style="margin-bottom:0; padding:16px;">
+        <div style="font-size:11px; color:var(--text3); text-transform:uppercase;">${titulo}</div>
+        <div style="font-size:24px; font-weight:700; margin:8px 0; color: ${over ? 'var(--danger)' : 'var(--accent)'}">${fmtMoney(actual)}</div>
+        <div style="font-size:12px; display:flex; justify-content:space-between;">
+          <span style="color:var(--text2)">Meta: ${fmtMoney(objetivo)}</span>
+          <span style="color:${over ? 'var(--danger)' : 'var(--success)'}; font-weight:600;">
+            ${over ? 'Excedido por' : 'Margen libre'}: ${fmtMoney(Math.abs(diff))} (${Math.abs(pct).toFixed(2)}%)
+          </span>
+        </div>
+        <div style="background:var(--surface2); height:6px; border-radius:3px; margin-top:12px; overflow:hidden;">
+          <div style="width:${barPct}%; height:100%; background:${over ? 'var(--danger)' : 'var(--accent)'};"></div>
+        </div>
+      </div>
+    `;
+  };
+
+  const globalContainer = document.getElementById('kpi-global-container');
+  if (globalContainer) {
+    globalContainer.innerHTML = 
+      buildCard('Inventario Chetumal', invChetumal, KPI_TARGETS.global.chetumal) +
+      buildCard('Inventario Cancún', invCancun, KPI_TARGETS.global.cancun) +
+      buildCard('TOTAL EMPRESA', invTotalGlobal, KPI_TARGETS.global.chetumal + KPI_TARGETS.global.cancun);
+  }
+
+  const renderIndices = (targetArray, targetPlazaKey) => {
+    let html = '<tr><th>Familia</th><th class="num">Meta</th><th class="num">Actual</th><th class="num">Avance</th><th class="num">Diferencia</th></tr>';
+    targetArray.forEach(kpi => {
+      let actual = 0;
+      kpi.match.forEach(cls => {
+        if (clasesMap[cls]) actual += clasesMap[cls][targetPlazaKey];
+      });
+
+      const avance = (actual / kpi.obj) * 100;
+      const dif = actual - kpi.obj;
+      const isRed = dif < 0; 
+
+      html += `<tr style="${isRed ? 'background:rgba(239,68,68,0.08);' : ''}">
+        <td><strong>${kpi.label}</strong></td>
+        <td class="num">${fmtMoney(kpi.obj)}</td>
+        <td class="num" style="font-weight:600;">${fmtMoney(actual)}</td>
+        <td class="num">${avance.toFixed(2)}%</td>
+        <td class="num" style="color:${isRed ? 'var(--danger)' : 'var(--text)'}; font-weight:600;">${isRed ? '-' : '+'}${fmtMoney(Math.abs(dif))}</td>
+      </tr>`;
+    });
+    return html;
+  };
+
+  const ctmBody = document.getElementById('kpi-ctm-body');
+  if (ctmBody) ctmBody.innerHTML = renderIndices(KPI_TARGETS.chetumal, 'ctm');
+
+  const cunBody = document.getElementById('kpi-cun-body');
+  if (cunBody) cunBody.innerHTML = renderIndices(KPI_TARGETS.cancun, 'cun');
+
+  globalClasesMap = clasesMap; 
+  if (typeof renderDistribution === 'function') {
+    renderDistribution('total');
+  }
+}
+
+function renderDistribution(plazaKey = 'total') {
+  const tbody = document.getElementById('kpi-familias-body');
+  if (!tbody) return;
+
+  const clasesArray = Object.keys(globalClasesMap)
+    .map(c => ({ 
+      clase: c, 
+      valor: globalClasesMap[c][plazaKey] || 0 
+    }))
+    .filter(c => c.valor > 0)
+    .sort((a,b) => b.valor - a.valor);
+
+  const totalPlaza = clasesArray.reduce((acc, curr) => acc + curr.valor, 0);
+
+  tbody.innerHTML = clasesArray.map(c => {
+    const peso = totalPlaza > 0 ? (c.valor / totalPlaza) * 100 : 0;
+    return `
+      <tr>
+        <td style="text-align: center;"><span class="badge badge-blue">${c.clase}</span></td>
+        <td class="num" style="font-weight:600;">${fmtMoney(c.valor)}</td>
+        <td class="num" style="color:var(--text2)">${peso.toFixed(2)}%</td>
+        <td style="padding-left: 30px;">
+          <div class="volumen-container">
+            <div class="volumen-bar">
+              <div class="volumen-fill" style="width:${peso}%;"></div>
+            </div>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+function logout() {
+  if (confirm('¿Cerrar sesión? Se limpiarán todos los datos cargados.')) {
+    sessionStorage.removeItem('SYSTEM_logged');
+    location.reload();
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  MÓDULO DE CONFIGURACIÓN
+// ═══════════════════════════════════════════════
+function renderConfiguracion() {
+  document.getElementById('config-global-ctm').value = KPI_TARGETS.global.chetumal;
+  document.getElementById('config-global-cun').value = KPI_TARGETS.global.cancun;
+
+  const renderFilas = (array, plaza) => {
+    return array.map((kpi, index) => `
+      <tr data-index="${index}">
+        <td><input type="text" class="cfg-label" value="${kpi.label}" placeholder="Ej: TAB100"></td>
+        <td><input type="text" class="cfg-match" value="${kpi.match.join(', ')}" placeholder="Ej: TAB100, TAB101"></td>
+        <td><input type="number" class="cfg-obj" value="${kpi.obj}" step="0.01"></td>
+        <td style="text-align:center;"><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">🗑</button></td>
+      </tr>
+    `).join('');
+  };
+
+  document.getElementById('config-ctm-body').innerHTML = renderFilas(KPI_TARGETS.chetumal, 'ctm');
+  document.getElementById('config-cun-body').innerHTML = renderFilas(KPI_TARGETS.cancun, 'cun');
+}
+
+function agregarFilaConfig(plaza) {
+  const tbody = document.getElementById(plaza === 'ctm' ? 'config-ctm-body' : 'config-cun-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" class="cfg-label" placeholder="Nombre (Ej: NUEVO_INDICE)"></td>
+    <td><input type="text" class="cfg-match" placeholder="Clases separadas por coma"></td>
+    <td><input type="number" class="cfg-obj" value="100000" step="0.01"></td>
+    <td style="text-align:center;"><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">🗑</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function guardarConfiguracionKPI() {
+  const extractFilas = (tbodyId) => {
+    const filas = Array.from(document.getElementById(tbodyId).querySelectorAll('tr'));
+    return filas.map(tr => {
+      const label = tr.querySelector('.cfg-label').value.trim();
+      const matchRaw = tr.querySelector('.cfg-match').value;
+      const obj = parseFloat(tr.querySelector('.cfg-obj').value) || 0;
+      // Convertir el texto separado por comas en un array limpio
+      const match = matchRaw.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+      return { label, match, obj };
+    }).filter(kpi => kpi.label && kpi.match.length > 0); // Solo guardar filas que tengan texto
+  };
+
+  const globalCtm = parseFloat(document.getElementById('config-global-ctm').value) || 0;
+  const globalCun = parseFloat(document.getElementById('config-global-cun').value) || 0;
+
+  KPI_TARGETS = {
+    global: { chetumal: globalCtm, cancun: globalCun },
+    chetumal: extractFilas('config-ctm-body'),
+    cancun: extractFilas('config-cun-body')
+  };
+
+  // Guardar en la computadora
+  localStorage.setItem('DRP_SYSTEMS_KPI_TARGETS', JSON.stringify(KPI_TARGETS));
+  
+  showToast('💾 Configuración de KPIs actualizada correctamente');
+
+  // Si ya hay datos cargados, recalcular los gráficos de inmediato
+  if (rawInventario && rawInventario.length) {
+    renderKPIs();
+  }
+}
+
+// Ejecutar el render al inicio para que el panel se llene con los datos actuales
+window.addEventListener('DOMContentLoaded', renderConfiguracion);
+
+function calcularIndicadoresVentas() {
+  if (!rawVentas || rawVentas.length === 0) return;
+
+  // 1. Encontrar la fecha más reciente en el reporte (Nuestro "Hoy" virtual)
+  const fechasValidas = rawVentas.map(v => v.FECHA).filter(Boolean);
+  const fechaMax = new Date(Math.max(...fechasValidas));
+  
+  // Variables para acumular
+  let ventaSemana = 0;
+  let ventaMes = 0;
+  let ventaTrimestre = 0;
+  let ventaAnual = 0;
+
+  // Fechas límite para los cálculos
+  const inicioMes = new Date(fechaMax.getFullYear(), fechaMax.getMonth(), 1);
+  const inicioAnio = new Date(fechaMax.getFullYear(), 0, 1);
+  
+  // Límites en milisegundos (para restar días fácilmente)
+  const limiteSemana = new Date(fechaMax).setDate(fechaMax.getDate() - 7);
+  const limiteTrimestre = new Date(fechaMax).setDate(fechaMax.getDate() - 90);
+
+  // 2. Recorrer ventas y clasificar los montos
+  rawVentas.forEach(v => {
+    if (!v.FECHA || v.VENTA <= 0) return; // Ignorar devoluciones o nulos
+    
+    const fechaVenta = v.FECHA.getTime();
+    const monto = v.COSTO_TOTAL; // O v.PRECIO_VENTA si prefieres ingresos vs costo
+
+    // ¿Es de los últimos 7 días?
+    if (fechaVenta >= limiteSemana && fechaVenta <= fechaMax.getTime()) {
+      ventaSemana += monto;
+    }
+    
+    // ¿Es del mes en curso?
+    if (fechaVenta >= inicioMes.getTime() && fechaVenta <= fechaMax.getTime()) {
+      ventaMes += monto;
+    }
+    
+    // ¿Es de los últimos 90 días?
+    if (fechaVenta >= limiteTrimestre && fechaVenta <= fechaMax.getTime()) {
+      ventaTrimestre += monto;
+    }
+    
+    // ¿Es del año en curso?
+    if (fechaVenta >= inicioAnio.getTime() && fechaVenta <= fechaMax.getTime()) {
+      ventaAnual += monto;
+    }
+  });
+
+  // 3. Resultados listos para inyectar en el HTML
+  console.log("--- INDICADORES DE VENTA ---");
+  console.log("Últimos 7 días: ", fmtMoney(ventaSemana));
+  console.log("Mes en curso: ", fmtMoney(ventaMes));
+  console.log("Últimos 90 días: ", fmtMoney(ventaTrimestre));
+  console.log("Año en curso (YTD): ", fmtMoney(ventaAnual));
+}
+
+// ═══════════════════════════════════════════════
+//  VARIABLES Y CONTROL DEL MÓDULO INVENTARIOS
+// ═══════════════════════════════════════════════
+let inventariosFilteredData = [];
+
+function renderInventarios() {
+  if (!rawInventario || rawInventario.length === 0) return;
+
+  // 1. Llenar dropdown de clases
+  const claseSelect = document.getElementById('inv-filter-clase');
+  if (claseSelect && claseSelect.options.length <= 1) {
+    const clases = [...new Set(rawInventario.map(r => r.CLASE).filter(Boolean))].sort();
+    claseSelect.innerHTML = '<option value="">Todas las clases</option>' + 
+      clases.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+
+  // 2. Llenar dropdown de Plazas y Locaciones Específicas
+  const plazaSelect = document.getElementById('inv-filter-plaza');
+  if (plazaSelect && plazaSelect.options.length <= 1) {
+    const ubicaciones = [...new Set(rawInventario.map(r => r.UBICACION).filter(Boolean))].sort();
+    
+    let htmlOpciones = `
+      <option value="">🌍 Todas las ubicaciones</option>
+      <optgroup label="Agrupaciones Globales">
+        <option value="chetumal">🏙 Chetumal (Todas sus locaciones)</option>
+        <option value="cancun">🌴 Cancún (Todas sus locaciones)</option>
+      </optgroup>
+      <optgroup label="Locaciones Específicas (SiteId)">
+    `;
+    ubicaciones.forEach(u => { htmlOpciones += `<option value="loc_${u}">📍 ${u}</option>`; });
+    htmlOpciones += `</optgroup>`;
+    
+    plazaSelect.innerHTML = htmlOpciones;
+  }
+
+  // Ejecutar el filtrado inicial (esto disparará el cálculo de stats y el dibujado de tablas)
+  filtrarInventarios();
+}
+
+function filtrarInventarios() {
+  const q = document.getElementById('inv-search-input').value.toLowerCase();
+  const plaza = document.getElementById('inv-filter-plaza').value;
+  const clase = document.getElementById('inv-filter-clase').value;
+  const estado = document.getElementById('inv-filter-estado').value;
+
+  inventariosFilteredData = rawInventario.filter(r => {
+    if (r.UNIDAD === 'QS') return false; // Ignorar Quality Scope
+
+    if (q && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
+    if (clase && r.CLASE !== clase) return false;
+
+    // Filtro super-cargado de ubicaciones
+    if (plaza) {
+      if (plaza.startsWith('loc_')) {
+        // Filtrar por una locación exacta (ej. COCTMBNAPO)
+        const ubiEspecifica = plaza.substring(4);
+        if (r.UBICACION !== ubiEspecifica) return false;
+      } else {
+        // Filtrar por grupos (Chetumal, Cancún, Tiendas, Bodegas)
+        const plazaReal = getPlazaOfUb(r.UBICACION);
+        if (plaza === 'chetumal' && plazaReal !== 'chetumal') return false;
+        if (plaza === 'cancun' && plazaReal !== 'cancun') return false;
+        
+        const esBodega = PLAZAS.chetumal.bodega.includes(r.UBICACION) || PLAZAS.cancun.bodega.includes(r.UBICACION);
+        if (plaza === 'tiendas' && esBodega) return false;
+        if (plaza === 'bodegas' && !esBodega) return false;
+      }
+    }
+
+    if (estado === 'con-stock' && r.STOCK <= 0) return false;
+    if (estado === 'en-ceros' && r.STOCK > 0) return false;
+    if (estado === 'rezago' && r.REZAGO <= 0) return false;
+
+    return true;
+  });
+
+  // Una vez que tenemos los datos filtrados, actualizamos TODOS los paneles de la pantalla
+  actualizarPanelesInventario(inventariosFilteredData);
+  renderInventariosTable();
+}
+
+function actualizarPanelesInventario(data) {
+  let skusActivos = new Set();
+  let valorTotal = 0;
+  let piezasTotales = 0;
+  let capitalRezago = 0;
+  
+  let inversonPorClase = {};
+  let listaRezagoClaves = [];
+
+  data.forEach(r => {
+    const costoFila = r.TOTCOST || (r.STOCK * r.COSTO);
+    
+    if (r.STOCK > 0) {
+      skusActivos.add(r.CLAVE);
+      piezasTotales += r.STOCK;
+    }
+    valorTotal += costoFila;
+
+    if (r.REZAGO > 0) {
+      // Nota: Si en tu Dynamics la columna InvRez ya viene en $, quita el "* r.COSTO"
+      const valorRezago = r.REZAGO;
+      capitalRezago += valorRezago;
+      
+      listaRezagoClaves.push({
+        clave: r.CLAVE,
+        descr: r.DESCRIPCION,
+        pzs: r.REZAGO,
+        valor: valorRezago
+      });
+    }
+
+    if (!inversonPorClase[r.CLASE]) inversonPorClase[r.CLASE] = 0;
+    inversonPorClase[r.CLASE] += costoFila;
+  });
+
+  // 1. Actualizar Tarjetas (Stats)
+  document.getElementById('inv-stat-skus').textContent = fmt(skusActivos.size);
+  document.getElementById('inv-stat-valor').textContent = fmtMoney(valorTotal);
+  document.getElementById('inv-stat-piezas').textContent = fmt(piezasTotales);
+  document.getElementById('inv-stat-rezago').textContent = fmtMoney(capitalRezago);
+
+  // 2. Actualizar Tabla de Top Clases
+  const clasesOrdenadas = Object.keys(inversonPorClase)
+    .map(c => ({ clase: c, total: inversonPorClase[c] }))
+    .sort((a,b) => b.total - a.total)
+    .slice(0, 10);
+
+  document.getElementById('inv-top-clases-body').innerHTML = clasesOrdenadas.map(c => {
+    const pct = valorTotal > 0 ? (c.total / valorTotal) * 100 : 0;
+    return `<tr>
+      <td><span class="badge badge-blue">${c.clase}</span></td>
+      <td class="num" style="font-weight:600;">${fmtMoney(c.total)}</td>
+      <td class="num" style="color:var(--text2);">${pct.toFixed(2)}%</td>
+    </tr>`;
+  }).join('');
+
+  // 3. Actualizar Tabla de Top Rezago
+  listaRezagoClaves.sort((a,b) => b.valor - a.valor);
+  document.getElementById('inv-top-rezago-body').innerHTML = listaRezagoClaves.slice(0, 10).map(r => `
+    <tr>
+      <td><code>${r.clave}</code></td>
+      <td class="text-cell" style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${r.descr}">${r.descr}</td>
+      <td class="num" style="color:var(--warn); font-weight:600;">${fmt(r.pzs)}</td>
+      <td class="num" style="color:var(--danger); font-weight:600;">${fmtMoney(r.valor)}</td>
+    </tr>
+  `).join('');
+}
+
+// Mantenemos renderInventariosTable exactamente igual a como te lo pase antes
+function renderInventariosTable() {
+  const tbody = document.getElementById('inv-master-tbody');
+  if (!tbody) return;
+
+  if (inventariosFilteredData.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text3); padding:20px;">No se encontraron registros con los filtros seleccionados.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = inventariosFilteredData.slice(0, 300).map(r => { 
+    const costoTotal = r.TOTCOST || (r.STOCK * r.COSTO);
+    
+    let estadoBadge = '<span class="badge badge-green">✓ Disponible</span>';
+    if (r.REZAGO > 0) estadoBadge = '<span class="badge badge-red">⚠️ Rezago Activo</span>';
+    else if (r.STOCK === 0) estadoBadge = '<span class="badge badge-gray">⚠️ Sin Stock</span>';
+
+    const plazaReal = getPlazaOfUb(r.UBICACION);
+    const plazaBadge = plazaReal === 'chetumal' 
+      ? '<span class="badge badge-blue">CTM</span>' 
+      : '<span class="badge badge-green">CUN</span>';
+
+    return `<tr>
+      <td><code>${r.CLAVE}</code></td>
+      <td class="text-cell" style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${r.DESCRIPCION}">${r.DESCRIPCION}</td>
+      <td><span class="badge badge-blue">${r.CLASE}</span></td>
+      <td><span class="badge badge-gray">${r.MARCA || '—'}</span></td>
+      <td>${plazaBadge} <code style="font-size:10px; color:var(--text2);">${r.UBICACION}</code></td>
+      <td class="num" style="color:var(--text3);">${fmtMoney(r.COSTO)}</td>
+      <td class="num" style="font-weight:600; color:${r.STOCK > 0 ? 'var(--text)' : 'var(--text3)'}">${fmt(r.STOCK)}</td>
+      <td class="num" style="font-weight:600;">${fmtMoney(costoTotal)}</td>
+      <td>${estadoBadge}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  VARIABLES Y CONTROL DEL MÓDULO VENTAS
+// ═══════════════════════════════════════════════
+let ventasFilteredData = [];
+
+function renderVentas() {
+  if (!rawVentas || rawVentas.length === 0) return;
+
+  // 1. Llenar dropdown de clases dinámicamente
+  const claseSelect = document.getElementById('ven-filter-clase');
+  if (claseSelect && claseSelect.options.length <= 1) {
+    const clases = [...new Set(rawVentas.map(r => r.CLASE).filter(Boolean))].sort();
+    claseSelect.innerHTML = '<option value="">Todas las clases</option>' + 
+      clases.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+
+  // 2. Llenar dropdown de Plazas y Locaciones
+  const plazaSelect = document.getElementById('ven-filter-plaza');
+  if (plazaSelect && plazaSelect.options.length <= 1) {
+    const ubicaciones = [...new Set(rawVentas.map(r => r.UBICACION).filter(Boolean))].sort();
+    
+    let htmlOpciones = `
+      <option value="">🌍 Todas las ubicaciones</option>
+      <optgroup label="Agrupaciones Globales">
+        <option value="chetumal">🏙 Chetumal (Global)</option>
+        <option value="cancun">🌴 Cancún (Global)</option>
+      </optgroup>
+      <optgroup label="Locaciones Especiales (SiteId)">
+    `;
+    ubicaciones.forEach(u => { htmlOpciones += `<option value="loc_${u}">📍 ${u}</option>`; });
+    htmlOpciones += `</optgroup>`;
+    
+    plazaSelect.innerHTML = htmlOpciones;
+  }
+
+  // 3. Auto-llenar el calendario interactivo con el rango del Excel
+  const fechas = rawVentas.map(v => v.FECHA).filter(Boolean).sort((a,b) => a - b);
+  if (fechas.length > 0) {
+    document.getElementById('ven-filter-desde').value = fechas[0].toISOString().split('T')[0];
+    document.getElementById('ven-filter-hasta').value = fechas[fechas.length - 1].toISOString().split('T')[0];
+  }
+
+  // Correr el filtro maestro inicial
+  filtrarVentas();
+}
+
+function filtrarVentas() {
+  const q = document.getElementById('ven-search-input').value.toLowerCase();
+  const plaza = document.getElementById('ven-filter-plaza').value;
+  const clase = document.getElementById('ven-filter-clase').value;
+  const desdeStr = document.getElementById('ven-filter-desde').value;
+  const hastaStr = document.getElementById('ven-filter-hasta').value;
+
+  const fDesde = desdeStr ? new Date(desdeStr + 'T00:00:00').getTime() : null;
+  const fHasta = hastaStr ? new Date(hastaStr + 'T23:59:59').getTime() : null;
+
+  ventasFilteredData = rawVentas.filter(v => {
+    if (v.UNIDAD === 'QS' || v.VENTA <= 0) return false; // Filtrar Quality y notas de crédito/devoluciones
+
+    // Filtro por texto libre
+    if (q && !v.CLAVE.toLowerCase().includes(q) && !v.DESCRIPCION.toLowerCase().includes(q) && !v.TICKET.toLowerCase().includes(q)) return false;
+    
+    // Filtro por clase
+    if (clase && v.CLASE !== clase) return false;
+
+    // Filtro por rango de fechas
+    if (v.FECHA) {
+      const timeVenta = v.FECHA.getTime();
+      if (fDesde && timeVenta < fDesde) return false;
+      if (fHasta && timeVenta > fHasta) return false;
+    }
+
+    // Filtro por plaza / ubicación
+    if (plaza) {
+      if (plaza.startsWith('loc_')) {
+        if (v.UBICACION !== plaza.substring(4)) return false;
+      } else {
+        const plazaReal = getPlazaOfUb(v.UBICACION);
+        if (plaza === 'chetumal' && plazaReal !== 'chetumal') return false;
+        if (plaza === 'cancun' && plazaReal !== 'cancun') return false;
+      }
+    }
+
+    return true;
+  });
+
+  // Recalcular indicadores y tops basándose estrictamente en lo filtrado
+  actualizarPanelesVentas(ventasFilteredData);
+  renderVentasTable();
+}
+
+function actualizarPanelesVentas(data) {
+  const fechasValidas = data.map(v => v.FECHA).filter(Boolean);
+  if (fechasValidas.length === 0) {
+    document.getElementById('ven-stat-semana').textContent = "$0.00";
+    document.getElementById('ven-stat-mes').textContent = "$0.00";
+    document.getElementById('ven-stat-trimestre').textContent = "$0.00";
+    document.getElementById('ven-stat-anio').textContent = "$0.00";
+    document.getElementById('ven-top-volumen-body').innerHTML = '';
+    document.getElementById('ven-top-rentabilidad-body').innerHTML = '';
+    return;
+  }
+  
+  // Encontrar la fecha máxima en milisegundos para ser exactos
+  const maxTime = Math.max(...fechasValidas.map(d => d.getTime()));
+  const fechaMax = new Date(maxTime);
+
+  // Normalizar las horas para evitar saltos por zonas horarias (00:00:00)
+  const y = fechaMax.getFullYear();
+  const m = fechaMax.getMonth();
+  const d = fechaMax.getDate();
+
+  // Límite superior: Final del día más reciente para incluir todo ese día
+  const fMaxFull = new Date(y, m, d, 23, 59, 59).getTime();
+
+  // 🔴 LÍMITES ESTRICTOS (Restando días exactos hacia atrás)
+  const limite7d  = new Date(y, m, d - 6, 0, 0, 0).getTime();  // 7 días incluye hoy
+  const limite30d = new Date(y, m, d - 29, 0, 0, 0).getTime(); // 30 días
+  const limite90d = new Date(y, m, d - 89, 0, 0, 0).getTime(); // 90 días
+  const limiteYTD = new Date(y, 0, 1, 0, 0, 0).getTime();      // Desde el 1 de Enero
+
+  let v7 = 0, v30 = 0, v90 = 0, vYTD = 0, vGlobalFiltrado = 0;
+  let acumuladoPorClave = {};
+  let acumuladoPorClase = {};
+
+  data.forEach(v => {
+    const time = v.FECHA.getTime();
+    const monto = v.PRECIO_VENTA || 0; 
+    vGlobalFiltrado += monto;
+
+    // Sumar únicamente si entra en las ventanas exactas
+    if (time >= limite7d && time <= fMaxFull) v7 += monto;
+    if (time >= limite30d && time <= fMaxFull) v30 += monto;
+    if (time >= limite90d && time <= fMaxFull) v90 += monto;
+    if (time >= limiteYTD && time <= fMaxFull) vYTD += monto;
+
+    // Acumular volumen por clave
+    if (!acumuladoPorClave[v.CLAVE]) {
+      acumuladoPorClave[v.CLAVE] = { descr: v.DESCRIPCION, piezas: 0, importe: 0 };
+    }
+    acumuladoPorClave[v.CLAVE].piezas += v.VENTA;
+    acumuladoPorClave[v.CLAVE].importe += monto;
+
+    // Acumular facturación por clase
+    if (!acumuladoPorClase[v.CLASE]) acumuladoPorClase[v.CLASE] = 0;
+    acumuladoPorClase[v.CLASE] += monto;
+  });
+
+  // Actualizar Tarjetas
+  document.getElementById('ven-stat-semana').textContent = fmtMoney(v7);
+  document.getElementById('ven-stat-mes').textContent = fmtMoney(v30);
+  document.getElementById('ven-stat-trimestre').textContent = fmtMoney(v90);
+  document.getElementById('ven-stat-anio').textContent = fmtMoney(vYTD);
+  document.getElementById('ven-lbl-anio').textContent = `Acumulado YTD del año ${y}`;
+
+  // 2. RENDER: Top 10 Artículos Más Vendidos
+  const topClaves = Object.keys(acumuladoPorClave)
+    .map(c => ({ clave: c, ...acumuladoPorClave[c] }))
+    .sort((a,b) => b.piezas - a.piezas)
+    .slice(0, 10);
+
+  document.getElementById('ven-top-volumen-body').innerHTML = topClaves.map(c => `
+    <tr>
+      <td><code>${c.clave}</code></td>
+      <td class="text-cell" style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${c.descr}">${c.descr}</td>
+      <td class="num" style="color:var(--accent); font-weight:600;">${fmt(c.piezas)} pzs</td>
+      <td class="num" style="font-weight:600;">${fmtMoney(c.importe)}</td>
+    </tr>
+  `).join('');
+
+  // 3. RENDER: Top 10 Clases por Facturación
+  const topClases = Object.keys(acumuladoPorClase)
+    .map(c => ({ clase: c, importe: acumuladoPorClase[c] }))
+    .sort((a,b) => b.importe - a.importe)
+    .slice(0, 10);
+
+  document.getElementById('ven-top-rentabilidad-body').innerHTML = topClases.map(c => {
+    const share = vGlobalFiltrado > 0 ? (c.importe / vGlobalFiltrado) * 100 : 0;
+    return `<tr>
+      <td><span class="badge badge-purple">${c.clase}</span></td>
+      <td class="num" style="font-weight:600;">${fmtMoney(c.importe)}</td>
+      <td class="num" style="color:var(--text2); font-weight:600;">${share.toFixed(2)}%</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderVentasTable() {
+  const tbody = document.getElementById('ven-master-tbody');
+  if (!tbody) return;
+
+  if (ventasFilteredData.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--text3); padding:20px;">No se encontraron transacciones con los criterios seleccionados.</td></tr>`;
+    return;
+  }
+
+  // Truncado estricto a 300 filas para garantizar velocidad instantánea en pantallas de baja gama
+  tbody.innerHTML = ventasFilteredData.slice(0, 300).map(v => {
+    const plazaReal = getPlazaOfUb(v.UBICACION);
+    const plazaBadge = plazaReal === 'chetumal' 
+      ? '<span class="badge badge-blue">CTM</span>' 
+      : '<span class="badge badge-green">CUN</span>';
+
+    return `<tr>
+      <td>${fmtDate(v.FECHA)}</td>
+      <td><code style="color:var(--text3);">${v.TICKET}</code></td>
+      <td><code>${v.CLAVE}</code></td>
+      <td class="text-cell" style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${v.DESCRIPCION}">${v.DESCRIPCION}</td>
+      <td>${plazaBadge} <code style="font-size:10px; color:var(--text2);">${v.UBICACION}</code></td>
+      <td><span class="badge badge-gray">${v.CLASE}</span></td>
+      <td class="num" style="color:var(--accent2); font-weight:600;">${fmt(v.VENTA)}</td>
+      <td class="num" style="font-weight:600;">${fmtMoney(v.PRECIO_VENTA)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function calcularKpisCruzados() {
+  if (!rawInventario.length || !rawVentas.length) return;
+
+  // 1. Costo de ventas (últimos 90 días)
+  const limite90d = new Date().getTime() - (90 * 86400000);
+  const costoVentas90 = rawVentas
+    .filter(v => v.FECHA.getTime() >= limite90d)
+    .reduce((sum, v) => sum + v.COSTO_TOTAL, 0);
+
+  // 2. Inventario Promedio (Total del reporte actual)
+  const inventarioTotal = rawInventario.reduce((sum, i) => sum + (i.TOTCOST || (i.STOCK * i.COSTO)), 0);
+
+  // 3. CÁLCULO ROTACIÓN: (Costo Ventas / Inventario)
+  const rotacion = inventarioTotal > 0 ? (costoVentas90 / inventarioTotal) : 0;
+  
+  // 4. CÁLCULO DÍAS DE INVENTARIO: (365 / Rotación Anualizada) 
+  // O más preciso: (Inventario / Venta Promedio Diaria de los últimos 90 días)
+  const ventaDiaria90 = costoVentas90 / 90;
+  const diasInv = ventaDiaria90 > 0 ? (inventarioTotal / ventaDiaria90) : 0;
+
+  // Actualizar UI
+  document.getElementById('kpi-rotacion').textContent = rotacion.toFixed(2);
+  document.getElementById('kpi-dias-inv').textContent = Math.round(diasInv);
+}
+
 </script>
+
+<div id="loader-global" style="
+  display: none; 
+  position: fixed; 
+  bottom: 24px; 
+  right: 24px; 
+  z-index: 10000; 
+  background: var(--surface2); 
+  padding: 12px 16px; 
+  border-radius: 50px; 
+  border: 1px solid var(--accent); 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+  align-items: center; 
+  gap: 10px;
+  animation: fadeIn 0.3s;">
+  <div style="width: 16px; height: 16px; border: 2px solid var(--accent); border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+  <span style="font-size: 12px; font-weight: 600; color: var(--text);">Procesando datos...</span>
+</div>
+
+<style>
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+
 </body>
 </html>

@@ -2290,17 +2290,61 @@ function today() { return new Date().toISOString().slice(0,10); }
 //  RESET
 // ═══════════════════════════════════════════════
 function resetAll() {
-  rawInventario = []; rawVentas = []; reportData = []; filteredData = [];
-  ['zone-inv','zone-ven'].forEach(id => document.getElementById(id).classList.remove('loaded'));
-  ['fname-inv','fname-ven'].forEach(id => document.getElementById(id).textContent = '');
-  ['dot-inv','dot-ven'].forEach(id => { document.getElementById(id).classList.remove('active'); });
+  // 1. Vaciamos absolutamente todos los arreglos de memoria
+  rawInventario = []; rawVentas = []; rawRecepciones = []; 
+  reportData = []; filteredData = []; recData = []; recFilteredData = [];
+  costosHistoricosMap = {}; 
+
+  // 2. EL BUG ESTABA AQUÍ: Limpiamos la memoria caché de los archivos ocultos
+  document.getElementById('file-inv').value = '';
+  document.getElementById('file-ven').value = '';
+  document.getElementById('file-rec').value = '';
+
+  // 3. Limpiamos los recuadros verdes (incluyendo ahora zone-rec)
+  ['zone-inv','zone-ven','zone-rec'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.remove('loaded');
+  });
+
+  // 4. Borramos los nombres de archivo
+  ['fname-inv','fname-ven','fname-rec'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = '';
+  });
+
+  // 5. Apagamos los puntitos de estatus superiores
+  ['dot-inv','dot-ven','dot-rec'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) {
+      el.classList.remove('active');
+      el.classList.remove('active-purple');
+    }
+  });
+
+  // 6. Reseteamos los textos
   document.getElementById('lbl-inv').textContent = 'Sin inventario';
   document.getElementById('lbl-ven').textContent = 'Sin ventas';
+  const lblRec = document.getElementById('lbl-rec');
+  if(lblRec) lblRec.textContent = 'Sin recepciones';
+
+  // 7. Ocultamos los paneles de resultados de Pedidos y Recepciones
   document.getElementById('stats-bar').style.display = 'none';
   document.getElementById('panel-result').style.display = 'none';
+  
+  const recStats = document.getElementById('rec-stats-bar');
+  if(recStats) recStats.style.display = 'none';
+  
+  const recResult = document.getElementById('panel-rec-result');
+  if(recResult) recResult.style.display = 'none';
+  
+  const recWarn = document.getElementById('panel-rec-warnings');
+  if(recWarn) recWarn.style.display = 'none';
+
+  // 8. Reseteamos el selector de grupos
   document.getElementById('filtro-grupo').value = "";
+  
   checkEnableBtn();
-  showToast('↺ Datos limpiados');
+  showToast('↺ Datos limpiados por completo');
 }
 
 // ═══════════════════════════════════════════════

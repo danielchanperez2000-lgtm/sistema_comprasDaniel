@@ -719,7 +719,6 @@
         </div>
       </div>
       <div style="display:flex;gap:12px;justify-content:flex-end">
-        <button class="btn btn-secondary" onclick="resetRecFilters()">↺ Limpiar filtros</button>
         <button class="btn btn-purple" id="btn-rec-analizar" onclick="analizarRecepciones()" disabled>🔬 Analizar Recepciones</button>
       </div>
     </div>
@@ -2290,61 +2289,45 @@ function today() { return new Date().toISOString().slice(0,10); }
 //  RESET
 // ═══════════════════════════════════════════════
 function resetAll() {
-  // 1. Vaciamos absolutamente todos los arreglos de memoria
-  rawInventario = []; rawVentas = []; rawRecepciones = []; 
-  reportData = []; filteredData = []; recData = []; recFilteredData = [];
-  costosHistoricosMap = {}; 
+  // 1. Restaurar parámetros de tiempo a sus valores por defecto
+  document.getElementById('dias-llegada').value = 5;
+  document.getElementById('dias-cobertura').value = 30;
+  calcularHistorial(); // Actualiza el campo de historial a 35
 
-  // 2. EL BUG ESTABA AQUÍ: Limpiamos la memoria caché de los archivos ocultos
-  document.getElementById('file-inv').value = '';
-  document.getElementById('file-ven').value = '';
-  document.getElementById('file-rec').value = '';
+  // 2. Vaciar todos los filtros de texto y selectores
+  document.getElementById('filtro-grupo').value = "";
+  document.getElementById('filtro-clase').value = "";
+  document.getElementById('filtro-marca').value = "";
+  document.getElementById('filtro-clave-param').value = "";
 
-  // 3. Limpiamos los recuadros verdes (incluyendo ahora zone-rec)
-  ['zone-inv','zone-ven','zone-rec'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.classList.remove('loaded');
-  });
+  // 3. Volver a marcar ambas plazas por defecto
+  const chkChetumal = document.querySelector('#chip-chetumal input');
+  const chkCancun = document.querySelector('#chip-cancun input');
+  if (chkChetumal && chkCancun) {
+    chkChetumal.checked = true;
+    chkCancun.checked = true;
+    updateChip(chkChetumal, 'chetumal');
+    updateChip(chkCancun, 'cancun');
+  }
 
-  // 4. Borramos los nombres de archivo
-  ['fname-inv','fname-ven','fname-rec'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.textContent = '';
-  });
+  // 4. Limpiar los filtros rápidos sobre la tabla de resultados
+  const searchTabla = document.getElementById('search-tabla');
+  if (searchTabla) searchTabla.value = "";
+  
+  const filterPlaza = document.getElementById('filter-plaza-tabla');
+  if (filterPlaza) filterPlaza.value = "";
+  
+  const filterComprar = document.getElementById('filter-comprar');
+  if (filterComprar) filterComprar.value = "";
+  
+  const filterClase = document.getElementById('filter-clase-tabla');
+  if (filterClase) filterClase.value = "";
 
-  // 5. Apagamos los puntitos de estatus superiores
-  ['dot-inv','dot-ven','dot-rec'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) {
-      el.classList.remove('active');
-      el.classList.remove('active-purple');
-    }
-  });
-
-  // 6. Reseteamos los textos
-  document.getElementById('lbl-inv').textContent = 'Sin inventario';
-  document.getElementById('lbl-ven').textContent = 'Sin ventas';
-  const lblRec = document.getElementById('lbl-rec');
-  if(lblRec) lblRec.textContent = 'Sin recepciones';
-
-  // 7. Ocultamos los paneles de resultados de Pedidos y Recepciones
+  // 5. Ocultar los paneles de resultados anteriores para dejar la pantalla limpia
   document.getElementById('stats-bar').style.display = 'none';
   document.getElementById('panel-result').style.display = 'none';
-  
-  const recStats = document.getElementById('rec-stats-bar');
-  if(recStats) recStats.style.display = 'none';
-  
-  const recResult = document.getElementById('panel-rec-result');
-  if(recResult) recResult.style.display = 'none';
-  
-  const recWarn = document.getElementById('panel-rec-warnings');
-  if(recWarn) recWarn.style.display = 'none';
 
-  // 8. Reseteamos el selector de grupos
-  document.getElementById('filtro-grupo').value = "";
-  
-  checkEnableBtn();
-  showToast('↺ Datos limpiados por completo');
+  showToast('🧹 Filtros limpiados (Tus reportes siguen cargados)');
 }
 
 // ═══════════════════════════════════════════════

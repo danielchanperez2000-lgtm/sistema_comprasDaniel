@@ -520,6 +520,371 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
+/* --- NUEVA ARQUITECTURA DE CONTENEDORES PARA KPIs --- */
+.kpi-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text2);
+  margin: 24px 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kpi-section-title::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* --- FRANJA DE RESUMEN EJECUTIVO --- */
+.exec-summary-strip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.exec-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.exec-summary-item .label {
+  color: var(--text2);
+}
+.exec-summary-item .value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+}
+
+/* --- CHIPS DE FILTRADO RÁPIDO VISUAL --- */
+.quick-filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.filter-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-chip:hover {
+  border-color: var(--text2);
+  color: var(--text);
+}
+.filter-chip.active-chip {
+  background: var(--surface2);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 212, 170, 0.15);
+}
+
+/* --- TARJETAS EJECUTIVAS CON BORDE LATERAL --- */
+.kpi-adv-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  min-height: 145px;
+}
+/* Bordes izquierdos por criticidad */
+.card-crit-red { border-left: 4px solid var(--danger); }
+.card-crit-yellow { border-left: 4px solid var(--warn); }
+.card-crit-green { border-left: 4px solid var(--success); }
+.card-crit-blue { border-left: 4px solid var(--accent2); }
+
+.kpi-adv-card .header-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.kpi-adv-card .main-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 6px 0;
+  line-height: 1.2;
+}
+.kpi-adv-card .title-lbl {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.kpi-adv-card .concept-short {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+.kpi-adv-card .action-rec {
+  font-size: 11px;
+  color: var(--warn);
+  background: rgba(245, 158, 11, 0.06);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  border: 1px dashed rgba(245, 158, 11, 0.2);
+}
+.kpi-adv-card .action-rec.rec-crit {
+  color: #fca5a5;
+  background: rgba(239, 64, 64, 0.08);
+  border-color: rgba(239, 64, 64, 0.25);
+}
+
+/* --- BARRAS DE COMPARACIÓN INTERNAS --- */
+.card-progress-container {
+  margin-top: 8px;
+  background: var(--surface2);
+  height: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+.card-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* --- COMPONENTE EXCESO VS FALTANTE VISUAL --- */
+.panel-balance-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+.balance-metric-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+.balance-block {
+  display: flex;
+  flex-direction: column;
+}
+.balance-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+.balance-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.dual-bar-container {
+  display: flex;
+  height: 10px;
+  background: var(--surface2);
+  border-radius: 50px;
+  margin-top: 14px;
+  overflow: hidden;
+  width: 100%;
+}
+.dual-bar-exceso { background: var(--danger); height: 100%; }
+.dual-bar-faltante { background: var(--warn); height: 100%; }
+
+/* --- SPARKLINE DE BLOQUES MICRO --- */
+.micro-sparkrow {
+  display: inline-flex;
+  align-items: flex-end;
+  height: 16px;
+  gap: 2px;
+  padding-left: 4px;
+}
+.micro-bar {
+  width: 3px;
+  background: var(--accent2);
+  border-radius: 1px;
+  transition: height 0.3s ease;
+}
+
+/* --- BOTÓN Y EXPANSIÓN DE GRÁFICAS --- */
+.chart-toggle-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-toggle-btn:hover {
+  background: var(--surface2);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.kpi-adv-card {
+  transition: all 0.3s ease;
+  height: auto; /* Permite que crezca suavemente */
+}
+.card-chart-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 12px;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-top: 0;
+  border-top: 1px dashed transparent;
+}
+.kpi-adv-card.expanded-chart .card-chart-area {
+  height: 180px;
+  opacity: 1;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top-color: var(--border);
+}
+/* --- DISEÑO DE GRÁFICA DE BARRAS PURA --- */
+.css-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  flex: 1;
+  min-width: 0;
+}
+.css-bar {
+  width: 100%;
+  max-width: 35px;
+  border-radius: 4px 4px 0 0;
+  min-height: 5px;
+  position: relative;
+  transition: height 0.5s ease;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+}
+.css-bar-lbl {
+  font-size: 9px;
+  color: var(--text3);
+  margin-top: 6px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.css-bar-val {
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text);
+  text-align: center;
+}
+/* --- EFECTO INTERACTIVO DE LAS TARJETAS --- */
+.kpi-adv-card.clickable-card {
+  cursor: pointer;
+}
+.kpi-adv-card.clickable-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  border-color: var(--accent);
+}
+
+
+  /* ── Mejoras solicitadas: botón arriba, filtros universales y descripción completa ── */
+  #btn-scroll-top {
+    position: fixed;
+    right: 24px;
+    bottom: 84px;
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,212,170,0.45);
+    background: rgba(22,27,34,0.94);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    transition: transform .2s, opacity .2s, border-color .2s;
+  }
+  #btn-scroll-top.show { display: inline-flex; }
+  #btn-scroll-top:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+  .universal-table-filter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+  }
+  .universal-table-filter input {
+    min-width: 260px;
+    max-width: 420px;
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  .universal-table-filter input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,212,170,0.1);
+  }
+
+  #result-table th.desc-col,
+  #result-table td.desc-cell {
+    min-width: 340px;
+    max-width: 560px;
+  }
+  #result-table td.desc-cell {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.35;
+  }
+  #result-table td.clase-cell .badge {
+    white-space: normal;
+    line-height: 1.2;
+  }
+
 </style>
 </head>
 <body>
@@ -637,36 +1002,24 @@
 <div id="tab-kpis" class="tab-pane">
   <div class="container">
     
-    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px;">1. OBJETIVOS MÁXIMOS DE INVENTARIO</div>
-    <div class="grid-3" id="kpi-global-container" style="margin-bottom:30px;"></div>
+    <div class="kpi-section-title">1. Objetivos Máximos de Inventario</div>
+    <div class="grid-3" id="kpi-global-container" style="margin-bottom:24px;"></div>
     
-    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px; margin-top:30px;">2. INDICADORES AVANZADOS DE INVENTARIO</div>
-    <div id="advanced-kpi-container" class="grid-4" style="margin-bottom:30px;">
-      </div>
+    <div id="kpi-executive-summary"></div>
 
-    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px; margin-top:30px;">3. EXCESO VS FALTANTE</div>
-    <div id="exceso-faltante-container" style="margin-bottom:30px;">
-      </div>
+    <div class="quick-filter-bar" id="quick-filters-holder"></div>
 
-    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px; margin-top:30px;">4. KPIs DE EFICIENCIA OPERATIVA</div>
-    <div class="grid-2" style="margin-bottom:30px;">
-      <div class="panel">
-        <div class="panel-header"><h3><span class="icon">🔄</span> Índice de Rotación (Global)</h3></div>
-        <div class="panel-body" style="text-align:center;">
-            <div class="value" id="kpi-rotacion" style="font-size:32px; color:var(--accent);">0.00</div>
-            <div class="sub">Vueltas al inventario (Periodo: 90 días)</div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-header"><h3><span class="icon">📅</span> Días de Inventario Promedio</h3></div>
-        <div class="panel-body" style="text-align:center;">
-            <div class="value" id="kpi-dias-inv" style="font-size:32px; color:var(--accent2);">0</div>
-            <div class="sub">Días promedio de cobertura</div>
-        </div>
-      </div>
-    </div>
+    <div class="kpi-section-title">2. Estado Financiero del Inventario</div>
+    <div id="kpi-financial-section" class="grid-4" style="margin-bottom:20px;"></div>
+    <div id="exceso-faltante-container" style="margin-bottom:24px;"></div>
 
-    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px;">5. ÍNDICES DE INVENTARIO (ACTUAL VS OBJETIVOS)</div>
+    <div class="kpi-section-title">3. Cobertura y Riesgo Operativo</div>
+    <div id="kpi-coverage-section" class="grid-3" style="margin-bottom:24px;"></div>
+
+    <div class="kpi-section-title">4. Flujo Operativo y Planeación</div>
+    <div id="kpi-flow-section" class="grid-2" style="margin-bottom:24px;"></div>
+
+    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px; margin-top:30px;">5. ÍNDICES DE INVENTARIO (ACTUAL VS OBJETIVOS)</div>
     <div style="margin-bottom:30px; display:flex; flex-direction:column; gap:20px;">
       <div class="panel">
         <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
@@ -684,9 +1037,8 @@
       </div>
     </div>
 
-    <div style="margin-bottom:20px; font-weight:600; color:var(--text2); letter-spacing:1px; margin-top:30px;">6. ALERTAS INTELIGENTES DE INVENTARIO</div>
-    <div id="alerts-inventory-container" class="panel" style="margin-bottom:30px;">
-      </div>
+    <div class="kpi-section-title">6. Alertas Inteligentes de Inventario</div>
+    <div id="alerts-inventory-container" class="panel" style="margin-bottom:30px;"></div>
 
     <div class="panel">
       <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
@@ -1434,6 +1786,7 @@
 </div>
 
 <div id="toast"></div>
+<button id="btn-scroll-top" type="button" onclick="scrollCurrentTabToTop()">⬆ Arriba</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
@@ -1455,6 +1808,10 @@ let excludedKeys = JSON.parse(localStorage.getItem('DRP_SYSTEMS_excluded') || '[
 let reviewGroups = JSON.parse(localStorage.getItem('DRP_SYSTEMS_grupos') || '[]');
 // Mapa para guardar el costo de la compra más reciente
 let costosHistoricosMap = {};
+// Mapa para guardar la fecha más reciente de compra por clave
+let ultimaCompraMap = {};
+//Mapa para guardar la fecha de la última venta por plaza
+let ultimaVentaPlazaMap = {};
 // Mapa GLOBAL para el filtro por ciudades de la tabla de distribución
 let globalClasesMap = {}; 
 
@@ -1570,8 +1927,11 @@ function deleteGrupo(id) {
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  btn.classList.add('active');
+  const pane = document.getElementById('tab-' + name);
+  if (pane) pane.classList.add('active');
+  if (btn) btn.classList.add('active');
+  updateScrollTopButton(name);
+  setTimeout(setupGenericTableFilters, 80);
 }
 
 // ═══════════════════════════════════════════════
@@ -1612,6 +1972,61 @@ function fmtMoney(n) { return '$' + Number(n).toLocaleString('es-MX', {minimumFr
 function fmtDate(d) {
   if (!d || !(d instanceof Date) || isNaN(d)) return '—';
   return d.toLocaleDateString('es-MX', {day:'2-digit', month:'2-digit', year:'numeric'});
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function getCostoUnitarioProducto(clave) {
+  const key = String(clave || '').trim().toUpperCase();
+  if (!key) return 0;
+  const inv = rawInventario.find(i => i.CLAVE === key && i.COSTO > 0);
+  if (inv) return inv.COSTO;
+  if (costosHistoricosMap[key]) return costosHistoricosMap[key];
+  const venta = rawVentas.find(v => v.CLAVE === key && v.COSTO_TOTAL > 0 && v.VENTA > 0);
+  if (venta) return venta.COSTO_TOTAL / Math.max(venta.VENTA, 1);
+  return 0;
+}
+
+function getMontoCostoVenta(v) {
+  const costoTotal = parseNum(v?.COSTO_TOTAL);
+  if (costoTotal > 0) return costoTotal;
+  const unidades = Math.max(parseNum(v?.VENTA), 0);
+  const costoUnit = getCostoUnitarioProducto(v?.CLAVE);
+  if (unidades > 0 && costoUnit > 0) return unidades * costoUnit;
+  return parseNum(v?.PRECIO_VENTA);
+}
+
+function getMontoRecepcion(r) {
+  const total = parseNum(r?.COSTO_TOTAL);
+  if (total > 0) return total;
+  const piezas = Math.max(parseNum(r?.PIEZAS), 0);
+  const costoUnit = parseNum(r?.COSTO_UNIT);
+  return piezas * costoUnit;
+}
+
+function makeClavePlazaKey(clave, plaza) {
+  return String(clave || '').trim().toUpperCase() + '||' + String(plaza || '').trim().toLowerCase();
+}
+
+function getUltimaCompraProducto(clave) {
+  const key = String(clave || '').trim().toUpperCase();
+  if (!key) return null;
+  if (ultimaCompraMap[key]) return ultimaCompraMap[key];
+  let latest = null;
+  for (const r of rawRecepciones) {
+    if (r.CLAVE === key && r.FECHA_COMPRA instanceof Date && !isNaN(r.FECHA_COMPRA)) {
+      if (!latest || r.FECHA_COMPRA > latest) latest = r.FECHA_COMPRA;
+    }
+  }
+  if (latest) ultimaCompraMap[key] = latest;
+  return latest;
 }
 
 // ═══════════════════════════════════════════════
@@ -1842,10 +2257,16 @@ function normalizeRec(rows) {
   }
   
   out.sort((a,b) => (a.FECHA_COMPRA || 0) - (b.FECHA_COMPRA || 0));
-  costosHistoricosMap = {}; 
+  costosHistoricosMap = {};
+  ultimaCompraMap = {};
   for (const r of out) {
     if (r.COSTO_UNIT > 0) {
       costosHistoricosMap[r.CLAVE] = r.COSTO_UNIT;
+    }
+    if (r.FECHA_COMPRA instanceof Date && !isNaN(r.FECHA_COMPRA)) {
+      if (!ultimaCompraMap[r.CLAVE] || r.FECHA_COMPRA > ultimaCompraMap[r.CLAVE]) {
+        ultimaCompraMap[r.CLAVE] = r.FECHA_COMPRA;
+      }
     }
   }
   
@@ -2063,13 +2484,14 @@ function runAnalysis() {
 //   MOTOR DE KPIS AVANZADOS E INDICADORES CRUZADOS
 // ═══════════════════════════════════════════════
 
+// Variable global para controlar la categoría activa en los filtros rápidos visuales
+let currentKpiFilter = 'all';
+
 function calcularKpisAvanzados() {
-  // Verificación de datos mínimos para el cálculo operativo
   const tieneInv = rawInventario && rawInventario.length > 0;
   const tieneVen = rawVentas && rawVentas.length > 0;
   const tieneRec = rawRecepciones && rawRecepciones.length > 0;
 
-  // Inicialización de acumuladores analíticos globales
   let inventarioTotalActual = 0;
   let excesoTotal = 0;
   let faltanteTotal = 0;
@@ -2077,32 +2499,28 @@ function calcularKpisAvanzados() {
   let recepcionTotalPeriodo = 0;
   let compraSugeridaTotal = 0;
   
-  // Variables de control de rango de tiempo
   let diasPeriodoVentas = parseInt(document.getElementById('dias-historial').value) || 35;
-  
-  // Estructura intermedia de mapeo por Familias (Clases)
   let analisisFamilias = {};
 
-  // 1. Mapear y procesar existencias e inversión por clases
+  // 1. Agrupamiento y procesamiento primario de existencias
   if (tieneInv) {
     rawInventario.forEach(r => {
-      if (r.UNIDAD === 'QS') return; // Ignorar Quality según requerimiento
+      if (r.UNIDAD === 'QS') return;
       const costoFila = r.TOTCOST || (r.STOCK * r.COSTO);
       const plaza = getPlazaOfUb(r.UBICACION);
       if (!plaza) return;
 
       const clase = r.CLASE || 'SIN_CLASE';
       if (!analisisFamilias[clase]) {
-        analisisFamilias[clase] = { stockActual: 0, stockObjetivo: 0, ventas: 0, recepciones: 0, rezago: 0, claves: new Set() };
+        analisisFamilias[clase] = { stockActual: 0, stockObjetivo: 0, ventas: 0, recepciones: 0, rezago: 0 };
       }
       analisisFamilias[clase].stockActual += costoFila;
       analisisFamilias[clase].rezago += r.REZAGO;
-      analisisFamilias[clase].claves.add(r.CLAVE);
       inventarioTotalActual += costoFila;
     });
   }
 
-  // 2. Cruzar metas de objetivos definidos desde KPI_TARGETS
+  // 2. Vinculación de metas de objetivos configuradas
   if (KPI_TARGETS) {
     ['chetumal', 'cancun'].forEach(plaza => {
       const targetsPlaza = KPI_TARGETS[plaza] || [];
@@ -2111,15 +2529,14 @@ function calcularKpisAvanzados() {
           if (analisisFamilias[claseMatch]) {
             analisisFamilias[claseMatch].stockObjetivo += target.obj;
           } else if (tieneInv) {
-            // Si la clase no tiene existencias pero está mapeada en objetivos
-            analisisFamilias[claseMatch] = { stockActual: 0, stockObjetivo: target.obj, ventas: 0, recepciones: 0, rezago: 0, claves: new Set() };
+            analisisFamilias[claseMatch] = { stockActual: 0, stockObjetivo: target.obj, ventas: 0, recepciones: 0, rezago: 0 };
           }
         });
       });
     });
   }
 
-  // 3. Cruzar histórico de ventas del periodo analizado
+  // 3. Procesamiento de transacciones de venta
   if (tieneVen) {
     const fechas = rawVentas.map(v => v.FECHA).filter(Boolean).sort((a,b) => a-b);
     if (fechas.length > 1) {
@@ -2128,48 +2545,39 @@ function calcularKpisAvanzados() {
     rawVentas.forEach(v => {
       if (v.UNIDAD === 'QS' || v.VENTA <= 0) return;
       const clase = v.CLASE || 'SIN_CLASE';
-      if (analisisFamilias[clase]) {
-        analisisFamilias[clase].ventas += v.COSTO_TOTAL;
+      const montoVenta = getMontoCostoVenta(v);
+      if (!analisisFamilias[clase]) {
+        analisisFamilias[clase] = { stockActual: 0, stockObjetivo: 0, ventas: 0, recepciones: 0, rezago: 0 };
       }
-      ventaTotalPeriodo += v.COSTO_TOTAL;
+      analisisFamilias[clase].ventas += montoVenta;
+      ventaTotalPeriodo += montoVenta;
     });
   }
 
-  // 4. Cruzar histórico de recepciones / ingresos de mercancía
+  // 4. Procesamiento de registros de recepción
   if (tieneRec) {
     rawRecepciones.forEach(r => {
       const clase = r.CLASE || 'SIN_CLASE';
-      if (analisisFamilias[clase]) {
-        analisisFamilias[clase].recepciones += r.COSTO_TOTAL;
+      const montoRec = getMontoRecepcion(r);
+      if (!analisisFamilias[clase]) {
+        analisisFamilias[clase] = { stockActual: 0, stockObjetivo: 0, ventas: 0, recepciones: 0, rezago: 0 };
       }
-      recepcionTotalPeriodo += r.COSTO_TOTAL;
+      analisisFamilias[clase].recepciones += montoRec;
+      recepcionTotalPeriodo += montoRec;
     });
   }
 
-  // Variables contadoras de tipologías de familias
-  let conteoQuiebre = 0;
-  let conteoLento = 0;
-  let conteoSinMovimiento = 0;
+  let conteoQuiebre = 0, conteoLento = 0, conteoSinMovimiento = 0;
   let conteoVerde = 0, conteoAmarillo = 0, conteoRojo = 0;
   let capitalInmovilizadoTotal = 0;
-
-  // Matriz temporal para construir el set de alertas inteligentes
   let listaAlertas = [];
 
-  // 5. Procesamiento del loop algorítmico por clase para determinar KPIs derivados
+  // 5. Análisis paramétrico por familia
   Object.keys(analisisFamilias).forEach(clase => {
     const fam = analisisFamilias[clase];
-    const vda = fam.ventas / diasPeriodoVentas; // Venta diaria promedio de la familia
+    const vda = fam.ventas / diasPeriodoVentas;
     
-    // Cálculo de días de cobertura de la familia
-    let diasCobertura = 0;
-    if (vda > 0) {
-      diasCobertura = fam.stockActual / vda;
-    } else {
-      diasCobertura = fam.stockActual > 0 ? 9999 : 0;
-    }
-
-    // Evaluación contra objetivos financieros
+    let diasCobertura = vda > 0 ? fam.stockActual / vda : (fam.stockActual > 0 ? 9999 : 0);
     let diff = fam.stockActual - fam.stockObjetivo;
     let tieneObjetivo = fam.stockObjetivo > 0;
     let pctCumplimiento = tieneObjetivo ? (fam.stockActual / fam.stockObjetivo) * 100 : 0;
@@ -2178,212 +2586,567 @@ function calcularKpisAvanzados() {
     let severidad = "Correcto";
     let accion = "Mantener monitoreo";
 
-    // Reglas de negocio para catalogación de alertas y capital inmovilizado
-    if (fam.stockActual > 0 && fam.ventas === 0) {
-      tipoAlerta = "Inventario sin movimiento";
-      severidad = "Crítico";
-      accion = "Validar obsolescencia y liquidar inventario";
-      conteoSinMovimiento++;
-      capitalInmovilizadoTotal += fam.stockActual;
-    } else if (diasCobertura > 120 && fam.ventas > 0) {
-      tipoAlerta = "Inventario lento";
-      severidad = "Advertencia";
-      accion = "Revisar precio, promoción y reducir futuras compras";
-      conteoLento++;
-      capitalInmovilizadoTotal += (diff > 0 ? diff : fam.stockActual * 0.2); // Ponderación de riesgo
-    } else if (diasCobertura < 15 && fam.ventas > 0) {
-      tipoAlerta = "Riesgo de quiebre";
-      severidad = "Crítico";
-      accion = "Priorizar compra urgente y revisar recepciones pendientes";
-      conteoQuiebre++;
-    } else if (diff > 0 && tieneObjetivo) {
-      tipoAlerta = "Sobrestock";
-      severidad = pctCumplimiento > 130 ? "Crítico" : "Advertencia";
-      accion = "Detener compras temporalmente y transferir faltantes";
+    // 👉 AQUÍ ESTÁ EL CANDADO LÓGICO CORRECTAMENTE POSICIONADO 👈
+    if (!tieneVen) {
+      tipoAlerta = "Pendiente de ventas";
+      severidad = "Informativo";
+      accion = "Carga el reporte de Ventas para evaluar salida y riesgo.";
+      if (diff > 0 && tieneObjetivo) {
+        tipoAlerta = "Sobrestock (Preliminar)";
+        severidad = "Advertencia";
+        accion = "Carga ventas para confirmar si hay estancamiento real.";
+      }
+    } else {
+      if (fam.stockActual > 0 && fam.ventas === 0) {
+        tipoAlerta = "Inventario sin movimiento";
+        severidad = "Crítico";
+        accion = "Validar liquidación, transferencia o baja rotación.";
+        conteoSinMovimiento++;
+        capitalInmovilizadoTotal += fam.stockActual;
+      } else if (diasCobertura > 120 && fam.ventas > 0) {
+        tipoAlerta = "Inventario lento";
+        severidad = "Advertencia";
+        accion = "Revisar promoción, precio o futuras compras.";
+        conteoLento++;
+        capitalInmovilizadoTotal += (diff > 0 ? diff : fam.stockActual * 0.15);
+      } else if (diasCobertura < 15 && fam.ventas > 0) {
+        tipoAlerta = "Riesgo de quiebre";
+        severidad = "Crítico";
+        accion = "Priorizar compra urgente y revisar recepciones pendientes.";
+        conteoQuiebre++;
+      } else if (diff > 0 && tieneObjetivo) {
+        tipoAlerta = "Sobrestock";
+        severidad = pctCumplimiento > 130 ? "Crítico" : "Advertencia";
+        accion = "Detener compras temporales o transferir stock.";
+      }
     }
 
-    // Clasificación de semáforos de familias críticas
     if (tieneObjetivo) {
       if (pctCumplimiento >= 90 && pctCumplimiento <= 110) conteoVerde++;
       else if ((pctCumplimiento >= 75 && pctCumplimiento < 90) || (pctCumplimiento > 110 && pctCumplimiento <= 130)) conteoAmarillo++;
       else conteoRojo++;
     }
 
-    if (diff > 0) {
-      excesoTotal += diff;
-      if (tipoAlerta === "Sobrestock") capitalInmovilizadoTotal += diff;
-    } else if (diff < 0) {
-      faltanteTotal += Math.abs(diff);
-      compraSugeridaTotal += Math.abs(diff);
-    }
+    if (diff > 0) excessTotalCalc(diff);
+    else if (diff < 0) deficientTotalCalc(diff);
 
-    // Inyección en la lista de alertas estructurales
+    function excessTotalCalc(val) { excesoTotal += val; }
+    function deficientTotalCalc(val) { faltanteTotal += Math.abs(val); compraSugeridaTotal += Math.abs(val); }
+
     listaAlertas.push({
-      clase: clase,
-      actual: fam.stockActual,
-      objetivo: fam.stockObjetivo,
-      vda: vda,
-      cobertura: diasCobertura,
-      diferencia: diff,
-      tipo: tipoAlerta,
-      severidad: severidad,
-      accion: accion
+      clase, actual: fam.stockActual, objetivo: fam.stockObjetivo, vda, cobertura: diasCobertura, diferencia: diff, tipo: tipoAlerta, severidad, accion
     });
   });
 
-  // Cálculo global de venta diaria y cobertura de la empresa
   const vdaGlobal = ventaTotalPeriodo / diasPeriodoVentas;
   const diasCoberturaGlobal = vdaGlobal > 0 ? (inventarioTotalActual / vdaGlobal) : 0;
+  const totalObjetivoGlobal = KPI_TARGETS ? (KPI_TARGETS.global.chetumal + KPI_TARGETS.global.cancun) : 0;
 
-  // 6. RENDERIZADO DE NUEVAS TARJETAS: INDICADORES AVANZADOS DE INVENTARIO
-  const advancedContainer = document.getElementById('advanced-kpi-container');
-  if (advancedContainer) {
-    let htmlCards = "";
+  // Renderizados modulares ejecutivos
+  if(typeof renderExecutiveSummaryStrip === 'function') renderExecutiveSummaryStrip(excesoTotal, conteoQuiebre, conteoSinMovimiento, diasCoberturaGlobal);
+  if(typeof renderQuickFilterPills === 'function') renderQuickFilterPills(conteoQuiebre, conteoLento, conteoSinMovimiento);
+  if(typeof renderFinancialInventoryBlock === 'function') renderFinancialInventoryBlock(inventarioTotalActual, excesoTotal, totalObjetivoGlobal, faltanteTotal);
+  if(typeof renderExcesoVsFaltanteCardView === 'function') renderExcesoVsFaltanteCardView(excesoTotal, faltanteTotal);
+  if(typeof renderCoverageRiskBlock === 'function') renderCoverageRiskBlock(diasCoberturaGlobal, vdaGlobal, conteoQuiebre, conteoLento, conteoSinMovimiento, conteoVerde, conteoAmarillo, conteoRojo, inventarioTotalActual, listaAlertas);
+  if(typeof renderOperationalFlowBlock === 'function') renderOperationalFlowBlock(recepcionTotalPeriodo, ventaTotalPeriodo, vdaGlobal, compraSugeridaTotal, capitalInmovilizadoTotal, listaAlertas);
+  if(typeof renderInventoryAlertsTableFiltered === 'function') renderInventoryAlertsTableFiltered(listaAlertas);
+}
 
-    // KPI 1: Inventario Total Actual
-    htmlCards += buildAdvancedCard("📦", "Inventario Total Actual", fmtMoney(inventarioTotalActual), "Representa el valor total de mercancía disponible actualmente.", "status-blue", "Informativo");
+// --- RENDER 1: RESUMEN EJECUTIVO HORIZONTAL COMPACTO ---
+function renderExecutiveSummaryStrip(exceso, quiebres, sinMov, cobertura) {
+  const container = document.getElementById('kpi-executive-summary');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div class="exec-summary-strip">
+      <div class="exec-summary-item" style="color: var(--danger);">
+        <span>🔴</span> <span class="label">Exceso Global:</span> <span class="value">${fmtMoney(exceso)}</span>
+      </div>
+      <div class="exec-summary-item" style="color: var(--warn);">
+        <span>🟠</span> <span class="label">Riesgo de Quiebre:</span> <span class="value">${quiebres} familias</span>
+      </div>
+      <div class="exec-summary-item" style="color: var(--danger);">
+        <span>🛑</span> <span class="label">Sin Movimiento:</span> <span class="value">${sinMov} familias</span>
+      </div>
+      <div class="exec-summary-item" style="color: var(--success);">
+        <span>🟢</span> <span class="label">Cobertura Promedio:</span> <span class="value">${cobertura > 0 ? Math.round(cobertura) + ' días' : 'Sin venta'}</span>
+      </div>
+    </div>
+  `;
+}
 
-    // KPI 2: Exceso sobre objetivo
-    htmlCards += buildAdvancedCard("📈", "Exceso sobre objetivo", KPI_TARGETS ? fmtMoney(excesoTotal) : "Sin objetivo", "Mide el valor de mercancía por encima del nivel recomendado. Detecta capital parado.", excesoTotal > 0 ? "status-red" : "status-green", excesoTotal > 0 ? "Exceso Activo" : "Optimizado");
+// --- RENDER 2: FILTROS RÁPIDOS DIRECTIVOS ---
+function renderQuickFilterPills(q, l, sm) {
+  const container = document.getElementById('quick-filters-holder');
+  if (!container) return;
 
-    // KPI 3: Faltante para objetivo
-    htmlCards += buildAdvancedCard("📉", "Faltante para objetivo", KPI_TARGETS ? fmtMoney(faltanteTotal) : "Sin objetivo", "Mide cuánto inventario falta para alcanzar el nivel recomendado en familias deficitarias.", faltanteTotal > 0 ? "status-yellow" : "status-green", faltanteTotal > 0 ? "Déficit Detectado" : "Completo");
+  const chips = [
+    { id: 'all', label: '🌍 Todos los KPIs', count: '' },
+    { id: 'criticos', label: '🔴 Críticos', count: q + sm },
+    { id: 'exceso', label: '📦 Solo Excesos', count: '' },
+    { id: 'quiebre', label: '🚨 Riesgo Quiebre', count: q },
+    { id: 'sin_mov', label: '❄️ Sin Movimiento', count: sm }
+  ];
 
-    // KPI 4: Días promedio de cobertura
-    let txtCob = vdaGlobal > 0 ? `${Math.round(diasCoberturaGlobal)} días` : "Sin venta";
-    if (inventarioTotalActual > 0 && vdaGlobal === 0) txtCob = "∞";
-    htmlCards += buildAdvancedCard("📅", "Días promedio de cobertura", txtCob, "Indica cuántos días puede operar la empresa con el stock actual si mantiene el ritmo de venta.", diasCoberturaGlobal < 15 ? "status-red" : (diasCoberturaGlobal > 90 ? "status-yellow" : "status-green"), diasCoberturaGlobal < 15 ? "Crítico" : "Estable");
+  container.innerHTML = chips.map(c => `
+    <button class="filter-chip ${currentKpiFilter === c.id ? 'active-chip' : ''}" onclick="setKpiActiveFilter('${c.id}')">
+      ${c.label} ${c.count !== '' ? `<span style="font-size:10px; background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:10px;">${c.count}</span>` : ''}
+    </button>
+  `).join('');
+}
 
-    // KPI 5: Riesgo de quiebre
-    htmlCards += buildAdvancedCard("🚨", "Riesgo de quiebre", `${conteoQuiebre} Familias`, "Identifica productos o familias con baja cobertura y riesgo inminente de agotarse.", conteoQuiebre > 0 ? "status-red" : "status-green", conteoQuiebre > 0 ? "Atención Urgente" : "Seguro");
+function setKpiActiveFilter(filterId) {
+  currentKpiFilter = filterId;
+  calcularKpisAvanzados(); // Refresca aplicando filtros cruzados en tablas
+}
 
-    // KPI 6: Inventario Lento
-    htmlCards += buildAdvancedCard("⏳", "Inventario lento", `${conteoLento} Familias`, "Detecta mercancía que sí tiene venta, pero a un ritmo insuficiente para justificar el stock actual.", conteoLento > 0 ? "status-yellow" : "status-green", conteoLento > 0 ? "Sobrecobertura" : "Salida Sana");
+// --- RENDER 3: BLOQUE FINANCIERO (CON CLICS) ---
+function renderFinancialInventoryBlock(totalActual, exceso, totalObj, faltante) {
+  const container = document.getElementById('kpi-financial-section');
+  if (!container) return;
 
-    // KPI 7: Inventario sin movimiento
-    htmlCards += buildAdvancedCard("❄️", "Inventario sin movimiento", `${conteoSinMovimiento} Familias`, "Identifica mercancía con existencia disponible pero con cero ventas en el periodo evaluado.", conteoSinMovimiento > 0 ? "status-red" : "status-green", conteoSinMovimiento > 0 ? "Dinero Congelado" : "Activo");
+  let pctExceso = totalObj > 0 ? (totalActual / totalObj) * 100 : 0;
 
-    // KPI 8: Recepción vs venta
-    let txtRec = "Sin datos de recepción";
-    let statusRecClass = "status-blue";
-    if (tieneRec && ventaTotalPeriodo > 0) {
-      const ratio = (recepcionTotalPeriodo / ventaTotalPeriodo) * 100;
-      txtRec = `${ratio.toFixed(0)}%`;
-      statusRecClass = ratio > 115 ? "status-yellow" : (ratio < 85 ? "status-red" : "status-green");
-    }
-    const ratioExplicacion = tieneRec && ventaTotalPeriodo > 0 ? `Por cada $100 vendidos, se recibieron $${((recepcionTotalPeriodo / ventaTotalPeriodo) * 100).toFixed(0)} en mercancía.` : "Compara mercancía recibida contra mercancía vendida.";
-    htmlCards += buildAdvancedCard("🔄", "Recepción vs venta", txtRec, ratioExplicacion, statusRecClass, "Flujo de Entradas");
+  container.innerHTML = `
+    <div class="kpi-adv-card card-crit-blue clickable-card" onclick="executeKpiAction('inv_total')">
+      <div class="header-meta"><span>Financiero</span><span class="badge badge-gray">MXN</span></div>
+      <div class="main-val" style="color: var(--text);">${fmtMoney(totalActual)}</div>
+      <div class="title-lbl">Inventario Total Actual</div>
+      <div class="concept-short">Clic para auditar universo completo de SKUs en módulo Inventarios.</div>
+      <span class="adv-card-status status-blue">Informativo</span>
+    </div>
 
-    // KPI 9: Venta promedio diaria
-    htmlCards += buildAdvancedCard("📊", "Venta promedio diaria", fmtMoney(vdaGlobal), "Indica el ritmo promedio de venta de costo diaria. Base para el cálculo de reabastecimiento.", "status-blue", "Ritmo Operativo");
+    <div class="kpi-adv-card card-crit-red clickable-card" onclick="executeKpiAction('exceso_obj')">
+      <div class="header-meta"><span>Excedentes</span><span class="badge badge-gray">MXN</span></div>
+      <div class="main-val" style="color: var(--danger);">${fmtMoney(exceso)}</div>
+      <div class="title-lbl">Exceso sobre Objetivo</div>
+      <div class="concept-short">Clic para aislar claves rezagadas que comprometen el flujo de efectivo.</div>
+      ${renderKpiProgressBar(pctExceso, 'var(--danger)')}
+      <div style="font-size:10px; color:var(--text3); margin-top:4px;">Capacidad del Objetivo: ${pctExceso.toFixed(0)}%</div>
+    </div>
 
-    // KPI 10: Compra sugerida
-    htmlCards += buildAdvancedCard("🛒", "Compra sugerida", KPI_TARGETS ? fmtMoney(compraSugeridaTotal) : "Sin objetivo", "Estima cuánto inventario se debería comprar para recuperar niveles objetivo sin sobrestock.", "status-blue", "Planeación");
+    <div class="kpi-adv-card card-crit-yellow clickable-card" onclick="executeKpiAction('faltante_obj')">
+      <div class="header-meta"><span>Déficit</span><span class="badge badge-gray">MXN</span></div>
+      <div class="main-val" style="color: var(--warn);">${fmtMoney(faltante)}</div>
+      <div class="title-lbl">Faltante para Objetivo</div>
+      <div class="concept-short">Clic para generar reporte de compras y visualizar inyección de capital requerida.</div>
+      <span class="adv-card-status status-yellow">🔴 Requiere compra</span>
+    </div>
+  `;
+}
 
-    // KPI 11: Capital inmovilizado
-    htmlCards += buildAdvancedCard("🔒", "Capital inmovilizado", fmtMoney(capitalInmovilizadoTotal), "Representa dinero invertido en mercancía con baja salida, excesos o nula rotación.", capitalInmovilizadoTotal > 0 ? "status-red" : "status-green", capitalInmovilizadoTotal > 0 ? "Costo de Oportunidad" : "Eficiente");
+// --- RENDER 4: CARD EXCESO VS FALTANTE (CON CLICS) ---
+function renderExcesoVsFaltanteCardView(exceso, faltante) {
+  const container = document.getElementById('exceso-faltante-container');
+  if (!container) return;
 
-    // KPI 12: Familias críticas
-    htmlCards += buildAdvancedCard("📋", "Familias críticas", KPI_TARGETS ? `${conteoRojo} Críticas` : "Sin objetivo", `Semáforo de control: ${conteoVerde} en rango óptimo, ${conteoAmarillo} advertencias y ${conteoRojo} desalineadas.`, conteoRojo > 0 ? "status-red" : "status-green", "Estatus de Catálogo");
+  const balanceNeto = exceso - faltante;
+  const totalBarra = exceso + faltante;
+  const pctExcesoBar = totalBarra > 0 ? (exceso / totalBarra) * 100 : 50;
+  const pctFaltanteBar = totalBarra > 0 ? (faltante / totalBarra) * 100 : 50;
 
-    // KPI 13: Tendencia de inventario
-    const histInv = localStorage.getItem('DRP_SYSTEMS_hist_total_inv');
-    let txtTendencia = "Sin histórico";
-    let statusTendClass = "status-blue";
-    if (histInv && tieneInv) {
-      const histVal = parseFloat(histInv);
-      const varAbs = inventarioTotalActual - histVal;
-      const varPct = (varAbs / histVal) * 100;
-      txtTendencia = `${varPct > 0 ? '+' : ''}${varPct.toFixed(1)}%`;
-      statusTendClass = Math.abs(varPct) > 10 ? "status-yellow" : "status-green";
-    }
-    // Almacenar el inventario actual como la foto histórica para la siguiente corrida
-    localStorage.setItem('DRP_SYSTEMS_hist_total_inv', inventarioTotalActual.toFixed(2));
-    htmlCards += buildAdvancedCard("📉", "Tendencia de inventario", txtTendencia, "Muestra si el volumen de inventario está creciendo o disminuyendo respecto a la captura anterior.", statusTendClass, "Variación Macroeconómica");
-
-    advancedContainer.innerHTML = htmlCards;
-  }
-
-  // 7. RENDERIZADO DE SECCIÓN: EXCESO VS FALTANTE
-  const excesoFaltanteContainer = document.getElementById('exceso-faltante-container');
-  if (excesoFaltanteContainer) {
-    const balanceNeto = excesoTotal - faltanteTotal;
-    excesoFaltanteContainer.innerHTML = `
-      <div class="panel" style="padding:16px;">
-        <div class="balance-grid">
-          <div style="border-right: 1px solid var(--border); padding-right:16px;">
-            <div style="font-size:10px; color:var(--text3); text-transform:uppercase;">Exceso Total Acumulado</div>
-            <div style="font-size:22px; font-weight:700; color:var(--danger); margin-top:4px;">${fmtMoney(excesoTotal)}</div>
-            <div style="font-size:11px; color:var(--text2); margin-top:2px;">Capital excedente en sucursales.</div>
-          </div>
-          <div style="border-right: 1px solid var(--border); padding-left:16px; padding-right:16px;">
-            <div style="font-size:10px; color:var(--text3); text-transform:uppercase;">Faltante Total Acumulado</div>
-            <div style="font-size:22px; font-weight:700; color:var(--warn); margin-top:4px;">${fmtMoney(faltanteTotal)}</div>
-            <div style="font-size:11px; color:var(--text2); margin-top:2px;">Inversión requerida para cubrir huecos.</div>
-          </div>
-          <div style="padding-left:16px;">
-            <div style="font-size:10px; color:var(--text3); text-transform:uppercase;">Balance Neto Estratégico</div>
-            <div style="font-size:22px; font-weight:700; color:${balanceNeto >= 0 ? 'var(--accent2)' : 'var(--success)'}; margin-top:4px;">
-              ${balanceNeto >= 0 ? '+' : ''}${fmtMoney(balanceNeto)}
-            </div>
-            <div style="font-size:11px; color:var(--text2); margin-top:2px;">Muestra si el problema es de sobrecompra o desbalance.</div>
-          </div>
+  container.innerHTML = `
+    <div class="panel-balance-wrapper">
+      <div class="balance-metric-row">
+        <div class="balance-block" style="cursor:pointer;" onclick="executeKpiAction('balance_exceso')">
+          <span class="balance-label">Exceso Total Acumulado <span style="font-size:10px;">↗</span></span>
+          <span class="balance-number" style="color: var(--danger);">${fmtMoney(exceso)}</span>
+        </div>
+        <div class="balance-block" style="border-left: 1px solid var(--border); padding-left:24px; cursor:pointer;" onclick="executeKpiAction('faltante_obj')">
+          <span class="balance-label">Faltante Total Acumulado <span style="font-size:10px;">↗</span></span>
+          <span class="balance-number" style="color: var(--warn);">${fmtMoney(faltante)}</span>
+        </div>
+        <div class="balance-block" style="border-left: 1px solid var(--border); padding-left:24px;">
+          <span class="balance-label">Balance Neto Financiero</span>
+          <span class="balance-number" style="color: ${balanceNeto >= 0 ? 'var(--accent2)' : 'var(--success)'};">
+            ${balanceNeto >= 0 ? '+' : ''}${fmtMoney(balanceNeto)}
+          </span>
         </div>
       </div>
-    `;
+      <div class="dual-bar-container">
+        <div class="dual-bar-exceso" style="width: ${pctExcesoBar}%;"></div>
+        <div class="dual-bar-faltante" style="width: ${pctFaltanteBar}%;"></div>
+      </div>
+    </div>
+  `;
+}
+
+// --- RENDER 5: COBERTURA Y RIESGO OPERATIVO (CORREGIDO + GRÁFICAS) ---
+function renderCoverageRiskBlock(cobGlobal, vdaGlobal, q, l, sm, cv, ca, cr, inventarioTotalActual, listaAlertas) {
+  const container = document.getElementById('kpi-coverage-section');
+  if (!container) return;
+
+  let txtCob = vdaGlobal > 0 ? `${Math.round(cobGlobal)} días` : "Sin venta";
+  if (cobGlobal >= 9999) txtCob = "∞";
+  
+  let estadoCobClass = "status-green"; let estadoCobTxt = "Cobertura estable";
+  if (vdaGlobal === 0 && inventarioTotalActual > 0) {
+      estadoCobClass = "status-red"; estadoCobTxt = "Faltan datos de Venta";
+  } else if (cobGlobal < 15 && vdaGlobal > 0) {
+      estadoCobClass = "status-red"; estadoCobTxt = "🔴 Crítico: Quiebre";
   }
 
-  // 8. RENDERIZADO DE SECCIÓN: ALERTAS INTELIGENTES DE INVENTARIO
-  const tableAlertsContainer = document.getElementById('alerts-inventory-container');
-  if (tableAlertsContainer) {
-    // Ordenar alertas por severidad: Crítico -> Advertencia -> Informativo -> Correcto
-    const pesosSeveridad = { "Crítico": 4, "Advertencia": 3, "Informativo": 2, "Correcto": 1 };
-    listaAlertas.sort((a,b) => pesosSeveridad[b.severidad] - pesosSeveridad[a.severidad]);
+  const topDias = [...listaAlertas].filter(a => a.cobertura > 0 && a.cobertura < 9999).sort((a,b) => b.cobertura - a.cobertura).slice(0,5).map(a => ({etiqueta: a.clase, valor: Math.round(a.cobertura), color: 'var(--accent2)'}));
+  const topQuiebre = [...listaAlertas].filter(a => a.cobertura > 0 && a.cobertura < 15).sort((a,b) => a.cobertura - b.cobertura).slice(0,5).map(a => ({etiqueta: a.clase, valor: Math.round(a.cobertura), color: 'var(--danger)'}));
+  const topSinMov = [...listaAlertas].filter(a => a.tipo === "Inventario sin movimiento").sort((a,b) => b.actual - a.actual).slice(0,5).map(a => ({etiqueta: a.clase, valor: a.actual, color: 'var(--danger)'}));
 
-    let htmlTable = `
-      <div class="panel-header"><h3><span class="icon">🚨</span> Matriz Analítica de Alertas Operativas</h3></div>
-      <div class="panel-body" style="padding:0;">
-        <div class="table-wrapper">
-          <table class="alert-table">
-            <thead>
-              <tr>
-                <th>Familia</th>
-                <th class="num">Stock Actual</th>
-                <th class="num">Objetivo</th>
-                <th class="num">Vta Prom Diaria</th>
-                <th class="num">Días Cob.</th>
-                <th class="num">Desviación</th>
-                <th style="text-align:center;">Tipo Alerta</th>
-                <th style="text-align:center;">Severidad</th>
-                <th>Acción Sugerida Directiva</th>
-              </tr>
-            </thead>
-            <tbody>
+  container.innerHTML = `
+    <div class="kpi-adv-card ${estadoCobClass === 'status-red' ? 'card-crit-red' : 'card-crit-green'} clickable-card" onclick="executeKpiAction('dias_cob')">
+      <div class="header-meta">
+        <span class="badge badge-gray">Rotación Mínima</span>
+        <button class="chart-toggle-btn" onclick="event.stopPropagation(); toggleCardChart(this)">📊 Ver Top</button>
+      </div>
+      <div class="main-val" style="color: ${estadoCobClass === 'status-red' ? 'var(--danger)' : 'var(--success)'};">${txtCob}</div>
+      <div class="title-lbl">Días Promedio de Cobertura</div>
+      <div class="concept-short">Clic para ordenar compras por extrema urgencia.</div>
+      <span class="adv-card-status ${estadoCobClass}">${estadoCobTxt}</span>
+      <div class="card-chart-area">${buildFullChart(topDias, false)}</div>
+    </div>
+
+    <div class="kpi-adv-card ${q > 0 ? 'card-crit-red' : 'card-crit-green'} clickable-card" onclick="executeKpiAction('quiebre')">
+      <div class="header-meta">
+        <span class="badge badge-gray">Urgencia Compra</span>
+        <button class="chart-toggle-btn" onclick="event.stopPropagation(); toggleCardChart(this)">📊 Gráfica</button>
+      </div>
+      <div class="main-val" style="color: ${q > 0 ? 'var(--danger)' : 'var(--success)'};">${q} Familias</div>
+      <div class="title-lbl">Riesgo de Quiebre</div>
+      <div class="concept-short">Clic para aislar matriz de alertas críticas de desabasto.</div>
+      ${q > 0 ? '<div class="action-rec rec-crit">⚠️ Acción: Priorizar pedido inmediato.</div>' : '<span class="adv-card-status status-green">Sin riesgo</span>'}
+      <div class="card-chart-area">${buildFullChart(topQuiebre, false)}</div>
+    </div>
+
+    <div class="kpi-adv-card ${sm > 0 ? 'card-crit-red' : 'card-crit-green'} clickable-card" onclick="executeKpiAction('sin_mov')">
+      <div class="header-meta">
+        <span class="badge badge-gray">Capital Muerto</span>
+        <button class="chart-toggle-btn" onclick="event.stopPropagation(); toggleCardChart(this)">📊 Top Estancadas</button>
+      </div>
+      <div class="main-val" style="color: ${sm > 0 ? 'var(--danger)' : 'var(--success)'};">${sm} Familias</div>
+      <div class="title-lbl">Inventario Sin Movimiento</div>
+      <div class="concept-short">Clic para ver matriz de liquidación u obsolescencia.</div>
+      ${sm > 0 ? '<div class="action-rec rec-crit">⚠️ Acción: Liquidar o reasignar.</div>' : '<span class="adv-card-status status-green">Salida limpia</span>'}
+      <div class="card-chart-area">${buildFullChart(topSinMov, true)}</div>
+    </div>
+  `;
+}
+
+// --- RENDER 6: FLUJO OPERATIVO Y PLANEACIÓN ---
+function renderOperationalFlowBlock(rec, ven, vda, compraSug, capInmovilizado, listaAlertas) {
+  const container = document.getElementById('kpi-flow-section');
+  if (!container) return;
+
+  let txtRecVsVen = "Sin datos cargados";
+  let barVentaPct = 0, barRecPct = 0;
+  let mensajeRec = "Carga ambos reportes para evaluar.";
+  let statusCardColor = "card-crit-blue";
+  
+  if (rec > 0 || ven > 0) {
+      if (ven > 0) {
+          let ratio = (rec / ven) * 100;
+          txtRecVsVen = `${ratio.toFixed(0)}%`;
+          barRecPct = Math.min((rec / Math.max(rec, ven)) * 100, 100);
+          barVentaPct = Math.min((ven / Math.max(rec, ven)) * 100, 100);
+          mensajeRec = rec > ven ? '🟠 Crecimiento de inventario' : '🟢 Descenso de inventario';
+          statusCardColor = rec > ven ? "card-crit-yellow" : "card-crit-blue";
+      } else {
+          txtRecVsVen = `Sólo Entradas`;
+          barRecPct = 100; barVentaPct = 0;
+          mensajeRec = '🔴 Faltan ventas para evaluar índice.';
+          statusCardColor = "card-crit-red";
+      }
+  }
+
+  const datosBalanceGlobal = [
+      { etiqueta: 'Ventas Netas', valor: ven, color: 'var(--accent2)' },
+      { etiqueta: 'Recepciones', valor: rec, color: 'var(--warn)' }
+  ];
+  const topSugerida = [...listaAlertas].filter(a => a.diferencia < 0).sort((a,b) => a.diferencia - b.diferencia).slice(0,5).map(a => ({etiqueta: a.clase, valor: Math.abs(a.diferencia), color: 'var(--warn)'}));
+
+  container.innerHTML = `
+    <div class="kpi-adv-card ${statusCardColor} clickable-card" onclick="executeKpiAction('rec_ven')">
+      <div class="header-meta">
+        <span class="badge badge-gray">% Variación</span>
+        <button class="chart-toggle-btn" onclick="event.stopPropagation(); toggleCardChart(this)">📊 Balance Visual</button>
+      </div>
+      <div class="main-val" style="color: var(--text);">${txtRecVsVen}</div>
+      <div class="title-lbl">Recepción vs Venta</div>
+      
+      <div style="margin-top:6px;">
+        <div style="font-size:9px; color:var(--text2); display:flex; justify-content:space-between;"><span>VENTAS</span> <span>${fmtMoney(ven)}</span></div>
+        <div class="card-progress-container"><div class="card-progress-fill" style="width:${barVentaPct}%; background:var(--accent2);"></div></div>
+        
+        <div style="font-size:9px; color:var(--text2); margin-top:4px; display:flex; justify-content:space-between;"><span>RECEPCIONES</span> <span>${fmtMoney(rec)}</span></div>
+        <div class="card-progress-container"><div class="card-progress-fill" style="width:${barRecPct}%; background:var(--warn);"></div></div>
+      </div>
+      
+      <div class="concept-short" style="margin-top:8px;">Clic para abrir cruce en módulo Recepciones.</div>
+      <div class="card-chart-area">${buildFullChart(datosBalanceGlobal, true)}</div>
+    </div>
+
+    <div class="kpi-adv-card card-crit-yellow clickable-card" onclick="executeKpiAction('compra_sug')">
+      <div class="header-meta">
+        <span class="badge badge-gray">Presupuesto Sugerido MXN</span>
+        <button class="chart-toggle-btn" onclick="event.stopPropagation(); toggleCardChart(this)">📊 Ver Top Familias</button>
+      </div>
+      <div class="main-val" style="color: var(--warn);">${fmtMoney(compraSug)}</div>
+      <div class="title-lbl">Compra Sugerida Estratégica</div>
+      <div class="concept-short">Clic para autogenerar reporte de compras por déficit objetivo.</div>
+      <div class="card-chart-area">${buildFullChart(topSugerida, true)}</div>
+    </div>
+  `;
+}
+
+// --- FUNCION INTERACTIVA PARA EXPANDIR LA TARJETA ---
+function toggleCardChart(btn) {
+  const card = btn.closest('.kpi-adv-card');
+  card.classList.toggle('expanded-chart');
+}
+
+// --- GENERADOR DE GRÁFICA DE BARRAS EN PURO HTML/CSS ---
+function buildFullChart(datos, isMoney = false) {
+  if(!datos || datos.length === 0) return '<div style="margin:auto; color:var(--text3); font-size:11px;">No hay datos suficientes para graficar.</div>';
+  
+  const maxVal = Math.max(...datos.map(d => d.valor)) || 1;
+  
+  return datos.map(d => {
+    const heightPct = Math.max(5, (d.valor / maxVal) * 100);
+    const displayVal = isMoney ? fmtMoney(d.valor) : fmt(d.valor);
+    return `
+      <div class="css-bar-wrapper">
+        <div class="css-bar-val">${displayVal}</div>
+        <div class="css-bar" style="height: ${heightPct}%; background: ${d.color || 'var(--accent)'};"></div>
+        <div class="css-bar-lbl" title="${d.etiqueta}">${d.etiqueta}</div>
+      </div>
     `;
+  }).join('');
+}
 
-    listaAlertas.forEach(alerta => {
-      let badgeClass = alerta.severidad === "Crítico" ? "badge-red" : (alerta.severidad === "Advertencia" ? "badge-yellow" : (alerta.severidad === "Informativo" ? "badge-blue" : "badge-green"));
-      let devColor = alerta.diferencia > 0 ? "var(--danger)" : (alerta.diferencia < 0 ? "var(--warn)" : "var(--text3)");
-      let cobText = alerta.cobertura >= 9999 ? "∞" : `${Math.round(alerta.cobertura)}d`;
+// --- RENDER 5: COBERTURA Y RIESGO OPERATIVO (CORREGIDO + GRÁFICAS) ---
+// Ahora la función requiere recibir 'listaAlertas' y el total del inventario para graficar correctamente
+function renderCoverageRiskBlock(cobGlobal, vdaGlobal, q, l, sm, cv, ca, cr, inventarioTotalActual, listaAlertas) {
+  const container = document.getElementById('kpi-coverage-section');
+  if (!container) return;
+
+  // 1. Corrección de lógica para "Sin Venta"
+  let txtCob = vdaGlobal > 0 ? `${Math.round(cobGlobal)} días` : "Sin venta";
+  if (cobGlobal >= 9999) txtCob = "∞";
+  
+  let estadoCobClass = "status-green";
+  let estadoCobTxt = "Cobertura estable";
+  
+  if (vdaGlobal === 0 && inventarioTotalActual > 0) {
+      estadoCobClass = "status-red";
+      estadoCobTxt = "🔴 Riesgo: Inventario inmovilizado sin salida";
+  } else if (cobGlobal < 15 && vdaGlobal > 0) {
+      estadoCobClass = "status-red";
+      estadoCobTxt = "🔴 Crítico: Quiebre inminente";
+  } else if (cobGlobal > 120) {
+      estadoCobClass = "status-yellow";
+      estadoCobTxt = "🟠 Advertencia: Lento movimiento";
+  }
+
+  // Preparación de datos para las gráficas expansibles
+  const topDias = [...listaAlertas].filter(a => a.cobertura > 0 && a.cobertura < 9999).sort((a,b) => b.cobertura - a.cobertura).slice(0,5).map(a => ({etiqueta: a.clase, valor: Math.round(a.cobertura), color: 'var(--accent2)'}));
+  const topQuiebre = [...listaAlertas].filter(a => a.cobertura > 0 && a.cobertura < 15).sort((a,b) => a.cobertura - b.cobertura).slice(0,5).map(a => ({etiqueta: a.clase, valor: Math.round(a.cobertura), color: 'var(--danger)'}));
+  const topSinMov = [...listaAlertas].filter(a => a.tipo === "Inventario sin movimiento").sort((a,b) => b.actual - a.actual).slice(0,5).map(a => ({etiqueta: a.clase, valor: a.actual, color: 'var(--danger)'}));
+
+  container.innerHTML = `
+    <div class="kpi-adv-card ${estadoCobClass === 'status-red' ? 'card-crit-red' : 'card-crit-green'}">
+      <div class="header-meta">
+        <span>Rotación</span>
+        <button class="chart-toggle-btn" onclick="toggleCardChart(this)">📊 Ver gráfica</button>
+      </div>
+      <div class="main-val" style="color: ${estadoCobClass === 'status-red' ? 'var(--danger)' : 'var(--success)'};">${txtCob}</div>
+      <div class="title-lbl">Días Promedio de Cobertura</div>
+      <div class="concept-short">Tiempo estimado de duración del inventario actual al ritmo de venta diaria.</div>
+      <span class="adv-card-status ${estadoCobClass}">${estadoCobTxt}</span>
+      <div class="card-chart-area">${buildFullChart(topDias, false)}</div>
+    </div>
+
+    <div class="kpi-adv-card ${q > 0 ? 'card-crit-red' : 'card-crit-green'}">
+      <div class="header-meta">
+        <span>Alertas Críticas</span>
+        <button class="chart-toggle-btn" onclick="toggleCardChart(this)">📊 Familias Críticas</button>
+      </div>
+      <div class="main-val" style="color: ${q > 0 ? 'var(--danger)' : 'var(--success)'};">${q} Familias</div>
+      <div class="title-lbl">Riesgo de Quiebre</div>
+      <div class="concept-short">Familias operando con existencias menores a 15 días críticos de venta.</div>
+      ${q > 0 ? '<div class="action-rec rec-crit">⚠️ Acción sugerida: Priorizar compra o revisar recepción pendiente.</div>' : '<span class="adv-card-status status-green">Sin riesgo</span>'}
+      <div class="card-chart-area">${buildFullChart(topQuiebre, false)}</div>
+    </div>
+
+    <div class="kpi-adv-card ${sm > 0 ? 'card-crit-red' : 'card-crit-green'}">
+      <div class="header-meta">
+        <span>Obsolescencia</span>
+        <button class="chart-toggle-btn" onclick="toggleCardChart(this)">📊 Capital Congelado</button>
+      </div>
+      <div class="main-val" style="color: ${sm > 0 ? 'var(--danger)' : 'var(--success)'};">${sm} Familias</div>
+      <div class="title-lbl">Inventario Sin Movimiento</div>
+      <div class="concept-short">SKUs con disponibilidad de stock física pero con $0 ventas en los últimos 90 días.</div>
+      ${sm > 0 ? '<div class="action-rec rec-crit">⚠️ Acción sugerida: Validar liquidación, transferencia o baja rotación.</div>' : '<span class="adv-card-status status-green">Salida limpia</span>'}
+      <div class="card-chart-area">${buildFullChart(topSinMov, true)}</div>
+    </div>
+  `;
+}
+
+// --- RENDER 6: FLUJO OPERATIVO Y PLANEACIÓN (CORREGIDO + GRÁFICAS) ---
+function renderOperationalFlowBlock(rec, ven, vda, compraSug, capInmovilizado, listaAlertas) {
+  const container = document.getElementById('kpi-flow-section');
+  if (!container) return;
+
+  // 1. Corrección de lógica "Sin datos de recepción" o "Sin Venta pero con compras"
+  let txtRecVsVen = "Sin datos cargados";
+  let barVentaPct = 0, barRecPct = 0;
+  let mensajeRec = "Carga ambos reportes para evaluar entradas vs salidas.";
+  let statusCardColor = "card-crit-blue";
+  
+  if (rec > 0 || ven > 0) {
+      if (ven > 0) {
+          let ratio = (rec / ven) * 100;
+          txtRecVsVen = `${ratio.toFixed(0)}%`;
+          barRecPct = Math.min((rec / Math.max(rec, ven)) * 100, 100);
+          barVentaPct = Math.min((ven / Math.max(rec, ven)) * 100, 100);
+          mensajeRec = rec > ven ? '🟠 Entradas mayores a ventas (Aumento de stock en tránsito)' : '🟢 Cobertura estable (Venta absorbe entradas)';
+          statusCardColor = rec > ven ? "card-crit-yellow" : "card-crit-blue";
+      } else if (rec > 0 && ven === 0) {
+          txtRecVsVen = `Sólo Entradas`;
+          barRecPct = 100; barVentaPct = 0;
+          mensajeRec = '🔴 Compras recientes detectadas, pero $0 registradas en ventas.';
+          statusCardColor = "card-crit-red";
+      }
+  }
+
+  // Preparación de datos para la gráfica
+  const datosBalanceGlobal = [
+      { etiqueta: 'Ventas Efectivas', valor: ven, color: 'var(--accent2)' },
+      { etiqueta: 'Valor de Recepciones', valor: rec, color: 'var(--warn)' }
+  ];
+  
+  const topSugerida = [...listaAlertas].filter(a => a.diferencia < 0).sort((a,b) => a.diferencia - b.diferencia).slice(0,5).map(a => ({etiqueta: a.clase, valor: Math.abs(a.diferencia), color: 'var(--warn)'}));
+
+  container.innerHTML = `
+    <div class="kpi-adv-card ${statusCardColor}">
+      <div class="header-meta">
+        <span>Abastecimiento</span>
+        <button class="chart-toggle-btn" onclick="toggleCardChart(this)">📊 Balance Ingresos/Salidas</button>
+      </div>
+      <div class="main-val" style="color: var(--text);">${txtRecVsVen}</div>
+      <div class="title-lbl">Recepción vs Venta</div>
+      
+      <div style="margin-top:6px;">
+        <div style="font-size:9px; color:var(--text2); display:flex; justify-content:space-between;"><span>VENTAS</span> <span>${fmtMoney(ven)}</span></div>
+        <div class="card-progress-container"><div class="card-progress-fill" style="width:${barVentaPct}%; background:var(--accent2);"></div></div>
+        
+        <div style="font-size:9px; color:var(--text2); margin-top:4px; display:flex; justify-content:space-between;"><span>RECEPCIONES</span> <span>${fmtMoney(rec)}</span></div>
+        <div class="card-progress-container"><div class="card-progress-fill" style="width:${barRecPct}%; background:var(--warn);"></div></div>
+      </div>
+      
+      <div class="concept-short" style="margin-top:8px;">${mensajeRec}</div>
+      <div class="card-chart-area">${buildFullChart(datosBalanceGlobal, true)}</div>
+    </div>
+
+    <div class="kpi-adv-card card-crit-yellow">
+      <div class="header-meta">
+        <span>Eficiencia y Reabastecimiento</span>
+        <button class="chart-toggle-btn" onclick="toggleCardChart(this)">📊 Prioridad de Compra</button>
+      </div>
+      <div class="main-val" style="color: var(--warn);">${fmtMoney(compraSug)}</div>
+      <div class="title-lbl">Compra Sugerida Directiva</div>
+      <div class="concept-short">Presupuesto recomendado enfocado exclusivamente en mitigar familias con déficit respecto al objetivo configurado.</div>
+      <div class="action-rec">⚠️ Acción sugerida: Priorizar familias con déficit crítico.</div>
+      <div class="card-chart-area">${buildFullChart(topSugerida, true)}</div>
+    </div>
+  `;
+}
+
+// --- RENDER 7: MATRIZ DE ALERTAS CON FILTRADO INTERACTIVO CRUZADO ---
+function renderInventoryAlertsTableFiltered(alertas) {
+  const container = document.getElementById('alerts-inventory-container');
+  if (!container) return;
+
+  // Aplicación estricta de filtros desde los chips superiores
+  let filteredAlerts = alertas.filter(a => {
+    if (currentKpiFilter === 'criticos') return a.severidad === "Crítico";
+    if (currentKpiFilter === 'exceso') return a.tipo === "Sobrestock";
+    if (currentKpiFilter === 'quiebre') return a.tipo === "Riesgo de quiebre";
+    if (currentKpiFilter === 'sin_mov') return a.tipo === "Inventario sin movimiento";
+    return true; // 'all'
+  });
+
+  const pesosSeveridad = { "Crítico": 4, "Advertencia": 3, "Informativo": 2, "Correcto": 1 };
+  filteredAlerts.sort((a,b) => pesosSeveridad[b.severidad] - pesosSeveridad[a.severidad]);
+
+  let htmlTable = `
+    <div class="panel-header"><h3><span class="icon">🚨</span> Alertas Operativas Filtradas (${filteredAlerts.length})</h3></div>
+    <div class="panel-body" style="padding:0;">
+      <div class="table-wrapper">
+        <table class="alert-table">
+          <thead>
+            <tr>
+              <th>Familia / Clase</th>
+              <th class="num">Stock Actual</th>
+              <th class="num">Objetivo</th>
+              <th class="num">Vta Prom Diaria</th>
+              <th class="num">Días Cob.</th>
+              <th class="num">Desviación</th>
+              <th style="text-align:center;">Tipo Alerta</th>
+              <th style="text-align:center;">Severidad</th>
+              <th>Acción Operativa Sugerida</th>
+            </tr>
+          </thead>
+          <tbody>
+  `;
+
+  if (filteredAlerts.length === 0) {
+    htmlTable += `<tr><td colspan="9" style="text-align:center; color:var(--text3); padding:30px;">No existen alertas operativas bajo esta clasificación de filtro.</td></tr>`;
+  } else {
+    filteredAlerts.forEach(a => {
+      let badgeClass = a.severidad === "Crítico" ? "badge-red" : (a.severidad === "Advertencia" ? "badge-yellow" : "badge-blue");
+      let devColor = a.diferencia > 0 ? "var(--danger)" : (a.diferencia < 0 ? "var(--warn)" : "var(--text3)");
+      let cobText = a.cobertura >= 9999 ? "∞" : `${Math.round(a.cobertura)}d`;
 
       htmlTable += `
         <tr>
-          <td><span class="badge badge-blue">${alerta.clase}</span></td>
-          <td class="num" style="font-weight:600;">${fmtMoney(alerta.actual)}</td>
-          <td class="num">${fmtMoney(alerta.objetivo)}</td>
-          <td class="num" style="color:var(--text2);">${fmtMoney(alerta.vda)}</td>
+          <td><span class="badge badge-blue">${a.clase}</span></td>
+          <td class="num" style="font-weight:600;">${fmtMoney(a.actual)}</td>
+          <td class="num">${fmtMoney(a.objetivo)}</td>
+          <td class="num" style="color:var(--text2);">${fmtMoney(a.vda)}</td>
           <td class="num" style="font-weight:600;">${cobText}</td>
-          <td class="num" style="color:${devColor}; font-weight:600;">${alerta.diferencia > 0 ? '+' : ''}${fmtMoney(alerta.diferencia)}</td>
-          <td style="text-align:center; font-size:11px;">${alerta.tipo}</td>
-          <td style="text-align:center;"><span class="badge ${badgeClass}">${alerta.severidad}</span></td>
-          <td class="text-cell" style="font-size:11px; color:var(--text2);">${alerta.accion}</td>
+          <td class="num" style="color:${devColor}; font-weight:600;">${a.diferencia > 0 ? '+' : ''}${fmtMoney(a.diferencia)}</td>
+          <td style="text-align:center; font-size:11px;">${a.tipo}</td>
+          <td style="text-align:center;"><span class="badge ${badgeClass}">${a.severidad}</span></td>
+          <td class="text-cell" style="font-size:11px; color:var(--text2);">${a.accion || 'Mantener monitoreo operativo base.'}</td>
         </tr>
       `;
     });
-
-    htmlTable += `</tbody></table></div></div>`;
-    tableAlertsContainer.innerHTML = htmlTable;
   }
+
+  htmlTable += `</tbody></table></div></div>`;
+  container.innerHTML = htmlTable;
+  setTimeout(setupGenericTableFilters, 50);
+}
+
+// --- FUNCIONES AUXILIARES DE MINI COMPONENTES VISUALES ---
+function renderKpiProgressBar(pct, color) {
+  const widthOb = Math.min(pct, 100);
+  return `
+    <div class="card-progress-container">
+      <div class="card-progress-fill" style="width: ${widthOb}%; background: ${color};"></div>
+    </div>
+  `;
+}
+
+function renderMiniSparkline(valores) {
+  const max = Math.max(...valores);
+  const min = Math.min(...valores);
+  const rango = max - min || 1;
+  
+  let barsHtml = valores.map(v => {
+    const alturaPct = ((v - min) / rango) * 100;
+    const alturaPx = Math.max(3, (alturaPct * 14) / 100); // Tope de altura 14px
+    return `<div class="micro-bar" style="height: ${alturaPx}px;"></div>`;
+  }).join('');
+
+  return `<div class="micro-sparkrow" title="Tendencia de actividad de reportes anteriores">${barsHtml}</div>`;
 }
 
 // Función constructora auxiliar de tarjetas de KPI
@@ -2567,6 +3330,7 @@ function generateReport() {
     const invMeta = invRows[0];
     const CLASE = invMeta ? invMeta.CLASE : (rawVentas.find(v=>v.CLAVE===clave)?.CLASE || '');
     const DESCRIPCION = invMeta ? invMeta.DESCRIPCION : (rawVentas.find(v=>v.CLAVE===clave)?.DESCRIPCION || '');
+    const ULTIMA_COMPRA = getUltimaCompraProducto(clave);
     
     let COSTO = invRows.find(r => r.COSTO > 0)?.COSTO || rawVentas.find(v=>v.CLAVE===clave && v.COSTO_TOTAL>0)?.COSTO_TOTAL || 0;
     if (COSTO === 0) {
@@ -2593,7 +3357,7 @@ function generateReport() {
     if (marcasFiltro.length > 0 && !marcasFiltro.some(f => MARCA === f || clave.startsWith(f))) continue;
     if (excludedKeys.includes(clave)) continue;
 
-    resultByKey[clave] = { CLAVE: clave, CLASE, DESCRIPCION, COSTO, MARCA, plazas: {} };
+    resultByKey[clave] = { CLAVE: clave, CLASE, DESCRIPCION, ULTIMA_COMPRA, COSTO, MARCA, plazas: {} };
 
     for (const plaza of selectedPlazas) {
       const ubsInventarioSet = new Set([...PLAZAS[plaza].tiendas, ...PLAZAS[plaza].bodega]);
@@ -2643,12 +3407,12 @@ function generateReport() {
       const plaza = selectedPlazas[0];
       const p = data.plazas[plaza];
       if (!p) continue;
-      reportData.push({ CLAVE: clave, CLASE: data.CLASE, DESCRIPCION: data.DESCRIPCION, COSTO: data.COSTO, MARCA: data.MARCA, PLAZA: plaza, ...p });
+      reportData.push({ CLAVE: clave, CLASE: data.CLASE, DESCRIPCION: data.DESCRIPCION, ULTIMA_COMPRA: data.ULTIMA_COMPRA, COSTO: data.COSTO, MARCA: data.MARCA, PLAZA: plaza, ...p });
     } else {
       for (const plaza of selectedPlazas) {
         const p = data.plazas[plaza];
         if (!p) continue;
-        reportData.push({ CLAVE: clave, CLASE: data.CLASE, DESCRIPCION: data.DESCRIPCION, COSTO: data.COSTO, MARCA: data.MARCA, PLAZA: plaza, ...p });
+        reportData.push({ CLAVE: clave, CLASE: data.CLASE, DESCRIPCION: data.DESCRIPCION, ULTIMA_COMPRA: data.ULTIMA_COMPRA, COSTO: data.COSTO, MARCA: data.MARCA, PLAZA: plaza, ...p });
       }
     }
   }
@@ -2672,6 +3436,7 @@ function generateReport() {
   buildTable();
   populateClaseFilter();
   showToast('✅ Reporte generado: ' + reportData.length + ' registros');
+  setTimeout(setupGenericTableFilters, 80);
 
   document.getElementById('panel-params').classList.add('collapsed');
 }
@@ -2702,6 +3467,7 @@ function renderTable() {
     { key:'diasCoberturaActual', label:'Días Cob.',      sortable:true },
     { key:'necesidad',        label:'Necesidad',         sortable:true },
     { key:'piezasAPedir',     label:'✦ A PEDIR',         sortable:true },
+    { key:'ULTIMA_COMPRA',    label:'Últ. compra',       sortable:true },
     { key:'COSTO',            label:'LastCost',          sortable:true },
     { key:'_total',           label:'Total $',           sortable:true },
     { key:'_actions',         label:'',                  sortable:false },
@@ -2710,7 +3476,8 @@ function renderTable() {
   thead.innerHTML = '<tr>' + cols.map(c => {
     let cls = '';
     if (c.key === sortCol) cls = sortDir > 0 ? 'sort-asc' : 'sort-desc';
-    return `<th class="${cls}" ${c.sortable ? `onclick="sortTable('${c.key}')"` : ''}>${c.label}</th>`;
+    const extraCls = c.key === 'DESCRIPCION' ? ' desc-col' : '';
+    return `<th class="${cls}${extraCls}" ${c.sortable ? `onclick="sortTable('${c.key}')"` : ''}>${c.label}</th>`;
   }).join('') + '</tr>';
 
   if (!filteredData.length) {
@@ -2748,8 +3515,8 @@ function renderTable() {
 
     return `<tr class="${rowClass}">
       <td><code style="font-size:11px">${r.CLAVE}</code></td>
-      <td class="text-cell" style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${r.DESCRIPCION}">${r.DESCRIPCION}</td>
-      <td><span class="badge badge-blue">${r.CLASE}</span></td>
+      <td class="text-cell desc-cell" title="${escapeHtml(r.DESCRIPCION)}">${escapeHtml(r.DESCRIPCION)}</td>
+      <td class="clase-cell"><span class="badge badge-blue">${escapeHtml(r.CLASE)}</span></td>
       <td><span class="badge badge-gray">${r.MARCA||'—'}</span></td>
       <td>${plazaBadge}</td>
       <td class="num">${fmt(r.stockTotal)}</td>
@@ -2760,6 +3527,7 @@ function renderTable() {
       <td class="num">${diasCob}</td>
       <td class="num" style="color:var(--text2)">${r.necesidad.toFixed(1)}</td>
       <td class="num">${piezasHtml}</td>
+      <td>${fmtDate(r.ULTIMA_COMPRA)}</td>
       <td class="num" style="color:var(--text3)">${fmtMoney(r.COSTO)}</td>
       <td class="num" style="font-weight:600">${r.piezasAPedir > 0 ? fmtMoney(totalCost) : '—'}</td>
       <td><button class="btn btn-danger btn-sm" onclick="excludeKey('${r.CLAVE}')" title="Excluir">🚫</button></td>
@@ -2773,8 +3541,13 @@ function sortTable(col) {
   const getVal = r => col === '_total' ? r.piezasAPedir * r.COSTO : r[col];
   filteredData.sort((a,b) => {
     const va = getVal(a), vb = getVal(b);
+    if (va instanceof Date || vb instanceof Date) {
+      const ta = va instanceof Date ? va.getTime() : 0;
+      const tb = vb instanceof Date ? vb.getTime() : 0;
+      return (ta - tb) * sortDir;
+    }
     if (typeof va === 'number') return (va - vb) * sortDir;
-    return String(va).localeCompare(String(vb)) * sortDir;
+    return String(va ?? '').localeCompare(String(vb ?? '')) * sortDir;
   });
   renderTable();
 }
@@ -2786,7 +3559,7 @@ function filterTable() {
   const clase = document.getElementById('filter-clase-tabla').value;
 
   filteredData = reportData.filter(r => {
-    if (q && !r.CLAVE.toLowerCase().includes(q) && !r.DESCRIPCION.toLowerCase().includes(q)) return false;
+    if (q && !r.CLAVE.toLowerCase().includes(q) && !String(r.DESCRIPCION||'').toLowerCase().includes(q) && !String(r.CLASE||'').toLowerCase().includes(q) && !String(r.MARCA||'').toLowerCase().includes(q)) return false;
     if (plaza && r.PLAZA !== plaza) return false;
     if (clase && r.CLASE !== clase) return false;
     if (estado === 'comprar' && r.piezasAPedir <= 0) return false;
@@ -2859,6 +3632,7 @@ function analizarRecepciones() {
 
   renderRecTable();
   buildRecWarnings(data);
+  setTimeout(setupGenericTableFilters, 80);
 
   showToast('✅ Recepciones analizadas: ' + data.length + ' registros');
 }
@@ -3087,7 +3861,7 @@ function renderExcluded() {
 function exportCSV(tipo) {
   if (tipo === 'pedidos') {
     if (!filteredData.length) { showToast('⚠ No hay datos para exportar'); return; }
-    const headers = ['CLAVE','DESCRIPCION','CLASE','MARCA','PLAZA','STOCK_TOTAL','REZAGO_INVREZ','VENTAS_PERIODO_QTYSHIP','VENTA_DIARIA','VENTA_MENSUAL','DIAS_COBERTURA_ACT','NECESIDAD','PIEZAS_A_PEDIR','LASTCOST','TOTAL_INVERSION'];
+    const headers = ['CLAVE','DESCRIPCION','CLASE','MARCA','PLAZA','STOCK_TOTAL','REZAGO_INVREZ','VENTAS_PERIODO_QTYSHIP','VENTA_DIARIA','VENTA_MENSUAL','DIAS_COBERTURA_ACT','NECESIDAD','PIEZAS_A_PEDIR','ULTIMA_COMPRA','LASTCOST','TOTAL_INVERSION'];
     const rows = filteredData.map(r => [
       r.CLAVE,
       '"' + (r.DESCRIPCION||'').replace(/"/g,'""') + '"',
@@ -3096,6 +3870,7 @@ function exportCSV(tipo) {
       r.ventaDiaria.toFixed(4), r.ventaMensual.toFixed(2),
       r.diasCoberturaActual >= 9999 ? 'SIN_VENTAS' : r.diasCoberturaActual,
       r.necesidad.toFixed(2), r.piezasAPedir,
+      fmtDate(r.ULTIMA_COMPRA),
       r.COSTO.toFixed(2), (r.piezasAPedir * r.COSTO).toFixed(2)
     ]);
     downloadCSV('pedidos_' + today() + '.csv', headers, rows);
@@ -4069,8 +4844,8 @@ function calcularKpisCruzados() {
   // 1. Costo de ventas (últimos 90 días)
   const limite90d = new Date().getTime() - (90 * 86400000);
   const costoVentas90 = rawVentas
-    .filter(v => v.FECHA.getTime() >= limite90d)
-    .reduce((sum, v) => sum + v.COSTO_TOTAL, 0);
+    .filter(v => v.FECHA && v.FECHA.getTime() >= limite90d)
+    .reduce((sum, v) => sum + getMontoCostoVenta(v), 0);
 
   // 2. Inventario Promedio (Total del reporte actual)
   const inventarioTotal = rawInventario.reduce((sum, i) => sum + (i.TOTCOST || (i.STOCK * i.COSTO)), 0);
@@ -4084,9 +4859,183 @@ function calcularKpisCruzados() {
   const diasInv = ventaDiaria90 > 0 ? (inventarioTotal / ventaDiaria90) : 0;
 
   // Actualizar UI
-  document.getElementById('kpi-rotacion').textContent = rotacion.toFixed(2);
-  document.getElementById('kpi-dias-inv').textContent = Math.round(diasInv);
+  const elRotacion = document.getElementById('kpi-rotacion');
+  const elDiasInv = document.getElementById('kpi-dias-inv');
+  if (elRotacion) elRotacion.textContent = rotacion.toFixed(2);
+  if (elDiasInv) elDiasInv.textContent = Math.round(diasInv);
 }
+
+// ═══════════════════════════════════════════════
+//   ENRUTADOR DE ACCIONES OPERATIVAS Y FILTROS CRUZADOS
+// ═══════════════════════════════════════════════
+
+function executeKpiAction(actionId) {
+    const switchTabSafely = (tabId) => {
+        const btn = document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+        if (btn) btn.click();
+    };
+
+    switch (actionId) {
+        case 'inv_total':
+            switchTabSafely('inventarios');
+            document.getElementById('inv-search-input').value = '';
+            document.getElementById('inv-filter-plaza').value = '';
+            document.getElementById('inv-filter-estado').value = '';
+            if(typeof filtrarInventarios === 'function') filtrarInventarios();
+            showToast("🔍 Universo Completo: Mostrando todo el catálogo físico activo.");
+            break;
+            
+        case 'exceso_obj':
+        case 'cap_inmov':
+        case 'inv_lento':
+            switchTabSafely('inventarios');
+            document.getElementById('inv-filter-estado').value = 'rezago';
+            if(typeof filtrarInventarios === 'function') filtrarInventarios();
+            showToast("🔍 Filtro Automático: Mostrando inventario rezagado y excedentes.");
+            break;
+
+        case 'faltante_obj':
+        case 'compra_sug':
+            switchTabSafely('pedidos');
+            const btnGen = document.getElementById('btn-generar');
+            if(btnGen && !btnGen.disabled) btnGen.click();
+            setTimeout(() => {
+                const fComprar = document.getElementById('filter-comprar');
+                if(fComprar) fComprar.value = 'comprar';
+                if(typeof filterTable === 'function') filterTable();
+                document.getElementById('panel-result').scrollIntoView({behavior: 'smooth'});
+                showToast("🛒 Reporte Filtrado: Mostrando únicamente sugerencias de compra.");
+            }, 600);
+            break;
+
+        case 'dias_cob':
+            switchTabSafely('pedidos');
+            const btnGenCob = document.getElementById('btn-generar');
+            if(btnGenCob && !btnGenCob.disabled) btnGenCob.click();
+            setTimeout(() => {
+                if(typeof sortTable === 'function') {
+                    sortCol = null; sortDir = 1; // Resetea dirección
+                    sortTable('diasCoberturaActual'); // Orden ascendente
+                }
+                document.getElementById('panel-result').scrollIntoView({behavior: 'smooth'});
+                showToast("⏱ Ordenado: Cobertura más crítica en las primeras filas.");
+            }, 600);
+            break;
+
+        case 'quiebre':
+        case 'sin_mov':
+        case 'balance_exceso':
+            // Estas tres llevan a la tabla matriz al final del mismo Dashboard
+            const alertTable = document.getElementById('alerts-inventory-container');
+            if (alertTable) {
+                alertTable.scrollIntoView({behavior: 'smooth'});
+                const chipMap = { 'quiebre': 'quiebre', 'sin_mov': 'sin_mov', 'balance_exceso': 'exceso' };
+                setKpiActiveFilter(chipMap[actionId]);
+            }
+            break;
+
+        case 'rec_ven':
+            switchTabSafely('recepciones');
+            showToast("📥 Auditoría de Entradas: Revisa aquí las OCs registradas en el periodo.");
+            break;
+
+        case 'ven_prom':
+            switchTabSafely('ventas');
+            showToast("💹 Auditoría de Salidas: Evaluando ritmo diario facturado.");
+            break;
+
+        case 'tend_inv':
+            // Despliega Modal o Alerta Nativa
+            const histInv = localStorage.getItem('DRP_SYSTEMS_hist_total_inv');
+            const actual = document.getElementById('inv-stat-valor') ? document.getElementById('inv-stat-valor').innerText : 'Actual';
+            alert(`📉 TENDENCIA MACROECONÓMICA\n\nÚltimo histórico (Sesión anterior): $${histInv || '0'}\nInventario Consolidado Actual: ${actual}\n\n* Compara el impacto de la captura de hoy contra tu última revisión analítica.`);
+            break;
+    }
+}
+
+
+// ═══════════════════════════════════════════════
+//  MEJORAS UI: BOTÓN ARRIBA Y FILTROS UNIVERSALES DE TABLAS
+// ═══════════════════════════════════════════════
+function getActiveTabName() {
+  const pane = document.querySelector('.tab-pane.active');
+  return pane ? pane.id.replace('tab-', '') : '';
+}
+
+function updateScrollTopButton(activeName = getActiveTabName()) {
+  const btn = document.getElementById('btn-scroll-top');
+  if (!btn) return;
+  const allowedTabs = ['ventas', 'recepciones', 'inventarios'];
+  const shouldShow = allowedTabs.includes(activeName) && window.scrollY > 160;
+  btn.classList.toggle('show', shouldShow);
+}
+
+function scrollCurrentTabToTop() {
+  const activePane = document.querySelector('.tab-pane.active');
+  const target = activePane ? activePane.querySelector('.container') || activePane : document.body;
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function setupScrollTopButton() {
+  window.addEventListener('scroll', () => updateScrollTopButton(), { passive: true });
+  updateScrollTopButton();
+}
+
+function applyUniversalTableFilter(tableId, query) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  const q = String(query || '').trim().toLowerCase();
+  const rows = Array.from(table.querySelectorAll('tbody tr'));
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = !q || text.includes(q) ? '' : 'none';
+  });
+}
+
+function setupGenericTableFilters() {
+  const tables = document.querySelectorAll('.table-wrapper table');
+  const skipIds = new Set(['result-table', 'rec-table', 'inv-master-table', 'ven-master-table']);
+  let autoIndex = 0;
+
+  tables.forEach(table => {
+    if (skipIds.has(table.id)) return; // Estos módulos ya tienen filtros maestros dedicados.
+    if (table.dataset.genericFilterReady === '1') return;
+
+    if (!table.id) {
+      do { autoIndex++; table.id = `auto-filter-table-${autoIndex}-${Date.now()}`; }
+      while (document.querySelectorAll(`#${CSS.escape(table.id)}`).length > 1);
+    }
+
+    const wrapper = table.closest('.table-wrapper');
+    if (!wrapper || (wrapper.previousElementSibling && wrapper.previousElementSibling.classList.contains('universal-table-filter'))) return;
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'universal-table-filter';
+    toolbar.innerHTML = `<input type="text" placeholder="🔍 Filtrar esta tabla..." aria-label="Filtrar tabla">`;
+    const input = toolbar.querySelector('input');
+    input.addEventListener('input', () => applyUniversalTableFilter(table.id, input.value));
+    wrapper.parentNode.insertBefore(toolbar, wrapper);
+    table.dataset.genericFilterReady = '1';
+  });
+}
+
+let tableFilterObserverReady = false;
+function setupTableFilterObserver() {
+  if (tableFilterObserverReady) return;
+  tableFilterObserverReady = true;
+  let timer = null;
+  const observer = new MutationObserver(() => {
+    clearTimeout(timer);
+    timer = setTimeout(setupGenericTableFilters, 120);
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  setupScrollTopButton();
+  setupGenericTableFilters();
+  setupTableFilterObserver();
+});
 
 </script>
 

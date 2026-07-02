@@ -1,1 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cronograma EMAS - A4</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --line: #d9e0e8;
+      --head: #0f172a;
+      --soft: #eef2f7;
+      --accent: #1f4e79;
+      --a: #e8f2ff;
+      --b: #eefbea;
+      --c: #fff4df;
+      --d: #f4eafe;
+    }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.35;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      padding: 12px;
+      background: rgba(244, 246, 248, .92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, .12);
+    }
+
+    button.secondary {
+      background: #334155;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 28px));
+      margin: 18px auto 36px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, .08);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 24px 28px 18px;
+      background: linear-gradient(135deg, #0f172a, #1f4e79);
+      color: #fff;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .85;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      font-size: 13px;
+      opacity: .92;
+    }
+
+    main { padding: 20px 24px 26px; }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .legend-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 12px;
+      min-height: 58px;
+    }
+
+    .legend-card strong { display: block; font-size: 13px; color: var(--head); margin-bottom: 3px; }
+    .legend-card.a { background: var(--a); }
+    .legend-card.b { background: var(--b); }
+    .legend-card.c { background: var(--c); }
+    .legend-card.d { background: var(--d); }
+
+    h2 {
+      font-size: 16px;
+      margin: 18px 0 10px;
+      color: var(--head);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 9px;
+      vertical-align: top;
+      font-size: 12px;
+    }
+
+    th {
+      background: var(--soft);
+      color: var(--head);
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .center { text-align: center; }
+    .week { width: 8%; font-weight: 800; color: var(--head); }
+    .block { width: 10%; font-weight: 800; }
+    .days { width: 82%; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 800;
+      border: 1px solid rgba(15, 23, 42, .12);
+    }
+    .tag.a { background: var(--a); }
+    .tag.b { background: var(--b); }
+    .tag.c { background: var(--c); }
+    .tag.d { background: var(--d); }
+
+    .mini-days {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .mini-day {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px;
+      background: #fff;
+      min-height: 60px;
+    }
+
+    .mini-day b {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--head);
+      font-size: 11px;
+    }
+
+    .mini-day span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-bottom: 3px;
+    }
+
+    .codes {
+      font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      font-size: 11.2px;
+      color: #111827;
+      word-break: break-word;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      margin: 10px 0;
+      overflow: hidden;
+      background: white;
+      break-inside: avoid;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 800;
+      color: var(--head);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 20px; line-height: 1; color: var(--accent); }
+    details[open] summary::after { content: "–"; }
+
+    details.a summary { background: var(--a); }
+    details.b summary { background: var(--b); }
+    details.c summary { background: var(--c); }
+    details.d summary { background: var(--d); }
+
+    .detail-table th:nth-child(1) { width: 15%; }
+    .detail-table th:nth-child(2) { width: 32%; }
+    .detail-table th:nth-child(3) { width: 53%; }
+
+    .note {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fafafa;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .legend { grid-template-columns: 1fr 1fr; }
+      .mini-days { grid-template-columns: 1fr; }
+      th, td { font-size: 11px; }
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 8mm;
+    }
+
+    @media print {
+      :root {
+        --bg: #ffffff;
+        --paper: #ffffff;
+        --line: #aeb7c2;
+        --soft: #edf0f4;
+      }
+
+      body { background: white; }
+      .toolbar { display: none !important; }
+      .page {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      header {
+        padding: 8mm 8mm 5mm;
+        background: #0f172a !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      main { padding: 5mm 8mm 0; }
+      h1 { font-size: 18pt; }
+      .subtitle { font-size: 9pt; }
+      .eyebrow { font-size: 8pt; }
+      h2 { font-size: 11pt; margin: 4mm 0 2mm; }
+
+      .legend { gap: 2.5mm; margin-bottom: 3mm; }
+      .legend-card {
+        min-height: 0;
+        padding: 2.5mm;
+        font-size: 8pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .legend-card strong { font-size: 8.5pt; }
+
+      th, td {
+        padding: 2.1mm 2.3mm;
+        font-size: 8.1pt;
+        border-color: #aeb7c2;
+      }
+      th { font-size: 7.3pt; }
+
+      .mini-days {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.6mm;
+      }
+      .mini-day {
+        padding: 1.6mm;
+        border-radius: 2mm;
+        min-height: 0;
+      }
+      .mini-day b { font-size: 7.5pt; margin-bottom: .5mm; }
+      .mini-day span { font-size: 6.7pt; margin-bottom: .8mm; }
+      .codes { font-size: 7.4pt; }
+      .tag {
+        font-size: 7.2pt;
+        padding: 1mm 2mm;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      details {
+        border-radius: 2.5mm;
+        margin: 2mm 0;
+        page-break-inside: avoid;
+      }
+      summary {
+        padding: 2.5mm 3mm;
+        font-size: 8.4pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      summary::after { display: none; }
+      .note { font-size: 7.8pt; padding: 2.5mm; margin-top: 3mm; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="printA4()">Imprimir A4</button>
+    <button class="secondary" onclick="setAllDetails(true)">Expandir bloques</button>
+    <button class="secondary" onclick="setAllDetails(false)">Contraer bloques</button>
+  </div>
+
+  <section class="page">
+    <header>
+      <div class="eyebrow">Acordeón digital para EMAS</div>
+      <h1>Cronograma de revisión por bloques · Ciclo de 12 semanas</h1>
+      <p class="subtitle">Distribución semanal de familias/códigos por día. Formato preparado para impresión en A4 horizontal.</p>
+    </header>
+
+    <main>
+      <section class="legend" aria-label="Leyenda de bloques">
+        <div class="legend-card a"><strong>Bloque A</strong>Semanas 1, 5 y 9</div>
+        <div class="legend-card b"><strong>Bloque B</strong>Semanas 2, 6 y 10</div>
+        <div class="legend-card c"><strong>Bloque C</strong>Semanas 3, 7 y 11</div>
+        <div class="legend-card d"><strong>Bloque D</strong>Semanas 4, 8 y 12</div>
+      </section>
+
+      <h2>Vista rápida del ciclo</h2>
+      <table aria-label="Vista rápida del ciclo de 12 semanas">
+        <thead>
+          <tr>
+            <th class="week center">Semana</th>
+            <th class="block center">Bloque</th>
+            <th class="days">Cronograma semanal</th>
+          </tr>
+        </thead>
+        <tbody id="cycleRows"></tbody>
+      </table>
+
+      <h2>Detalle por bloque</h2>
+      <div id="blockDetails"></div>
+
+      <div class="note">
+        Sugerencia operativa: imprimir en A4 horizontal, escala 100% o “ajustar a página” si la impresora reduce márgenes. Para control semanal, marcar la semana correspondiente y seguir la fila del día.
+      </div>
+    </main>
+  </section>
+
+  <script>
+    const schedule = {
+      A: {
+        weeks: 'Semanas 1, 5 y 9',
+        cls: 'a',
+        days: [
+          ['Lunes', 'Laptops y Accesorios', 'CPLPHI, CPLPME, CPLPLO, ACGELA'],
+          ['Martes', 'Telefonía y Accesorios', 'TCIP00, TCTE00, TCLB00, ACGECE'],
+          ['Miércoles', 'Impresión y Consumibles', 'PEIMMU, COIMTI, COIMTO, COIMPA'],
+          ['Jueves', 'Memorias y Almacenamiento', 'ALMUSB, ALMCEL, ALDDEX'],
+          ['Viernes', 'Entretenimiento y Tablets', 'PEBP00, WEBA00, TAB100']
+        ]
+      },
+      B: {
+        weeks: 'Semanas 2, 6 y 10',
+        cls: 'b',
+        days: [
+          ['Lunes', 'Laptops + Muebles', 'CPLPHI, CPLPME, CPLPLO, ACGELA, MBES00, MBSI00'],
+          ['Martes', 'Telefonía + Cámaras', 'TCIP00, TCTE00, TCLB00, ACGECE, CAFODI, CAPC00'],
+          ['Miércoles', 'Impresión + Limpieza', 'PEIMMU, COIMTI, COIMTO, COIMPA, ACLI00'],
+          ['Jueves', 'Almacenamiento + Cables', 'ALMUSB, ALMCEL, ALDDEX, CABC00, CABV00'],
+          ['Viernes', 'Entretenimiento + Seguridad', 'PEBP00, WEBA00, TAB100, CASE00']
+        ]
+      },
+      C: {
+        weeks: 'Semanas 3, 7 y 11',
+        cls: 'c',
+        days: [
+          ['Lunes', 'Laptops + Escritorio', 'CPLPHI, CPLPME, CPLPLO, ACGELA, CPDK00'],
+          ['Martes', 'Telefonía + Fija', 'TCIP00, TCTE00, TCLB00, ACGECE, ELTL01'],
+          ['Miércoles', 'Impresión + Medios', 'PEIMMU, COIMTI, COIMTO, COIMPA, COALCD'],
+          ['Jueves', 'Almacenamiento + Internos/RAM', 'ALMUSB, ALMCEL, ALDDEX, OEDDIN, OEME00'],
+          ['Viernes', 'Entretenimiento + Videojuegos', 'PEBP00, WEBA00, TAB100, ELVIJU']
+        ]
+      },
+      D: {
+        weeks: 'Semanas 4, 8 y 12',
+        cls: 'd',
+        days: [
+          ['Lunes', 'Laptops + Enseres/Clima', 'CPLPHI, CPLPME, CPLPLO, ACGELA, EDHI00, EDVA00, EDVEPI'],
+          ['Martes', 'Telefonía + Audio/Juguetes', 'TCIP00, TCTE00, TCLB00, ACGECE, ELADHT, ELJUTE'],
+          ['Miércoles', 'Impresión + Acc. Cómputo', 'PEIMMU, COIMTI, COIMTO, COIMPA, ACGE00'],
+          ['Jueves', 'Almacenamiento + Componentes/Procesadores', 'ALMUSB, ALMCEL, ALDDEX, OEGAAT, OEGAMA, OEPCHI, OEPCLO'],
+          ['Viernes', 'Entretenimiento + Pantallas', 'PEBP00, WEBA00, TAB100, ELTV32, ELTV40, ELTV55']
+        ]
+      }
+    };
+
+    const weekToBlock = [
+      ['1', 'A'], ['2', 'B'], ['3', 'C'], ['4', 'D'],
+      ['5', 'A'], ['6', 'B'], ['7', 'C'], ['8', 'D'],
+      ['9', 'A'], ['10', 'B'], ['11', 'C'], ['12', 'D']
+    ];
+
+    function miniDays(block) {
+      return `<div class="mini-days">${schedule[block].days.map(([day, area, codes]) => `
+        <div class="mini-day">
+          <b>${day}</b>
+          <span>${area}</span>
+          <div class="codes">${codes}</div>
+        </div>`).join('')}</div>`;
+    }
+
+    document.getElementById('cycleRows').innerHTML = weekToBlock.map(([week, block]) => {
+      const item = schedule[block];
+      return `<tr>
+        <td class="center week">${week}</td>
+        <td class="center block"><span class="tag ${item.cls}">Bloque ${block}</span></td>
+        <td>${miniDays(block)}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('blockDetails').innerHTML = Object.entries(schedule).map(([block, item]) => `
+      <details class="${item.cls}" open>
+        <summary>Bloque ${block} · ${item.weeks}</summary>
+        <table class="detail-table" aria-label="Detalle Bloque ${block}">
+          <thead>
+            <tr><th>Día</th><th>Familia / enfoque</th><th>Códigos</th></tr>
+          </thead>
+          <tbody>
+            ${item.days.map(([day, area, codes]) => `
+              <tr>
+                <td><strong>${day}</strong></td>
+                <td>${area}</td>
+                <td class="codes">${codes}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </details>
+    `).join('');
+
+    function setAllDetails(open) {
+      document.querySelectorAll('details').forEach(detail => detail.open = open);
+    }
+
+    function printA4() {
+      setAllDetails(true);
+      window.print();
+    }
+
+    window.addEventListener('beforeprint', () => setAllDetails(true));
+  </script>
+</body>
+</html>

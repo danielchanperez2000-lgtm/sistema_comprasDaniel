@@ -5017,10 +5017,12 @@
       const key=norm(id);
       return settings.procurement.buyers.find(item=>norm(item.id)===key)||null;
     }
-    function defaultDestinationForPlaza(plaza){
-      const key=norm(plaza);
-      return settings.procurement.destinations.find(item=>item.active!==false&&norm(item.plaza)===key)
-        ||settings.procurement.destinations.find(item=>item.active!==false)
+    function defaultDestinationForPlaza(plaza,siteId=""){
+      const key=plazaCode({siteId,plaza});
+      const siteKey=norm(siteId);
+      const active=settings.procurement.destinations.filter(item=>item.active!==false);
+      return active.find(item=>siteKey&&norm(item.id)===siteKey)
+        ||active.find(item=>plazaCode(item)===key)
         ||null;
     }
     function syncDetectedCatalogs(){
@@ -5796,10 +5798,11 @@
       const profile=$("engine-active-profile")?.value||settings.policy;
       const scenario=row.scenarios?.[profile]||{};
       const qty=Math.max(0,Math.ceil(number(row.buyActive,number(scenario.finalBuy))));
-      const destination=defaultDestinationForPlaza(row.plaza);
+      const plaza=plazaCode(row);
+      const destination=defaultDestinationForPlaza(plaza,row.siteId);
       return {
-        key:`${row.invtId}|${row.plaza}|${row.siteId}`,
-        invtId:row.invtId,description:row.description,classId:row.classId,plaza:row.plaza,siteId:row.siteId,
+        key:`${row.invtId}|${plaza}|${row.siteId}`,
+        invtId:row.invtId,description:row.description,classId:row.classId,plaza,siteId:row.siteId,
         vendor:norm(row.receipt?.habitualVendor),destination:destination?.id||"",requiredDate:dateKey(addDays(new Date(),number(settings.engine.lead,14))),
         qty,unitCost:number(row.replacementCost),status:STATUS_LABELS[row.activeStatus||scenario.status]||row.activeStatus||scenario.status||"",
         reason:row.activeReason||scenario.reason||"",policy:PROFILE_LABELS[profile]
@@ -5829,7 +5832,7 @@
         invtId:"",
         description:"",
         classId:"",
-        plaza:norm(referenceLine?.plaza||destination?.plaza||"CTM"),
+        plaza:plazaCode(referenceLine||destination||{plaza:"CTM"}),
         siteId:"",
         vendor:activeGroup?.vendor||"",
         destination:activeGroup?.destination||destination?.id||"",
@@ -5881,6 +5884,15 @@
       if(group.destination&&!destination)issues.push(`El destino ${group.destination} no existe en Configuración`);
       if(destination&&!String(destination.recipient||"").trim())issues.push(`Falta el destinatario de ${destination.id}`);
       if(destination&&!String(destination.address||"").trim())issues.push(`Falta la dirección de ${destination.id}`);
+      if(destination){
+        const destinationPlaza=plazaCode(destination);
+        group.lines.forEach((line,index)=>{
+          const linePlaza=plazaCode(line);
+          if(linePlaza&&destinationPlaza&&linePlaza!==destinationPlaza){
+            issues.push(`${norm(line.invtId)||`Partida ${index+1}`}: la plaza ${linePlaza} no corresponde al destino ${destination.id} (${destinationPlaza})`);
+          }
+        });
+      }
       if(!buyer)issues.push("Falta seleccionar un comprador válido");
       if(!parseIsoDate(orderMeta.orderDate))issues.push("Falta la fecha de la orden");
       group.lines.forEach((line,index)=>issues.push(...orderLineIssues(line,index)));
@@ -5926,7 +5938,19 @@
           const field=event.target.dataset.orderField;
           if(field==="qty")line.qty=Math.max(0,Math.ceil(number(event.target.value)));
           else if(field==="unitCost")line.unitCost=Math.max(0,number(event.target.value));
-          else if(["invtId","classId","vendor","destination","plaza"].includes(field))line[field]=norm(event.target.value);
+          else if(field==="plaza"){
+            line.plaza=plazaCode({siteId:line.siteId,plaza:event.target.value});
+            const currentDestination=destinationById(line.destination);
+            if(!currentDestination||plazaCode(currentDestination)!==line.plaza){
+              line.destination=defaultDestinationForPlaza(line.plaza,line.siteId)?.id||"";
+            }
+          }
+          else if(field==="destination"){
+            line.destination=norm(event.target.value);
+            const selectedDestination=destinationById(line.destination);
+            if(selectedDestination)line.plaza=plazaCode(selectedDestination);
+          }
+          else if(["invtId","classId","vendor"].includes(field))line[field]=norm(event.target.value);
           else line[field]=String(event.target.value||"").trim();
           if(!line.qty)order.delete(key);
           clearOrderMessage();

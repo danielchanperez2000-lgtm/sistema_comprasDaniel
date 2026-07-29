@@ -1319,8 +1319,24 @@
         grid-column:1/-1;
       }
     }
+    .policy-select-field{border-color:#d8e8f5;background:linear-gradient(180deg,#f8fbfe,#f5f9fd)}
+    .policy-select-wrap{position:relative}.policy-select-wrap::after{content:"";position:absolute;right:16px;top:50%;width:7px;height:7px;border-right:2px solid #0f6cbd;border-bottom:2px solid #0f6cbd;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+    .policy-select-wrap select{appearance:none;-webkit-appearance:none;width:100%;min-height:44px;padding:10px 44px 10px 12px;border:1px solid #c8c6c4;border-radius:6px;outline:none;background:#fff;color:#242424;font-family:inherit;font-size:.86rem;font-weight:600;cursor:pointer}
+    .policy-select-wrap select:focus{border-color:#0f6cbd;box-shadow:0 0 0 2px rgba(15,108,189,.15)}.policy-select-help{display:block;margin-top:8px;color:#616161;font-size:.7rem;line-height:1.4}
+    .settings-inline-actions{display:flex;gap:8px;flex-wrap:wrap}.calendar-start-row{display:grid;grid-template-columns:minmax(240px,.55fr) minmax(0,1.45fr);gap:12px;margin-bottom:14px}.settings-field>span:first-child{display:block;margin-bottom:6px;color:#605e5c;font-size:.72rem;font-weight:600}
+    .calendar-explanation{display:flex;flex-direction:column;justify-content:center;padding:12px 14px;border:1px solid #d8e8f5;border-radius:7px;background:#f5f9fd}.calendar-explanation strong{font-size:.78rem}.calendar-explanation span{margin-top:3px;color:#616161;font-size:.72rem;line-height:1.5}
+    .calendar-block-editor{display:grid;gap:10px}.calendar-block-card{border:1px solid #e1e1e1;border-radius:8px;background:#fff;overflow:hidden}.calendar-block-card summary{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;background:#fafafa;cursor:pointer;font-weight:700}.calendar-block-card summary small{color:#616161;font-weight:500}.calendar-day-list{padding:0 15px 12px}.calendar-day-row{display:grid;grid-template-columns:100px minmax(200px,.8fr) minmax(320px,1.2fr);gap:10px;align-items:end;padding:10px 0;border-top:1px solid #ededed}.calendar-day-row>strong{align-self:center;color:#0f6cbd}.calendar-day-row label span{display:block;margin-bottom:5px;color:#616161;font-size:.68rem}.calendar-day-row input{width:100%;min-height:38px;padding:8px 10px;border:1px solid #c8c6c4;border-radius:5px}
+    .company-settings-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:20px}.company-settings-grid .wide{grid-column:span 2}
+    .catalog-section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 0 8px}.catalog-section-head h4{margin:0}.catalog-section-head p{margin:3px 0 0;color:#616161;font-size:.72rem}.catalog-table-wrap{overflow:auto;border:1px solid #e1e1e1;border-radius:8px}.catalog-table{width:100%;min-width:1420px;border-collapse:collapse;font-size:.72rem}.catalog-table.compact{min-width:760px}.catalog-table th{padding:8px;background:#f5f5f5;color:#605e5c;text-align:left;white-space:nowrap}.catalog-table td{padding:6px;border-top:1px solid #ededed}.catalog-table input,.catalog-table select{width:100%;min-width:105px;padding:7px 8px;border:1px solid #d1d1d1;border-radius:5px;background:#fff}.catalog-table td:nth-child(2) input,.catalog-table td:nth-child(4) input,.catalog-table td:nth-child(5) input,.catalog-table td:nth-child(6) input{min-width:180px}.catalog-check{display:flex;align-items:center;gap:6px;white-space:nowrap}.catalog-check input{width:auto;min-width:0}
+    .purchase-agenda{margin:-2px 0 18px;overflow:hidden}.agenda-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px;border-bottom:1px solid #e5e5e5}.agenda-head h3{margin:0}.agenda-head p{margin:5px 0 0;color:#616161}.agenda-actions{display:flex;gap:8px;flex-wrap:wrap}.agenda-body{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(360px,.5fr);gap:18px;align-items:center;padding:16px 20px;background:#fafafa}.agenda-classes{display:flex;gap:7px;flex-wrap:wrap}.agenda-classes span{padding:6px 9px;border:1px solid #c7e0f4;border-radius:999px;background:#eff6fc;color:#0f6cbd;font-size:.7rem;font-weight:700}.agenda-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid #e1e1e1;border-radius:7px;background:#e1e1e1;overflow:hidden}.agenda-metrics div{padding:10px;background:#fff}.agenda-metrics span{display:block;color:#616161;font-size:.64rem}.agenda-metrics strong{display:block;margin-top:3px}
+    .order-document-controls{display:grid;grid-template-columns:minmax(220px,1.3fr) minmax(160px,.8fr) minmax(145px,.65fr) minmax(180px,1fr) auto auto;gap:10px;align-items:end;padding:14px 18px;border-bottom:1px solid #e5e5e5;background:#f8fafc}.order-document-controls label span{display:block;margin-bottom:5px;color:#605e5c;font-size:.68rem;font-weight:600}.order-document-controls input,.order-document-controls select{width:100%;min-height:38px;padding:8px 10px;border:1px solid #c8c6c4;border-radius:5px;background:#fff}.order-summary{grid-template-columns:repeat(5,minmax(0,1fr))}.order-summary .order-warning strong{color:#c50f1f}.order-summary .order-ready strong{color:#107c10}
+    .order-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px;padding:14px 18px;border-bottom:1px solid #e5e5e5}.order-group-card{display:block;padding:12px;border:1px solid #d8d8d8;border-radius:7px;background:#fff;text-align:left}.order-group-card:hover,.order-group-card.active{border-color:#0f6cbd;background:#f5f9fd}.order-group-card.incomplete{border-left:4px solid #c75c00}.order-group-card>span{display:block;color:#0f6cbd;font-size:.64rem;font-weight:700;text-transform:uppercase}.order-group-card>strong{display:block;margin:4px 0;font-size:.78rem}.order-group-card>small{display:block;color:#616161;line-height:1.4}
+    .order-editor-table{min-width:1600px}.order-editor-table th{position:sticky;top:0;z-index:1}.order-editor-table td{padding:6px}.order-editor-table input,.order-editor-table select{width:100%;min-width:110px;padding:7px;border:1px solid #d1d1d1;border-radius:5px;background:#fff;text-align:left}.order-editor-table input[type="number"]{min-width:88px;text-align:right}.order-description-input{min-width:270px!important}.order-editor-table td:nth-child(5) select,.order-editor-table td:nth-child(6) select{min-width:190px}.order-row-actions{display:flex;gap:6px;align-items:center}.order-split:disabled{opacity:.45;cursor:not-allowed}.order-print-sheet{display:none}
+    .po-print-title{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #111;padding-bottom:10px}.po-print-title span,.po-print-title strong{display:block}.po-print-title>div:last-child{text-align:right}.po-print-title b{display:block;padding:3px 8px;background:#111;color:#fff}.po-print-meta{display:grid;grid-template-columns:1.3fr 1.3fr .8fr;gap:1px;margin:16px 0;background:#111;border:1px solid #111}.po-print-meta>div{padding:10px;background:#fff}.po-print-meta span,.po-print-meta strong,.po-print-meta small{display:block}.po-print-meta span{font-size:9px;font-weight:700}.po-print-meta small{margin-top:4px}.order-print-sheet table{width:100%;border-collapse:collapse;font-size:10px}.order-print-sheet th{padding:5px;background:#111;color:#fff;text-align:left}.order-print-sheet td{padding:4px;border-bottom:1px solid #ccc}.po-print-totals{width:280px;margin:28px 0 0 auto}.po-print-totals span{display:flex;justify-content:space-between;padding:4px 7px;border-bottom:1px solid #ccc}.po-print-totals span:last-child{background:#111;color:#fff;font-weight:700}
+    @media(max-width:1100px){.company-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.order-document-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.agenda-body{grid-template-columns:1fr}.calendar-day-row{grid-template-columns:90px 1fr}.calendar-day-row label:last-child{grid-column:2}}
+    @media(max-width:700px){.calendar-start-row,.company-settings-grid,.order-document-controls{grid-template-columns:1fr}.company-settings-grid .wide{grid-column:auto}.calendar-day-row{grid-template-columns:1fr}.calendar-day-row label:last-child{grid-column:auto}.agenda-head{flex-direction:column}.agenda-actions{width:100%}.agenda-actions .btn{flex:1}.agenda-metrics{grid-template-columns:1fr}.order-summary{grid-template-columns:1fr}}
     @media print{
-      body *{visibility:hidden!important}.order-panel,.order-panel *{visibility:visible!important}.order-panel{position:absolute!important;inset:0!important;margin:0!important;border:0!important;box-shadow:none!important}.order-actions,.order-remove{display:none!important}.order-table input{border:0!important}.app-header{display:none!important}
+      body *{visibility:hidden!important}.order-print-sheet,.order-print-sheet *{visibility:visible!important}.order-print-sheet{display:block!important;position:absolute!important;inset:0!important;padding:18mm 14mm!important;background:#fff!important;color:#111!important}.app-header{display:none!important}
     }
   </style>
 </head>
@@ -3432,6 +3448,16 @@
         return formatPercent(cell.getValue());
       }
 
+      function dateCell(cell) {
+        return displayDate(parseDate(cell.getValue()));
+      }
+
+      function dateSorter(a, b) {
+        const left = parseDate(a);
+        const right = parseDate(b);
+        return (left ? left.getTime() : 0) - (right ? right.getTime() : 0);
+      }
+
       function operationFormatter(cell) {
         const type = cell.getValue() || "NO_CLASIFICADO";
         const label = OPERATION_LABELS[type] || type;
@@ -3455,9 +3481,9 @@
           movableColumns: true,
           resizableColumns: true,
           placeholder: "No hay filas que coincidan con los filtros.",
-          initialSort: [{ column: "dateKey", dir: "desc" }],
+          initialSort: [{ column: "date", dir: "desc" }],
           columns: [
-            { title: "Fecha", field: "dateLabel", width: 110, frozen: true },
+            { title: "Fecha", field: "date", width: 110, frozen: true, sorter: dateSorter, formatter: dateCell },
             { title: "SiteID", field: "siteId", width: 125 },
             { title: "Plaza", field: "plaza", width: 90 },
             { title: "Unidad", field: "unit", width: 105 },
@@ -3593,7 +3619,7 @@
         }
 
         const exportData = rows.map(row => ({
-          Fecha: row.dateLabel,
+          Fecha: row.date instanceof Date ? new Date(row.date.getTime()) : parseDate(row.date),
           SiteID: row.siteId,
           Plaza: row.plaza,
           Unidad: row.unit,
@@ -3618,10 +3644,27 @@
           Alertas: getRowAnomalies(row).map(code => ANOMALY_LABELS[code]).join(" | ")
         }));
 
-        const worksheet = XLSX.utils.json_to_sheet(exportData);
+        const worksheet = XLSX.utils.json_to_sheet(exportData, {
+          cellDates: true,
+          dateNF: "dd/mm/yyyy"
+        });
+        const range = XLSX.utils.decode_range(worksheet["!ref"]);
+        for (let rowIndex = range.s.r + 1; rowIndex <= range.e.r; rowIndex++) {
+          const address = XLSX.utils.encode_cell({ r: rowIndex, c: 0 });
+          const cell = worksheet[address];
+          if (cell && cell.v instanceof Date) {
+            cell.t = "d";
+            cell.z = "dd/mm/yyyy";
+          }
+        }
+        worksheet["!cols"] = [
+          { wch: 12 }, { wch: 15 }, { wch: 10 }, { wch: 10 }, { wch: 16 },
+          { wch: 12 }, { wch: 22 }, { wch: 42 }, { wch: 10 }, { wch: 12 },
+          { wch: 22 }
+        ];
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
-        XLSX.writeFile(workbook, filename);
+        XLSX.writeFile(workbook, filename, { cellDates: true });
       }
 
       function exportSummary() {
@@ -4755,6 +4798,55 @@
     const CUN_SITES = new Set(["COCUNTLAKI"]);
     const PROFILE_LABELS = {conservative:"Conservadora",balanced:"Balanceada",aggressive:"Agresiva"};
     const STATUS_LABELS = {URGENTE:"Compra urgente",COMPRAR:"Comprar",SUFICIENTE:"Inventario suficiente",EXCESO:"Exceso",SIN_MOVIMIENTO:"Sin movimiento",BLOQUEADO:"Compra bloqueada"};
+    const CALENDAR_DAYS = [
+      {key:"monday",label:"Lunes"},
+      {key:"tuesday",label:"Martes"},
+      {key:"wednesday",label:"Miércoles"},
+      {key:"thursday",label:"Jueves"},
+      {key:"friday",label:"Viernes"}
+    ];
+    const DEFAULT_CALENDAR_BLOCKS = [
+      {
+        id:"A",
+        days:{
+          monday:{focus:"Laptops y Accesorios",classes:["CPLPHI","CPLPME","CPLPLO","ACGELA"]},
+          tuesday:{focus:"Telefonía y Accesorios",classes:["TCIP00","TCLB00","ACGECE"]},
+          wednesday:{focus:"Impresión y Consumibles",classes:["PEIMMU","COIMTI","COIMPA","PEIMMP","PRCC01","PRSC01"]},
+          thursday:{focus:"Memorias y Almacenamiento",classes:["ALMUSB","ALMCEL","ALDDEX"]},
+          friday:{focus:"Entretenimiento y Tablets",classes:["PEBP00","WEBA00","TAB100","TAB700","RELAAC","RELARO","RELASW","RETRUS","PEAV00"]}
+        }
+      },
+      {
+        id:"B",
+        days:{
+          monday:{focus:"Laptops + Muebles",classes:["CPLPHI","CPLPME","CPLPLO","ACGELA","MBES00","MBSI00"]},
+          tuesday:{focus:"Telefonía + Cámaras",classes:["TCIP00","TCLB00","ACGECE","CAPC00","CAFO00"]},
+          wednesday:{focus:"Impresión + Limpieza",classes:["PEIMMU","COIMTI","COIMPA","ACLI00"]},
+          thursday:{focus:"Almacenamiento + Cables",classes:["ALMUSB","ALMCEL","ALDDEX","CABC00","CABV00","RECR00","RECRPL","RECRR4"]},
+          friday:{focus:"Entretenimiento + Seguridad",classes:["PEBP00","WEBA00","TAB100","CASE00","SE0000"]}
+        }
+      },
+      {
+        id:"C",
+        days:{
+          monday:{focus:"Laptops + Escritorio",classes:["CPLPHI","CPLPME","CPLPLO","ACGELA","CPDK00","EPNB00","EPRE00","PEMO00","PETE00","PEVIMO"]},
+          tuesday:{focus:"Telefonía + Fija",classes:["TCIP00","TCLB00","ACGECE"]},
+          wednesday:{focus:"Impresión + Medios",classes:["PEIMMU","COIMTI","COIMPA"]},
+          thursday:{focus:"Almacenamiento + Internos/RAM",classes:["ALMUSB","ALMCEL","ALDDEX","OEDDIN","OEME00","RF0000"]},
+          friday:{focus:"Entretenimiento + Videojuegos",classes:["PEBP00","WEBA00","TAB100","ELVIJU"]}
+        }
+      },
+      {
+        id:"D",
+        days:{
+          monday:{focus:"Laptops + Enseres/Clima",classes:["CPLPHI","CPLPME","CPLPLO","ACGELA"]},
+          tuesday:{focus:"Telefonía + Audio/Juguetes",classes:["TCIP00","TCLB00","ACGECE","ELADHT","ACELAU","ACELMI","PEBO00","PEBOWO"]},
+          wednesday:{focus:"Impresión + Acc. Cómputo",classes:["PEIMMU","COIMTI","COIMPA","ACGE00"]},
+          thursday:{focus:"Almacenamiento + Componentes/Procesadores",classes:["ALMUSB","ALMCEL","ALDDEX","OEGAAT","OEGAMA","OEPCHI","OEPCLO","OEPCME","OETM00","OEVI00"]},
+          friday:{focus:"Entretenimiento + Pantallas",classes:["PEBP00","WEBA00","TAB100","ELTV40","ELTV55","PEVIPR"]}
+        }
+      }
+    ];
     const DEFAULTS = {
       inventoryTargets:{CTM:3220000,CUN:1495000},
       tolerance:5,
@@ -4791,12 +4883,36 @@
           {id:"ALMCEL",classes:["ALMCEL"],target:25000},
           {id:"TAB100",classes:["TAB100"],target:23000}
         ]
+      },
+      calendar:{
+        startDate:"",
+        blocks:DEFAULT_CALENDAR_BLOCKS
+      },
+      procurement:{
+        company:{
+          legalName:"Electrónicos y Más, S.A. de C.V.",
+          rfc:"",
+          address:"",
+          billingContact:""
+        },
+        suppliers:[],
+        destinations:[
+          {id:"COCTMBNAPO",name:"Almacén Chetumal",plaza:"CTM",recipient:"",address:"",city:"Chetumal",state:"Quintana Roo",postalCode:"",taxRate:8,active:true,detected:false},
+          {id:"COCUNTLAKI",name:"Cancún",plaza:"CUN",recipient:"",address:"",city:"Cancún",state:"Quintana Roo",postalCode:"",taxRate:16,active:true,detected:false}
+        ],
+        buyers:[
+          {id:"MA112USB",name:"",email:"",phone:"",active:true}
+        ],
+        orderPrefix:"OC",
+        nextOrderNumber:1
       }
     };
     let settings;
     let priorityPlaza = "CTM";
     let flowChart = null;
     const order = new Map();
+    let orderMeta = {folio:"",orderDate:"",buyerId:"",scope:"general",groupFolios:{}};
+    let orderLineSequence = 0;
 
     const number = (value,fallback=0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
     const norm = value => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toUpperCase();
@@ -4806,6 +4922,21 @@
     const dateKey = value => { const d=dateOnly(value); return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`:""; };
     const dateLabel = value => { const d=dateOnly(value); return d?new Intl.DateTimeFormat("es-MX",{day:"2-digit",month:"2-digit",year:"numeric"}).format(d):"—"; };
     const clone = value => JSON.parse(JSON.stringify(value));
+    const parseIsoDate = value => {
+      const match=String(value||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if(!match)return null;
+      const date=new Date(Number(match[1]),Number(match[2])-1,Number(match[3]),12);
+      return Number.isNaN(date.getTime())?null:date;
+    };
+    const currentQuarterMonday = value => {
+      const reference=dateOnly(value)||dateOnly(new Date());
+      const quarterStart=new Date(reference.getFullYear(),Math.floor(reference.getMonth()/3)*3,1,12);
+      const weekday=quarterStart.getDay()||7;
+      quarterStart.setDate(quarterStart.getDate()-(weekday-1));
+      return quarterStart;
+    };
+    const normalizeClassList = value => [...new Set(String(value||"").split(/[\s,;|]+/).map(norm).filter(Boolean))];
+    const makeOrderFolio = (offset=0) => `${settings.procurement.orderPrefix||"OC"}${String(Math.max(1,number(settings.procurement.nextOrderNumber,1)+offset)).padStart(8,"0")}`;
 
     function mergeSettings(base,saved){
       const result=clone(base);
@@ -4817,6 +4948,20 @@
       if(saved.engine){
         result.engine.lead=number(saved.engine.lead,result.engine.lead);
         Object.keys(PROFILE_LABELS).forEach(key=>result.engine[key]={...result.engine[key],...(saved.engine[key]||{})});
+      }
+      if(saved.calendar&&typeof saved.calendar==="object"){
+        if(parseIsoDate(saved.calendar.startDate))result.calendar.startDate=saved.calendar.startDate;
+        if(Array.isArray(saved.calendar.blocks)&&saved.calendar.blocks.length===4){
+          result.calendar.blocks=clone(saved.calendar.blocks);
+        }
+      }
+      if(saved.procurement&&typeof saved.procurement==="object"){
+        result.procurement.company={...result.procurement.company,...(saved.procurement.company||{})};
+        ["suppliers","destinations","buyers"].forEach(key=>{
+          if(Array.isArray(saved.procurement[key]))result.procurement[key]=clone(saved.procurement[key]);
+        });
+        if(String(saved.procurement.orderPrefix||"").trim())result.procurement.orderPrefix=String(saved.procurement.orderPrefix).trim().toUpperCase();
+        result.procurement.nextOrderNumber=Math.max(1,Math.floor(number(saved.procurement.nextOrderNumber,result.procurement.nextOrderNumber)));
       }
       const legacyClassTargetIds = {
         "TCIP00": "TCIP",
@@ -4845,12 +4990,68 @@
       return result;
     }
     function loadSettings(){
-      try{return mergeSettings(DEFAULTS,JSON.parse(localStorage.getItem(STORAGE_KEY)||"null"));}
-      catch(error){console.warn("No fue posible recuperar la configuración guardada.",error);return clone(DEFAULTS);}
+      try{
+        const loaded=mergeSettings(DEFAULTS,JSON.parse(localStorage.getItem(STORAGE_KEY)||"null"));
+        if(!parseIsoDate(loaded.calendar.startDate))loaded.calendar.startDate=dateKey(currentQuarterMonday(new Date()));
+        return loaded;
+      }
+      catch(error){
+        console.warn("No fue posible recuperar la configuración guardada.",error);
+        const fallback=clone(DEFAULTS);fallback.calendar.startDate=dateKey(currentQuarterMonday(new Date()));return fallback;
+      }
     }
     function persistSettings(){
       try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}
       catch(error){console.warn("No fue posible guardar la configuración.",error);}
+    }
+    function supplierById(id){
+      const key=norm(id);
+      return settings.procurement.suppliers.find(item=>norm(item.id)===key)||null;
+    }
+    function destinationById(id){
+      const key=norm(id);
+      return settings.procurement.destinations.find(item=>norm(item.id)===key)||null;
+    }
+    function buyerById(id){
+      const key=norm(id);
+      return settings.procurement.buyers.find(item=>norm(item.id)===key)||null;
+    }
+    function defaultDestinationForPlaza(plaza){
+      const key=norm(plaza);
+      return settings.procurement.destinations.find(item=>item.active!==false&&norm(item.plaza)===key)
+        ||settings.procurement.destinations.find(item=>item.active!==false)
+        ||null;
+    }
+    function syncDetectedCatalogs(){
+      let changed=false;
+      const supplierIds=new Set(settings.procurement.suppliers.map(item=>norm(item.id)));
+      (app.receipts||[]).forEach(row=>{
+        const id=norm(row.vendorId);
+        if(!id||supplierIds.has(id))return;
+        settings.procurement.suppliers.push({
+          id,name:id,rfc:"",currency:"MXN",terms:"",taxRate:0,
+          contact:"",email:"",phone:"",address:"",active:true,detected:true
+        });
+        supplierIds.add(id);changed=true;
+      });
+      const destinationIds=new Set(settings.procurement.destinations.map(item=>norm(item.id)));
+      [...(app.inventory||[]),...(app.receipts||[])].forEach(row=>{
+        const id=norm(row.siteId);
+        if(!id||destinationIds.has(id))return;
+        const plaza=plazaCode(row);
+        settings.procurement.destinations.push({
+          id,name:id,plaza,recipient:"",address:"",city:"",state:"Quintana Roo",
+          postalCode:"",taxRate:plaza==="CTM"?8:plaza==="CUN"?16:0,
+          active:id==="COCTMBNAPO"||id==="COCUNTLAKI",detected:true
+        });
+        destinationIds.add(id);changed=true;
+      });
+      if(changed){
+        persistSettings();
+        if($("settings-catalogs"))renderProcurementSettings();
+        renderOrder();
+      }
+      return changed;
     }
     function showNotice(message,type="success",timeout=4800){
       const notice=$("notice");if(!notice)return;
@@ -4887,7 +5088,7 @@
       }
       if(name==="inventory")$("inventory-filter-class")?.dispatchEvent(new Event("change",{bubbles:true}));
       if(name==="receipts")$("receipts-filter-class")?.dispatchEvent(new Event("change",{bubbles:true}));
-      if(name==="purchase")setTimeout(()=>{window.MotorEngine?.rebuild();window.MotorEngine?.updateEngine();},80);
+      if(name==="purchase")setTimeout(()=>{window.MotorEngine?.rebuild();window.MotorEngine?.updateEngine();renderPurchaseAgenda();renderOrder();},80);
       if(name==="settings")renderSettingsForm();
       setTimeout(()=>window.scrollTo({top:0,behavior:"smooth"}),20);
     }
@@ -5084,13 +5285,51 @@
           <article class="panel settings-card full">
             <div class="dashboard-section-head"><div><span class="dashboard-eyebrow">Top 10 por plaza</span><h3>Objetivos monetarios por ClassID</h3><p>Chetumal mantiene TCIP00 y TCLB00 separados; Cancún los consolida. TCTE no forma parte de los índices.</p></div></div>
             <div class="class-target-grid" id="settings-class-targets"></div>
-          </article>       
+          </article>
+          <article class="panel settings-card full" id="settings-calendar">
+            <div class="dashboard-section-head">
+              <div><span class="dashboard-eyebrow">Agenda trimestral</span><h3>Calendario de revisión por ClassID</h3><p>Plantilla de 12 semanas basada en cuatro bloques recurrentes. Cada enfoque y ClassID puede editarse.</p></div>
+              <div class="settings-inline-actions"><button class="btn btn-outline" id="settings-calendar-export" type="button">Exportar calendario</button><button class="btn btn-outline" id="settings-calendar-reset" type="button">Restablecer plantilla</button></div>
+            </div>
+            <div class="calendar-start-row">
+              <label class="settings-field"><span>Primer lunes del trimestre</span><input id="settings-calendar-start" type="date"></label>
+              <div class="calendar-explanation"><strong>Secuencia automática</strong><span>Semanas 1, 5 y 9 usan A; 2, 6 y 10 usan B; 3, 7 y 11 usan C; 4, 8 y 12 usan D.</span></div>
+            </div>
+            <div class="calendar-block-editor" id="settings-calendar-blocks"></div>
+          </article>
+          <article class="panel settings-card full" id="settings-catalogs">
+            <div class="dashboard-section-head">
+              <div><span class="dashboard-eyebrow">Datos maestros de compra</span><h3>Proveedores, destinos y compradores</h3><p>Recepciones aporta VendId y costos históricos; aquí completas los datos necesarios para emitir órdenes reales.</p></div>
+              <button class="btn btn-secondary" id="settings-detect-catalogs" type="button">Detectar desde reportes</button>
+            </div>
+            <div class="company-settings-grid">
+              <label class="settings-field"><span>Razón social emisora</span><input id="settings-company-name" type="text"></label>
+              <label class="settings-field"><span>RFC</span><input id="settings-company-rfc" type="text"></label>
+              <label class="settings-field wide"><span>Domicilio de facturación</span><input id="settings-company-address" type="text"></label>
+              <label class="settings-field"><span>Contacto de facturación</span><input id="settings-company-contact" type="text"></label>
+              <label class="settings-field"><span>Prefijo de OC</span><input id="settings-order-prefix" type="text" maxlength="8"></label>
+              <label class="settings-field"><span>Siguiente consecutivo</span><input id="settings-order-next" type="number" min="1" step="1"></label>
+            </div>
+            <div class="catalog-section-head"><div><h4>Proveedores</h4><p>Los detectados automáticamente conservan su VendId y esperan información comercial.</p></div><button class="btn btn-outline" id="settings-add-supplier" type="button">Nuevo proveedor</button></div>
+            <div class="catalog-table-wrap" id="settings-suppliers"></div>
+            <div class="catalog-section-head"><div><h4>Destinos y destinatarios</h4><p>Activa únicamente los SiteID autorizados para recibir órdenes.</p></div><button class="btn btn-outline" id="settings-add-destination" type="button">Nuevo destino</button></div>
+            <div class="catalog-table-wrap" id="settings-destinations"></div>
+            <div class="catalog-section-head"><div><h4>Compradores internos</h4><p>El código y nombre aparecerán en las órdenes de compra.</p></div><button class="btn btn-outline" id="settings-add-buyer" type="button">Nuevo comprador</button></div>
+            <div class="catalog-table-wrap" id="settings-buyers"></div>
+          </article>
           <article class="panel settings-card full" id="settings-policy-slot"></article>
         </section>
         <div class="settings-actions"><span id="settings-save-state" style="margin-right:auto;align-self:center;color:var(--muted);font-size:.76rem">Sin cambios pendientes</span><button class="btn btn-outline" id="settings-cancel-btn" type="button">Cancelar cambios</button><button class="btn btn-primary" id="settings-save-btn" type="button">Guardar configuración</button></div>`;
       main.insertBefore(module,footer||null);
       movePolicySettings();
       ["settings-target-ctm","settings-target-cun","settings-target-tolerance","settings-active-policy"].forEach(id=>$(id)?.addEventListener("input",markSettingsDirty));
+      ["settings-calendar-start","settings-company-name","settings-company-rfc","settings-company-address","settings-company-contact","settings-order-prefix","settings-order-next"].forEach(id=>$(id)?.addEventListener("input",markSettingsDirty));
+      $("settings-calendar-reset").addEventListener("click",()=>{renderCalendarSettings({startDate:dateKey(currentQuarterMonday(new Date())),blocks:clone(DEFAULT_CALENDAR_BLOCKS)});markSettingsDirty();showNotice("Plantilla del cronograma restaurada. Guarda para aplicar los cambios.","info");});
+      $("settings-calendar-export").addEventListener("click",exportCalendarSettings);
+      $("settings-detect-catalogs").addEventListener("click",()=>{const changed=syncDetectedCatalogs();renderProcurementSettings();showNotice(changed?"Se agregaron nuevos proveedores o destinos detectados.":"No se encontraron registros nuevos en los reportes.",changed?"success":"info");});
+      $("settings-add-supplier").addEventListener("click",()=>appendSupplierRow());
+      $("settings-add-destination").addEventListener("click",()=>appendDestinationRow());
+      $("settings-add-buyer").addEventListener("click",()=>appendBuyerRow());
       $("settings-save-btn").addEventListener("click",saveSettingsFromForm);
       $("settings-cancel-btn").addEventListener("click",()=>{renderSettingsForm();showNotice("Cambios descartados.","info");});
     }
@@ -5129,6 +5368,174 @@
       root.innerHTML=["CTM","CUN"].map(plaza=>`<div class="class-target-column"><h4>${plaza==="CTM"?"Chetumal":"Cancún"}</h4>${settings.classTargets[plaza].map((row,index)=>`<label class="class-target-row"><span>${index+1}. ${esc(row.id)}</span><input type="number" min="0" step="1000" data-class-target="${plaza}" data-class-index="${index}" value="${number(row.target)}"></label>`).join("")}</div>`).join("");
       root.querySelectorAll("[data-class-target]").forEach(input=>input.addEventListener("input",markSettingsDirty));
     }
+    function renderCalendarSettings(calendar=settings.calendar){
+      const root=$("settings-calendar-blocks");if(!root)return;
+      $("settings-calendar-start").value=parseIsoDate(calendar.startDate)?calendar.startDate:dateKey(currentQuarterMonday(new Date()));
+      root.innerHTML=(calendar.blocks||DEFAULT_CALENDAR_BLOCKS).map((block,blockIndex)=>`
+        <details class="calendar-block-card" ${blockIndex===0?"open":""}>
+          <summary><span>Bloque ${esc(block.id||String.fromCharCode(65+blockIndex))}</span><small>Semanas ${blockIndex+1}, ${blockIndex+5} y ${blockIndex+9}</small></summary>
+          <div class="calendar-day-list">
+            ${CALENDAR_DAYS.map(day=>{
+              const item=block.days?.[day.key]||{focus:"",classes:[]};
+              return `<div class="calendar-day-row">
+                <strong>${day.label}</strong>
+                <label><span>Enfoque</span><input type="text" data-calendar-focus="${blockIndex}|${day.key}" value="${esc(item.focus||"")}"></label>
+                <label><span>ClassID separados por coma</span><input type="text" data-calendar-classes="${blockIndex}|${day.key}" value="${esc((item.classes||[]).join(", "))}"></label>
+              </div>`;
+            }).join("")}
+          </div>
+        </details>`).join("");
+      root.querySelectorAll("input").forEach(input=>input.addEventListener("input",markSettingsDirty));
+    }
+    function collectCalendarSettings(){
+      const blocks=clone(DEFAULT_CALENDAR_BLOCKS);
+      blocks.forEach((block,blockIndex)=>CALENDAR_DAYS.forEach(day=>{
+        const focus=rootValue(`[data-calendar-focus="${blockIndex}|${day.key}"]`);
+        const classes=normalizeClassList(rootValue(`[data-calendar-classes="${blockIndex}|${day.key}"]`));
+        block.days[day.key]={focus,classes};
+      }));
+      return {
+        startDate:parseIsoDate($("settings-calendar-start").value)?$("settings-calendar-start").value:dateKey(currentQuarterMonday(new Date())),
+        blocks
+      };
+    }
+    function rootValue(selector){
+      return String(document.querySelector(selector)?.value||"").trim();
+    }
+    function exportCalendarSettings(){
+      if(typeof XLSX==="undefined"){showNotice("La biblioteca de Excel no está disponible.","error");return;}
+      const calendar=collectCalendarSettings();
+      const header=["Semana / Bloque",...CALENDAR_DAYS.map(day=>day.label)];
+      const matrix=[header];
+      for(let week=1;week<=12;week++){
+        const block=calendar.blocks[(week-1)%4];
+        matrix.push([
+          `Semana ${week}\n(Bloque ${block.id})`,
+          ...CALENDAR_DAYS.map(day=>{
+            const item=block.days[day.key];
+            return `ENFOQUE: ${item.focus}\n\nCÓDIGOS:\n${item.classes.join(", ")}`;
+          })
+        ]);
+      }
+      const sheet=XLSX.utils.aoa_to_sheet(matrix);
+      sheet["!cols"]=[{wch:18},...CALENDAR_DAYS.map(()=>({wch:34}))];
+      sheet["!rows"]=[{hpt:24},...Array.from({length:12},()=>({hpt:78}))];
+      const workbook=XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook,sheet,"Cronograma Códigos");
+      XLSX.writeFile(workbook,`cronograma_compras_${calendar.startDate}.xlsx`);
+    }
+    function supplierRow(item={}){
+      return `<tr data-catalog-row="supplier">
+        <td><input data-field="id" value="${esc(item.id||"")}" placeholder="VendId"></td>
+        <td><input data-field="name" value="${esc(item.name||"")}" placeholder="Razón social"></td>
+        <td><input data-field="rfc" value="${esc(item.rfc||"")}" placeholder="RFC"></td>
+        <td><input data-field="address" value="${esc(item.address||"")}" placeholder="Domicilio fiscal"></td>
+        <td><input data-field="contact" value="${esc(item.contact||"")}" placeholder="Vendedor / contacto"></td>
+        <td><input data-field="email" type="email" value="${esc(item.email||"")}" placeholder="correo@proveedor.com"></td>
+        <td><input data-field="terms" value="${esc(item.terms||"")}" placeholder="Crédito 30 días"></td>
+        <td><select data-field="currency"><option value="MXN" ${item.currency!=="USD"?"selected":""}>MXN</option><option value="USD" ${item.currency==="USD"?"selected":""}>USD</option></select></td>
+        <td><input data-field="taxRate" type="number" min="0" max="100" step=".01" value="${number(item.taxRate)}"></td>
+        <td><label class="catalog-check"><input data-field="active" type="checkbox" ${item.active===false?"":"checked"}><span>${item.detected?"Detectado":"Activo"}</span></label></td>
+        <td><button class="order-remove catalog-remove" type="button" aria-label="Eliminar proveedor">×</button></td>
+      </tr>`;
+    }
+    function destinationRow(item={}){
+      return `<tr data-catalog-row="destination">
+        <td><input data-field="id" value="${esc(item.id||"")}" placeholder="SiteID"></td>
+        <td><input data-field="name" value="${esc(item.name||"")}" placeholder="Nombre del destino"></td>
+        <td><select data-field="plaza"><option value="CTM" ${norm(item.plaza)==="CTM"?"selected":""}>Chetumal</option><option value="CUN" ${norm(item.plaza)==="CUN"?"selected":""}>Cancún</option></select></td>
+        <td><input data-field="recipient" value="${esc(item.recipient||"")}" placeholder="Persona que recibe"></td>
+        <td><input data-field="address" value="${esc(item.address||"")}" placeholder="Dirección de entrega"></td>
+        <td><input data-field="city" value="${esc(item.city||"")}" placeholder="Ciudad"></td>
+        <td><input data-field="postalCode" value="${esc(item.postalCode||"")}" placeholder="C.P."></td>
+        <td><input data-field="taxRate" type="number" min="0" max="100" step=".01" value="${number(item.taxRate)}"></td>
+        <td><label class="catalog-check"><input data-field="active" type="checkbox" ${item.active===false?"":"checked"}><span>${item.detected?"Detectado":"Activo"}</span></label></td>
+        <td><button class="order-remove catalog-remove" type="button" aria-label="Eliminar destino">×</button></td>
+      </tr>`;
+    }
+    function buyerRow(item={}){
+      return `<tr data-catalog-row="buyer">
+        <td><input data-field="id" value="${esc(item.id||"")}" placeholder="Código"></td>
+        <td><input data-field="name" value="${esc(item.name||"")}" placeholder="Nombre completo"></td>
+        <td><input data-field="email" type="email" value="${esc(item.email||"")}" placeholder="correo@empresa.com"></td>
+        <td><input data-field="phone" value="${esc(item.phone||"")}" placeholder="Teléfono"></td>
+        <td><label class="catalog-check"><input data-field="active" type="checkbox" ${item.active===false?"":"checked"}><span>Activo</span></label></td>
+        <td><button class="order-remove catalog-remove" type="button" aria-label="Eliminar comprador">×</button></td>
+      </tr>`;
+    }
+    function wireCatalogRows(root){
+      root?.querySelectorAll("input,select").forEach(input=>input.addEventListener("input",markSettingsDirty));
+      root?.querySelectorAll(".catalog-remove").forEach(button=>button.addEventListener("click",()=>{button.closest("tr")?.remove();markSettingsDirty();}));
+    }
+    function renderProcurementSettings(){
+      const procurement=settings.procurement;
+      $("settings-company-name").value=procurement.company.legalName||"";
+      $("settings-company-rfc").value=procurement.company.rfc||"";
+      $("settings-company-address").value=procurement.company.address||"";
+      $("settings-company-contact").value=procurement.company.billingContact||"";
+      $("settings-order-prefix").value=procurement.orderPrefix||"OC";
+      $("settings-order-next").value=Math.max(1,number(procurement.nextOrderNumber,1));
+      const suppliers=$("settings-suppliers"),destinations=$("settings-destinations"),buyers=$("settings-buyers");
+      suppliers.innerHTML=`<table class="catalog-table"><thead><tr><th>VendId</th><th>Razón social</th><th>RFC</th><th>Domicilio fiscal</th><th>Vendedor</th><th>Correo OC</th><th>Condición de pago</th><th>Moneda</th><th>IVA %</th><th>Estado</th><th></th></tr></thead><tbody>${procurement.suppliers.map(supplierRow).join("")}</tbody></table>`;
+      destinations.innerHTML=`<table class="catalog-table"><thead><tr><th>SiteID</th><th>Destino</th><th>Plaza</th><th>Destinatario</th><th>Dirección</th><th>Ciudad</th><th>C.P.</th><th>IVA %</th><th>Recibe OC</th><th></th></tr></thead><tbody>${procurement.destinations.map(destinationRow).join("")}</tbody></table>`;
+      buyers.innerHTML=`<table class="catalog-table compact"><thead><tr><th>Código</th><th>Comprador</th><th>Correo</th><th>Teléfono</th><th>Estado</th><th></th></tr></thead><tbody>${procurement.buyers.map(buyerRow).join("")}</tbody></table>`;
+      [suppliers,destinations,buyers].forEach(wireCatalogRows);
+    }
+    function appendSupplierRow(){
+      const tbody=$("settings-suppliers")?.querySelector("tbody");if(!tbody)return;
+      tbody.insertAdjacentHTML("beforeend",supplierRow({active:true,currency:"MXN"}));wireCatalogRows(tbody.lastElementChild);tbody.lastElementChild?.querySelector("input")?.focus();markSettingsDirty();
+    }
+    function appendDestinationRow(){
+      const tbody=$("settings-destinations")?.querySelector("tbody");if(!tbody)return;
+      tbody.insertAdjacentHTML("beforeend",destinationRow({active:true,plaza:"CTM"}));wireCatalogRows(tbody.lastElementChild);tbody.lastElementChild?.querySelector("input")?.focus();markSettingsDirty();
+    }
+    function appendBuyerRow(){
+      const tbody=$("settings-buyers")?.querySelector("tbody");if(!tbody)return;
+      tbody.insertAdjacentHTML("beforeend",buyerRow({active:true}));wireCatalogRows(tbody.lastElementChild);tbody.lastElementChild?.querySelector("input")?.focus();markSettingsDirty();
+    }
+    function collectCatalogRows(type){
+      const rows=[...document.querySelectorAll(`[data-catalog-row="${type}"]`)];
+      const output=[],seen=new Set();
+      for(const row of rows){
+        const get=field=>row.querySelector(`[data-field="${field}"]`);
+        const id=norm(get("id")?.value);
+        if(!id)continue;
+        if(seen.has(id)){showNotice(`El identificador ${id} está repetido en el catálogo.`,"error");return null;}
+        seen.add(id);
+        if(type==="supplier")output.push({
+          id,name:String(get("name")?.value||id).trim()||id,rfc:norm(get("rfc")?.value),
+          contact:String(get("contact")?.value||"").trim(),email:String(get("email")?.value||"").trim(),
+          terms:String(get("terms")?.value||"").trim(),currency:get("currency")?.value||"MXN",
+          taxRate:Math.max(0,number(get("taxRate")?.value)),phone:"",address:String(get("address")?.value||"").trim(),
+          active:Boolean(get("active")?.checked),detected:false
+        });
+        if(type==="destination")output.push({
+          id,name:String(get("name")?.value||id).trim()||id,plaza:get("plaza")?.value||"",
+          recipient:String(get("recipient")?.value||"").trim(),address:String(get("address")?.value||"").trim(),
+          city:String(get("city")?.value||"").trim(),state:"Quintana Roo",postalCode:String(get("postalCode")?.value||"").trim(),
+          taxRate:Math.max(0,number(get("taxRate")?.value)),active:Boolean(get("active")?.checked),detected:false
+        });
+        if(type==="buyer")output.push({
+          id,name:String(get("name")?.value||"").trim(),email:String(get("email")?.value||"").trim(),
+          phone:String(get("phone")?.value||"").trim(),active:Boolean(get("active")?.checked)
+        });
+      }
+      return output;
+    }
+    function collectProcurementSettings(next){
+      const suppliers=collectCatalogRows("supplier"),destinations=collectCatalogRows("destination"),buyers=collectCatalogRows("buyer");
+      if(!suppliers||!destinations||!buyers)return false;
+      next.procurement.company={
+        legalName:String($("settings-company-name").value||"").trim(),
+        rfc:norm($("settings-company-rfc").value),
+        address:String($("settings-company-address").value||"").trim(),
+        billingContact:String($("settings-company-contact").value||"").trim()
+      };
+      next.procurement.suppliers=suppliers;next.procurement.destinations=destinations;next.procurement.buyers=buyers;
+      next.procurement.orderPrefix=norm($("settings-order-prefix").value)||"OC";
+      next.procurement.nextOrderNumber=Math.max(1,Math.floor(number($("settings-order-next").value,1)));
+      return true;
+    }
     function renderSettingsForm(){
       if(!$("module-settings"))return;
       $("settings-target-ctm").value=number(settings.inventoryTargets.CTM);
@@ -5145,6 +5552,8 @@
       });
       $("settings-target-total").textContent=MXN.format(number(settings.inventoryTargets.CTM)+number(settings.inventoryTargets.CUN));
       renderClassTargetInputs();
+      renderCalendarSettings();
+      renderProcurementSettings();
       const state=$("settings-save-state");state.textContent="Configuración guardada";state.classList.remove("settings-dirty");
     }
     function markSettingsDirty(){
@@ -5165,8 +5574,11 @@
         next.engine[key].review=Math.max(1,number($(`engine-${prefix}-review`).value));
       });
       $$("[data-class-target]").forEach(input=>{next.classTargets[input.dataset.classTarget][Number(input.dataset.classIndex)].target=Math.max(0,number(input.value));});
+      next.calendar=collectCalendarSettings();
+      if(!collectProcurementSettings(next))return;
       settings=next;persistSettings();applySettingsToSystem();renderSettingsForm();renderDashboard();
-      showNotice("Configuración guardada y aplicada al Dashboard y al Motor de Compra.","success");
+      renderPurchaseAgenda();renderOrder();
+      showNotice("Configuración guardada y aplicada al Dashboard, agenda y Centro de Órdenes.","success");
     }
     function applySettingsToSystem(){
       const profile=$("engine-active-profile");if(profile){profile.value=settings.policy;profile.dispatchEvent(new Event("change",{bubbles:true}));}
@@ -5187,7 +5599,73 @@
       if($("engine-policy-badge"))$("engine-policy-badge").textContent=`Política ${label}`;
       if($("engine-kpi-profile"))$("engine-kpi-profile").textContent=`Política ${label.toLowerCase()}`;
     }
+    function calendarAgendaFor(date=new Date()){
+      const current=dateOnly(date),start=parseIsoDate(settings.calendar.startDate);
+      if(!current||!start)return{status:"invalid",date:current};
+      const elapsed=Math.floor((current-start)/86400000);
+      const weekIndex=Math.floor(elapsed/7);
+      if(weekIndex<0||weekIndex>11)return{status:"outside",date:current,start,weekIndex};
+      const weekday=current.getDay();
+      if(weekday===0||weekday===6)return{status:"weekend",date:current,start,weekIndex,week:weekIndex+1};
+      const day=CALENDAR_DAYS[weekday-1],block=settings.calendar.blocks[weekIndex%4];
+      const item=block?.days?.[day.key]||{focus:"",classes:[]};
+      return{status:"ready",date:current,start,weekIndex,week:weekIndex+1,block:block?.id||"",day,item};
+    }
+    function agendaRows(agenda=calendarAgendaFor()){
+      if(agenda.status!=="ready")return[];
+      const allowed=new Set((agenda.item.classes||[]).map(norm));
+      const profile=$("engine-active-profile")?.value||settings.policy;
+      return (window.MotorEngine?.getRows?.()||[]).filter(row=>{
+        const scenario=row.scenarios?.[profile]||{};
+        return allowed.has(norm(row.classId))&&Math.ceil(number(scenario.finalBuy))>0;
+      });
+    }
+    function createPurchaseAgenda(){
+      if($("purchase-agenda")||!$("module-purchase"))return;
+      const section=document.createElement("section");section.id="purchase-agenda";section.className="panel purchase-agenda";
+      const hero=$("module-purchase").querySelector(".purchase-hero");
+      hero?.insertAdjacentElement("afterend",section);
+      section.addEventListener("click",event=>{
+        if(event.target.closest("#agenda-build-order"))buildOrderFromToday();
+        if(event.target.closest('[data-agenda-action="settings"]')){
+          activateModule("settings");
+          setTimeout(()=>$("settings-calendar")?.scrollIntoView({behavior:"smooth",block:"start"}),100);
+        }
+      });
+      renderPurchaseAgenda();
+    }
+    function renderPurchaseAgenda(){
+      const root=$("purchase-agenda");if(!root)return;
+      const agenda=calendarAgendaFor(),rows=agendaRows(agenda),units=rows.reduce((sum,row)=>{
+        const profile=$("engine-active-profile")?.value||settings.policy;
+        return sum+Math.ceil(number(row.scenarios?.[profile]?.finalBuy));
+      },0);
+      if(agenda.status==="ready"){
+        root.innerHTML=`
+          <div class="agenda-head">
+            <div><span class="dashboard-eyebrow">Agenda de compra de hoy</span><h3>${esc(agenda.day.label)} ${dateLabel(agenda.date)} · Semana ${agenda.week}, bloque ${esc(agenda.block)}</h3><p>${esc(agenda.item.focus||"Sin enfoque definido")}</p></div>
+            <div class="agenda-actions"><button class="btn btn-outline" data-agenda-action="settings" type="button">Configurar calendario</button><button class="btn btn-primary" id="agenda-build-order" type="button" ${rows.length?"":"disabled"}>Preparar compra de hoy</button></div>
+          </div>
+          <div class="agenda-body">
+            <div class="agenda-classes">${(agenda.item.classes||[]).map(code=>`<span>${esc(code)}</span>`).join("")||"<em>Sin ClassID programados</em>"}</div>
+            <div class="agenda-metrics"><div><span>ClassID programados</span><strong>${INT.format((agenda.item.classes||[]).length)}</strong></div><div><span>Productos con compra</span><strong>${INT.format(rows.length)}</strong></div><div><span>Unidades sugeridas</span><strong>${INT.format(units)}</strong></div></div>
+          </div>`;
+        return;
+      }
+      const message=agenda.status==="weekend"?"El calendario opera de lunes a viernes.":agenda.status==="outside"?"La fecha actual está fuera de las 12 semanas configuradas.":"Configura una fecha inicial válida para el trimestre.";
+      root.innerHTML=`<div class="agenda-head"><div><span class="dashboard-eyebrow">Agenda de compra</span><h3>Sin revisión programada para hoy</h3><p>${message}</p></div><button class="btn btn-outline" data-agenda-action="settings" type="button">Configurar calendario</button></div>`;
+    }
+    function buildOrderFromToday(){
+      const agenda=calendarAgendaFor(),rows=agendaRows(agenda);
+      if(!rows.length){showNotice("Hoy no hay recomendaciones positivas para los ClassID programados.","info");return;}
+      if(!orderMeta.folio)orderMeta.folio=makeOrderFolio();
+      let added=0;rows.forEach(row=>{if(addOrder(row,true))added++;});
+      renderOrder();
+      showNotice(`Agenda preparada: ${INT.format(added)} productos agregados al Centro de Órdenes.`,"success");
+      $("purchase-order-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+    }
     function configurePurchaseModule(){
+      createPurchaseAgenda();
       const productHead=document.querySelector(".product-360-head");
       if(productHead&&!$("engine-policy-badge"))productHead.insertAdjacentHTML("beforeend",`<span class="policy-badge" id="engine-policy-badge">Política ${PROFILE_LABELS[settings.policy]}</span>`);
       const activeLabel=$("engine-active-profile")?.closest(".control")?.querySelector("label");if(activeLabel)activeLabel.textContent="Política de compra";
@@ -5206,30 +5684,107 @@
       createOrderPanel(tablePanel);
       const profile=$("engine-active-profile");
       profile?.addEventListener("change",()=>{
-        if(PROFILE_LABELS[profile.value]){settings.policy=profile.value;persistSettings();if($("settings-active-policy"))$("settings-active-policy").value=profile.value;updatePolicyLabels();renderOrder();}
+        if(PROFILE_LABELS[profile.value]){settings.policy=profile.value;persistSettings();if($("settings-active-policy"))$("settings-active-policy").value=profile.value;updatePolicyLabels();renderPurchaseAgenda();renderOrder();}
       });
     }
     function createOrderPanel(afterNode){
       if(!afterNode||$("purchase-order-panel"))return;
       const panel=document.createElement("section");panel.id="purchase-order-panel";panel.className="panel order-panel";
       panel.innerHTML=`
-        <div class="order-toolbar"><div><span class="dashboard-eyebrow">Pedido de compra</span><h3>Propuesta editable</h3><p>Revisa cantidades, elimina líneas y exporta el pedido final. Importes sin IVA.</p></div>
-          <div class="order-actions"><button class="btn btn-outline" id="order-clear-btn" type="button">Vaciar</button><button class="btn btn-outline" id="order-export-excel-btn" type="button">Exportar Excel</button><button class="btn btn-primary" id="order-print-btn" type="button">Imprimir / PDF</button></div></div>
-        <div class="order-summary" id="order-summary"></div><div id="order-content"></div>`;
+        <div class="order-toolbar"><div><span class="dashboard-eyebrow">Centro de Órdenes de Compra</span><h3>Armador profesional de OC</h3><p>Edita proveedor, destino, cantidades, costos y fechas. Los importes del motor permanecen sin IVA; la OC aplica la tasa configurada.</p></div>
+          <div class="order-actions"><button class="btn btn-outline" id="order-add-line-btn" type="button">Agregar partida</button><button class="btn btn-outline" id="order-clear-btn" type="button">Vaciar</button><button class="btn btn-secondary" id="order-export-general-btn" type="button">Exportar general</button></div></div>
+        <div class="order-document-controls">
+          <label><span>Documento</span><select id="order-scope-select"><option value="general">Plan general</option></select></label>
+          <label><span>Folio de OC</span><input id="order-folio-input" type="text" placeholder="Se asigna por proveedor"></label>
+          <label><span>Fecha de orden</span><input id="order-date-input" type="date"></label>
+          <label><span>Comprador</span><select id="order-buyer-select"></select></label>
+          <button class="btn btn-outline" id="order-export-provider-btn" type="button">Exportar OC seleccionada</button>
+          <button class="btn btn-primary" id="order-print-btn" type="button">Imprimir / PDF</button>
+        </div>
+        <div class="order-summary" id="order-summary"></div>
+        <div class="order-groups" id="order-groups"></div>
+        <div id="order-content"></div>
+        <div class="order-print-sheet" id="order-print-sheet" aria-hidden="true"></div>`;
       afterNode.insertAdjacentElement("afterend",panel);
-      $("order-clear-btn").addEventListener("click",()=>{order.clear();renderOrder();showNotice("Pedido vaciado.","info");});
-      $("order-export-excel-btn").addEventListener("click",exportOrder);
-      $("order-print-btn").addEventListener("click",()=>{if(!order.size){showNotice("Agrega al menos una línea antes de imprimir.","error");return;}window.print();});
+      orderMeta.orderDate=dateKey(new Date());
+      orderMeta.buyerId=settings.procurement.buyers.find(item=>item.active!==false)?.id||"";
+      $("order-add-line-btn").addEventListener("click",addManualOrderLine);
+      $("order-clear-btn").addEventListener("click",()=>{order.clear();orderMeta.groupFolios={};orderMeta.scope="general";renderOrder();showNotice("Centro de Órdenes vaciado.","info");});
+      $("order-export-general-btn").addEventListener("click",exportOrderGeneral);
+      $("order-export-provider-btn").addEventListener("click",exportSelectedFormalOrder);
+      $("order-print-btn").addEventListener("click",printSelectedFormalOrder);
+      $("order-scope-select").addEventListener("change",event=>{orderMeta.scope=event.target.value;refreshOrderDocumentControls(orderGroups());});
+      $("order-date-input").addEventListener("change",event=>{orderMeta.orderDate=event.target.value||dateKey(new Date());});
+      $("order-buyer-select").addEventListener("change",event=>{orderMeta.buyerId=event.target.value;});
+      $("order-folio-input").addEventListener("input",event=>{
+        const scope=$("order-scope-select").value;
+        if(scope!=="general")orderMeta.groupFolios[scope]=String(event.target.value||"").trim().toUpperCase();
+      });
       renderOrder();
+    }
+    function orderGroupKey(line){
+      return `${norm(line.vendor)||"PENDIENTE"}@@${norm(line.destination)||"SIN_DESTINO"}`;
+    }
+    function orderGroups(){
+      const groups=new Map();
+      [...order.values()].forEach(line=>{
+        const key=orderGroupKey(line);
+        if(!groups.has(key))groups.set(key,{key,vendor:norm(line.vendor),destination:norm(line.destination),lines:[]});
+        groups.get(key).lines.push(line);
+      });
+      return [...groups.values()].sort((a,b)=>a.key.localeCompare(b.key));
+    }
+    function groupLabel(group){
+      const supplier=supplierById(group.vendor),destination=destinationById(group.destination);
+      return `${supplier?.name||group.vendor||"Proveedor pendiente"} · ${destination?.name||group.destination||"Destino pendiente"}`;
+    }
+    function ensureGroupFolios(groups){
+      let offset=0;
+      groups.forEach(group=>{
+        if(group.vendor&&group.destination){
+          if(!orderMeta.groupFolios[group.key])orderMeta.groupFolios[group.key]=makeOrderFolio(offset);
+          offset++;
+        }
+      });
+    }
+    function supplierOptions(selected){
+      const key=norm(selected),items=settings.procurement.suppliers.filter(item=>item.active!==false);
+      if(key&&!items.some(item=>norm(item.id)===key))items.push({id:key,name:key});
+      return `<option value="">Proveedor pendiente</option>${items.sort((a,b)=>String(a.name||a.id).localeCompare(String(b.name||b.id))).map(item=>`<option value="${esc(item.id)}" ${norm(item.id)===key?"selected":""}>${esc(item.name||item.id)} · ${esc(item.id)}</option>`).join("")}`;
+    }
+    function destinationOptions(selected){
+      const key=norm(selected),items=settings.procurement.destinations.filter(item=>item.active!==false);
+      if(key&&!items.some(item=>norm(item.id)===key))items.push({id:key,name:key});
+      return `<option value="">Destino pendiente</option>${items.map(item=>`<option value="${esc(item.id)}" ${norm(item.id)===key?"selected":""}>${esc(item.name||item.id)} · ${esc(item.id)}</option>`).join("")}`;
+    }
+    function refreshOrderDocumentControls(groups=orderGroups()){
+      ensureGroupFolios(groups);
+      const scope=$("order-scope-select"),buyer=$("order-buyer-select"),folio=$("order-folio-input");
+      if(!scope||!buyer||!folio)return;
+      const validScopes=new Set(["general",...groups.map(group=>group.key)]);
+      if(!validScopes.has(orderMeta.scope))orderMeta.scope="general";
+      scope.innerHTML=`<option value="general">Plan general · todas las partidas</option>${groups.map(group=>`<option value="${esc(group.key)}" ${group.key===orderMeta.scope?"selected":""}>${esc(groupLabel(group))}</option>`).join("")}`;
+      scope.value=orderMeta.scope;
+      const activeBuyers=settings.procurement.buyers.filter(item=>item.active!==false);
+      if(!orderMeta.buyerId||!activeBuyers.some(item=>norm(item.id)===norm(orderMeta.buyerId)))orderMeta.buyerId=activeBuyers[0]?.id||"";
+      buyer.innerHTML=activeBuyers.length?activeBuyers.map(item=>`<option value="${esc(item.id)}" ${norm(item.id)===norm(orderMeta.buyerId)?"selected":""}>${esc(item.name?`${item.name} · ${item.id}`:item.id)}</option>`).join(""):'<option value="">Configura un comprador</option>';
+      buyer.value=orderMeta.buyerId;
+      $("order-date-input").value=orderMeta.orderDate||dateKey(new Date());
+      folio.disabled=orderMeta.scope==="general";
+      folio.value=orderMeta.scope==="general"?"":orderMeta.groupFolios[orderMeta.scope]||"";
+      $("order-export-provider-btn").disabled=orderMeta.scope==="general";
+      $("order-print-btn").disabled=orderMeta.scope==="general";
     }
     function orderLine(row){
       const profile=$("engine-active-profile")?.value||settings.policy;
       const scenario=row.scenarios?.[profile]||{};
       const qty=Math.max(0,Math.ceil(number(row.buyActive,number(scenario.finalBuy))));
+      const destination=defaultDestinationForPlaza(row.plaza);
       return {
         key:`${row.invtId}|${row.plaza}|${row.siteId}`,
         invtId:row.invtId,description:row.description,classId:row.classId,plaza:row.plaza,siteId:row.siteId,
-        vendor:row.receipt?.habitualVendor||"",qty,unitCost:number(row.replacementCost),status:STATUS_LABELS[row.activeStatus||scenario.status]||row.activeStatus||scenario.status||"",
+        vendor:norm(row.receipt?.habitualVendor),destination:destination?.id||"",requiredDate:dateKey(addDays(new Date(),number(settings.engine.lead,14))),
+        qty,unitCost:number(row.replacementCost),status:STATUS_LABELS[row.activeStatus||scenario.status]||row.activeStatus||scenario.status||"",
         reason:row.activeReason||scenario.reason||"",policy:PROFILE_LABELS[profile]
       };
     }
@@ -5240,30 +5795,170 @@
       return true;
     }
     function buildOrderFromFilter(){
-      const rows=window.MotorEngine?.getFilteredRows?.()||[];order.clear();let added=0;
+      const rows=window.MotorEngine?.getFilteredRows?.()||[];order.clear();orderMeta.groupFolios={};let added=0;
       rows.forEach(row=>{if(addOrder(row,true))added++;});renderOrder();
       showNotice(added?`Pedido preparado con ${INT.format(added)} líneas recomendadas.`:"No hay cantidades de compra positivas con los filtros y la política actuales.",added?"success":"info");
       if(added)$("purchase-order-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
     }
+    function addManualOrderLine(){
+      const destination=defaultDestinationForPlaza("CTM");
+      const key=`MANUAL|${Date.now()}|${++orderLineSequence}`;
+      order.set(key,{key,invtId:"",description:"",classId:"",plaza:"CTM",siteId:"",vendor:"",destination:destination?.id||"",requiredDate:dateKey(addDays(new Date(),number(settings.engine.lead,14))),qty:1,unitCost:0,status:"Partida manual",reason:"Agregada manualmente",policy:PROFILE_LABELS[settings.policy]});
+      renderOrder();
+      setTimeout(()=>document.querySelector(`[data-order-key="${key}"] [data-order-field="invtId"]`)?.focus(),40);
+    }
+    function splitOrderLine(key){
+      const line=order.get(key);if(!line)return;
+      const qty=Math.max(0,Math.ceil(number(line.qty)));
+      if(qty<2){showNotice("Se requieren al menos 2 unidades para dividir la partida.","info");return;}
+      const split=Math.floor(qty/2);line.qty=qty-split;
+      const cloneLine={...line,key:`${key}|DIV${++orderLineSequence}`,qty:split,vendor:"",status:"Proveedor pendiente"};
+      order.set(cloneLine.key,cloneLine);renderOrder();showNotice("Partida dividida. Asigna el segundo proveedor.","success");
+    }
     function renderOrder(){
-      const summary=$("order-summary"),content=$("order-content");if(!summary||!content)return;
-      const lines=[...order.values()],units=lines.reduce((sum,line)=>sum+number(line.qty),0),investment=lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
-      summary.innerHTML=`<div><span>Política</span><strong>${esc(PROFILE_LABELS[$("engine-active-profile")?.value]||PROFILE_LABELS[settings.policy])}</strong></div><div><span>Líneas</span><strong>${INT.format(lines.length)}</strong></div><div><span>Unidades</span><strong>${INT.format(units)}</strong></div><div><span>Inversión sin IVA</span><strong>${MXN.format(investment)}</strong></div>`;
-      if(!lines.length){content.innerHTML='<div class="order-empty"><strong>El pedido está vacío.</strong><br>Agrega productos desde la recomendación, la Ficha 360 o usa “Preparar pedido con el filtro”.</div>';return;}
-      content.innerHTML=`<div class="order-table-wrap"><table class="order-table"><thead><tr><th>InvtID</th><th>Descripción</th><th>ClassID</th><th>Plaza</th><th>Bodega</th><th>Proveedor</th><th class="number">Cantidad</th><th class="number">Costo unit.</th><th class="number">Importe</th><th>Estado</th><th></th></tr></thead><tbody>${lines.map(line=>`<tr data-order-key="${esc(line.key)}"><td><strong>${esc(line.invtId)}</strong></td><td>${esc(line.description)}</td><td>${esc(line.classId)}</td><td>${esc(line.plaza)}</td><td>${esc(line.siteId)}</td><td>${esc(line.vendor||"—")}</td><td class="number"><input class="order-qty" type="number" min="0" step="1" value="${number(line.qty)}" aria-label="Cantidad ${esc(line.invtId)}"></td><td class="number">${MXN.format(line.unitCost)}</td><td class="number"><strong>${MXN.format(line.qty*line.unitCost)}</strong></td><td>${esc(line.status)}</td><td><button class="order-remove" type="button" aria-label="Eliminar ${esc(line.invtId)}">×</button></td></tr>`).join("")}</tbody></table></div>`;
+      const summary=$("order-summary"),content=$("order-content"),groupRoot=$("order-groups");if(!summary||!content||!groupRoot)return;
+      const lines=[...order.values()],groups=orderGroups(),units=lines.reduce((sum,line)=>sum+number(line.qty),0),investment=lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
+      const pending=lines.filter(line=>!norm(line.vendor)||!norm(line.destination)||number(line.unitCost)<=0||!parseIsoDate(line.requiredDate)).length;
+      summary.innerHTML=`<div><span>Política</span><strong>${esc(PROFILE_LABELS[$("engine-active-profile")?.value]||PROFILE_LABELS[settings.policy])}</strong></div><div><span>Partidas</span><strong>${INT.format(lines.length)}</strong></div><div><span>Unidades</span><strong>${INT.format(units)}</strong></div><div><span>Inversión sin IVA</span><strong>${MXN.format(investment)}</strong></div><div class="${pending?"order-warning":"order-ready"}"><span>Datos pendientes</span><strong>${INT.format(pending)}</strong></div>`;
+      refreshOrderDocumentControls(groups);
+      groupRoot.innerHTML=groups.length?groups.map(group=>{
+        const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
+        const incomplete=!group.vendor||!group.destination||group.lines.some(line=>number(line.unitCost)<=0||!parseIsoDate(line.requiredDate));
+        return `<button type="button" class="order-group-card ${orderMeta.scope===group.key?"active":""} ${incomplete?"incomplete":""}" data-order-scope="${esc(group.key)}"><span>${incomplete?"Requiere datos":"OC lista"}</span><strong>${esc(groupLabel(group))}</strong><small>${INT.format(group.lines.length)} partidas · ${MXN.format(subtotal)} sin IVA · ${esc(orderMeta.groupFolios[group.key]||"Sin folio")}</small></button>`;
+      }).join(""):"";
+      groupRoot.querySelectorAll("[data-order-scope]").forEach(button=>button.addEventListener("click",()=>{orderMeta.scope=button.dataset.orderScope;refreshOrderDocumentControls(groups);renderOrder();}));
+      if(!lines.length){content.innerHTML='<div class="order-empty"><strong>El Centro de Órdenes está vacío.</strong><br>Usa la Agenda de hoy, agrega productos desde la recomendación o crea una partida manual.</div>';return;}
+      content.innerHTML=`<div class="order-table-wrap"><table class="order-table order-editor-table"><thead><tr><th>InvtID</th><th>Descripción</th><th>ClassID</th><th>Plaza</th><th>Proveedor</th><th>Destino</th><th>Fecha requerida</th><th class="number">Cantidad</th><th class="number">Costo unit.</th><th class="number">Importe</th><th>Acciones</th></tr></thead><tbody>${lines.map(line=>`<tr data-order-key="${esc(line.key)}">
+        <td><input data-order-field="invtId" value="${esc(line.invtId)}" placeholder="SKU"></td>
+        <td><input class="order-description-input" data-order-field="description" value="${esc(line.description)}" placeholder="Descripción"></td>
+        <td><input data-order-field="classId" value="${esc(line.classId)}" placeholder="ClassID"></td>
+        <td><select data-order-field="plaza"><option value="CTM" ${norm(line.plaza)==="CTM"?"selected":""}>CTM</option><option value="CUN" ${norm(line.plaza)==="CUN"?"selected":""}>CUN</option></select></td>
+        <td><select data-order-field="vendor">${supplierOptions(line.vendor)}</select></td>
+        <td><select data-order-field="destination">${destinationOptions(line.destination)}</select></td>
+        <td><input data-order-field="requiredDate" type="date" value="${esc(line.requiredDate||"")}"></td>
+        <td class="number"><input data-order-field="qty" type="number" min="0" step="1" value="${number(line.qty)}"></td>
+        <td class="number"><input data-order-field="unitCost" type="number" min="0" step=".01" value="${number(line.unitCost)}"></td>
+        <td class="number"><strong>${MXN.format(number(line.qty)*number(line.unitCost))}</strong></td>
+        <td><div class="order-row-actions"><button class="table-add-btn order-split" type="button" ${number(line.qty)<2?"disabled":""}>Dividir</button><button class="order-remove" type="button" aria-label="Eliminar ${esc(line.invtId||"partida")}">×</button></div></td>
+      </tr>`).join("")}</tbody></table></div>`;
       content.querySelectorAll("[data-order-key]").forEach(row=>{
         const key=row.dataset.orderKey;
-        row.querySelector(".order-qty").addEventListener("change",event=>{const line=order.get(key);if(!line)return;line.qty=Math.max(0,Math.ceil(number(event.target.value)));if(!line.qty)order.delete(key);renderOrder();});
+        row.querySelectorAll("[data-order-field]").forEach(control=>control.addEventListener("change",event=>{
+          const line=order.get(key);if(!line)return;
+          const field=event.target.dataset.orderField;
+          if(field==="qty")line.qty=Math.max(0,Math.ceil(number(event.target.value)));
+          else if(field==="unitCost")line.unitCost=Math.max(0,number(event.target.value));
+          else if(["invtId","classId","vendor","destination","plaza"].includes(field))line[field]=norm(event.target.value);
+          else line[field]=String(event.target.value||"").trim();
+          if(!line.qty)order.delete(key);
+          renderOrder();
+        }));
+        row.querySelector(".order-split").addEventListener("click",()=>splitOrderLine(key));
         row.querySelector(".order-remove").addEventListener("click",()=>{order.delete(key);renderOrder();});
       });
     }
-    function exportOrder(){
+    function orderRowsForExport(lines){
+      return lines.map(line=>({
+        Politica:line.policy,Plaza:line.plaza,ClassID:line.classId,InvtID:line.invtId,Descripcion:line.description,
+        Proveedor:line.vendor,Destino:line.destination,FechaRequerida:parseIsoDate(line.requiredDate),
+        Cantidad:number(line.qty),CostoUnitarioSinIVA:number(line.unitCost),ImporteSinIVA:number(line.qty)*number(line.unitCost),
+        Estado:line.status,Motivo:line.reason
+      }));
+    }
+    function formatDateColumn(sheet,columnIndex,rowStart,rowEnd){
+      for(let rowIndex=rowStart;rowIndex<=rowEnd;rowIndex++){
+        const address=XLSX.utils.encode_cell({r:rowIndex,c:columnIndex}),cell=sheet[address];
+        if(cell&&cell.v instanceof Date){cell.t="d";cell.z="dd/mm/yyyy";}
+      }
+    }
+    function exportOrderGeneral(){
       if(!order.size){showNotice("Agrega al menos una línea antes de exportar.","error");return;}
       if(typeof XLSX==="undefined"){showNotice("La biblioteca de Excel no está disponible en este momento.","error");return;}
-      const rows=[...order.values()].map(line=>({Politica:line.policy,Plaza:line.plaza,Bodega:line.siteId,ClassID:line.classId,InvtID:line.invtId,Descr:line.description,Proveedor:line.vendor,Cantidad:line.qty,CostoUnitarioSinIVA:line.unitCost,ImporteSinIVA:line.qty*line.unitCost,Estado:line.status,Motivo:line.reason}));
-      const totals=[{FechaAnalisis:dateLabel(window.MotorEngine?.getReference?.()||new Date()),Politica:PROFILE_LABELS[$("engine-active-profile")?.value]||PROFILE_LABELS[settings.policy],Lineas:rows.length,Unidades:rows.reduce((sum,row)=>sum+row.Cantidad,0),InversionSinIVA:rows.reduce((sum,row)=>sum+row.ImporteSinIVA,0)}];
-      const workbook=XLSX.utils.book_new();XLSX.utils.book_append_sheet(workbook,XLSX.utils.json_to_sheet(rows),"Pedido");XLSX.utils.book_append_sheet(workbook,XLSX.utils.json_to_sheet(totals),"Resumen");
-      XLSX.writeFile(workbook,`pedido_compra_360_${dateKey(new Date())}.xlsx`);
+      const rows=orderRowsForExport([...order.values()]);
+      const totals=[{FechaAnalisis:dateOnly(window.MotorEngine?.getReference?.()||new Date()),Politica:PROFILE_LABELS[$("engine-active-profile")?.value]||PROFILE_LABELS[settings.policy],Lineas:rows.length,Unidades:rows.reduce((sum,row)=>sum+row.Cantidad,0),InversionSinIVA:rows.reduce((sum,row)=>sum+row.ImporteSinIVA,0)}];
+      const workbook=XLSX.utils.book_new(),detail=XLSX.utils.json_to_sheet(rows,{cellDates:true,dateNF:"dd/mm/yyyy"}),summary=XLSX.utils.json_to_sheet(totals,{cellDates:true,dateNF:"dd/mm/yyyy"});
+      formatDateColumn(detail,7,1,rows.length);formatDateColumn(summary,0,1,1);
+      detail["!cols"]=[{wch:14},{wch:10},{wch:12},{wch:22},{wch:42},{wch:16},{wch:18},{wch:15},{wch:10},{wch:18},{wch:18},{wch:20},{wch:48}];
+      XLSX.utils.book_append_sheet(workbook,detail,"Plan general");XLSX.utils.book_append_sheet(workbook,summary,"Resumen");
+      XLSX.writeFile(workbook,`plan_general_compra_${dateKey(new Date())}.xlsx`,{cellDates:true});
+    }
+    function selectedOrderGroup(){
+      if(orderMeta.scope==="general")return null;
+      return orderGroups().find(group=>group.key===orderMeta.scope)||null;
+    }
+    function validateFormalGroup(group){
+      if(!group){showNotice("Selecciona una orden de proveedor antes de continuar.","error");return null;}
+      if(!group.vendor){showNotice("La orden seleccionada todavía tiene proveedor pendiente.","error");return null;}
+      if(!group.destination){showNotice("La orden seleccionada todavía tiene destino pendiente.","error");return null;}
+      const supplier=supplierById(group.vendor),destination=destinationById(group.destination),buyer=buyerById(orderMeta.buyerId);
+      if(!supplier||!supplier.name){showNotice("Completa la razón social del proveedor en Configuración.","error");return null;}
+      if(!destination||!destination.recipient||!destination.address){showNotice("Completa destinatario y dirección del destino en Configuración.","error");return null;}
+      if(!buyer){showNotice("Selecciona un comprador válido para la orden.","error");return null;}
+      const invalid=group.lines.find(line=>!line.invtId||number(line.qty)<=0||number(line.unitCost)<=0||!parseIsoDate(line.requiredDate));
+      if(invalid){showNotice(`La partida ${invalid.invtId||"sin SKU"} tiene cantidad, costo o fecha pendiente.`,"error");return null;}
+      return{group,supplier,destination,buyer,folio:orderMeta.groupFolios[group.key]||makeOrderFolio(),orderDate:parseIsoDate(orderMeta.orderDate)||dateOnly(new Date())};
+    }
+    function formalOrderSheet(context){
+      const {group,supplier,destination,buyer,folio,orderDate}=context,company=settings.procurement.company;
+      const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
+      const taxRate=number(destination.taxRate)||number(supplier.taxRate),tax=subtotal*taxRate/100,total=subtotal+tax;
+      const matrix=[
+        [company.legalName||"ELECTRÓNICOS Y MÁS","","","","","",""],
+        ["PROVEEDOR",`${supplier.id} · ${supplier.name}`,"","","ORDEN DE COMPRA","",folio],
+        ["ENVIAR A",`${destination.id} · ${destination.name} · ${destination.recipient}`,"","","COMPRADOR","",buyer.name?`${buyer.name} · ${buyer.id}`:buyer.id],
+        ["DIRECCIÓN",`${destination.address}${destination.city?`, ${destination.city}`:""}${destination.postalCode?` C.P. ${destination.postalCode}`:""}`,"","","FECHA","",orderDate],
+        ["FACTURAR A",`${company.address||company.legalName}${company.billingContact?` · ${company.billingContact}`:""}`,"","","CONDICIONES","",supplier.terms||"Por definir"],
+        ["PARTIDA","InvtID","Desc","Cantidad","Fecha requerida","Ult. Costo","Costo total"],
+        ...group.lines.map((line,index)=>[index+1,line.invtId,line.description,number(line.qty),parseIsoDate(line.requiredDate),number(line.unitCost),number(line.qty)*number(line.unitCost)]),
+        ["","","","","","SUBTOTAL",subtotal],
+        ["","","","","",`IMPUESTO ${taxRate}%`,tax],
+        ["","","","","","TOTAL",total]
+      ];
+      const sheet=XLSX.utils.aoa_to_sheet(matrix,{cellDates:true,dateNF:"dd/mm/yyyy"});
+      const firstLine=6,lastLine=firstLine+group.lines.length-1;
+      formatDateColumn(sheet,4,firstLine,lastLine);
+      const orderDateCell=sheet["G4"];if(orderDateCell&&orderDateCell.v instanceof Date){orderDateCell.t="d";orderDateCell.z="dd/mm/yyyy";}
+      for(let rowIndex=firstLine;rowIndex<=lastLine;rowIndex++){
+        ["F","G"].forEach(column=>{const cell=sheet[`${column}${rowIndex+1}`];if(cell)cell.z='"$"#,##0.00';});
+      }
+      const totalsStart=lastLine+2;for(let row=totalsStart;row<=totalsStart+2;row++){const cell=sheet[`G${row}`];if(cell)cell.z='"$"#,##0.00';}
+      sheet["!cols"]=[{wch:10},{wch:22},{wch:54},{wch:11},{wch:16},{wch:15},{wch:17}];
+      sheet["!merges"]=[
+        {s:{r:0,c:0},e:{r:0,c:6}},
+        {s:{r:1,c:1},e:{r:1,c:3}},{s:{r:1,c:4},e:{r:1,c:5}},
+        {s:{r:2,c:1},e:{r:2,c:3}},{s:{r:2,c:4},e:{r:2,c:5}},
+        {s:{r:3,c:1},e:{r:3,c:3}},{s:{r:3,c:4},e:{r:3,c:5}},
+        {s:{r:4,c:1},e:{r:4,c:3}},{s:{r:4,c:4},e:{r:4,c:5}}
+      ];
+      return{sheet,subtotal,taxRate,tax,total};
+    }
+    function consumeOrderFolio(folio){
+      const match=String(folio||"").match(/(\d+)$/);
+      const next=match?Number(match[1])+1:number(settings.procurement.nextOrderNumber)+1;
+      settings.procurement.nextOrderNumber=Math.max(number(settings.procurement.nextOrderNumber),next);
+      persistSettings();
+      if($("settings-order-next"))$("settings-order-next").value=settings.procurement.nextOrderNumber;
+    }
+    function exportSelectedFormalOrder(){
+      if(typeof XLSX==="undefined"){showNotice("La biblioteca de Excel no está disponible.","error");return;}
+      const context=validateFormalGroup(selectedOrderGroup());if(!context)return;
+      const {sheet}=formalOrderSheet(context),workbook=XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook,sheet,"Orden de compra");
+      const safeVendor=context.supplier.id.replace(/[^A-Z0-9_-]+/gi,"_");
+      XLSX.writeFile(workbook,`${context.folio}_${safeVendor}_${context.destination.id}.xlsx`,{cellDates:true});
+      consumeOrderFolio(context.folio);
+      showNotice(`Orden ${context.folio} exportada para ${context.supplier.name}.`,"success");
+    }
+    function printSelectedFormalOrder(){
+      const context=validateFormalGroup(selectedOrderGroup());if(!context)return;
+      const {group,supplier,destination,buyer,folio,orderDate}=context;
+      const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0),taxRate=number(destination.taxRate)||number(supplier.taxRate),tax=subtotal*taxRate/100,total=subtotal+tax;
+      $("order-print-sheet").innerHTML=`
+        <div class="po-print-title"><div><strong>${esc(settings.procurement.company.legalName)}</strong><span>${esc(settings.procurement.company.address)}</span></div><div><b>ORDEN DE COMPRA</b><strong>${esc(folio)}</strong></div></div>
+        <div class="po-print-meta"><div><span>PROVEEDOR</span><strong>${esc(supplier.id)} · ${esc(supplier.name)}</strong><small>${esc(supplier.address||"")}</small></div><div><span>ENVIAR A</span><strong>${esc(destination.id)} · ${esc(destination.name)}</strong><small>${esc(destination.recipient)} · ${esc(destination.address)}</small></div><div><span>COMPRADOR</span><strong>${esc(buyer.name||buyer.id)}</strong><small>${dateLabel(orderDate)} · ${esc(supplier.terms||"Condición por definir")}</small></div></div>
+        <table><thead><tr><th>Partida</th><th>Artículo</th><th>Descripción</th><th>Cantidad</th><th>Fecha requerida</th><th>Costo</th><th>Costo ext.</th></tr></thead><tbody>${group.lines.map((line,index)=>`<tr><td>${index+1}</td><td>${esc(line.invtId)}</td><td>${esc(line.description)}</td><td>${INT.format(line.qty)}</td><td>${dateLabel(parseIsoDate(line.requiredDate))}</td><td>${MXN.format(line.unitCost)}</td><td>${MXN.format(line.qty*line.unitCost)}</td></tr>`).join("")}</tbody></table>
+        <div class="po-print-totals"><span>Subtotal <b>${MXN.format(subtotal)}</b></span><span>Impuesto ${PCT.format(taxRate)}% <b>${MXN.format(tax)}</b></span><span>Total <b>${MXN.format(total)}</b></span></div>`;
+      window.print();
     }
     function renderDashboard(){
       if(!$("module-dashboard"))return;
@@ -5325,7 +6020,10 @@
       renderSettingsForm();
       applySettingsToSystem();
       window.MotorUI={addOrder,buildOrderFromFilter,renderOrder,activateModule};
-      window.addEventListener("motor:datachange",()=>setTimeout(()=>{renderDashboard();if($("module-purchase")?.classList.contains("active"))window.MotorEngine?.rebuild();},220));
+      window.addEventListener("motor:datachange",()=>{
+        syncDetectedCatalogs();
+        setTimeout(()=>{renderDashboard();if($("module-purchase")?.classList.contains("active"))window.MotorEngine?.rebuild();renderPurchaseAgenda();renderOrder();},220);
+      });
       activateModule("dashboard");
       renderDashboard();
     }

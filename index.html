@@ -649,17 +649,22 @@
       box-shadow: 0 30px 80px rgba(0,0,0,.2);
     }
 
-    .spinner {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 14px;
-      border: 4px solid #dce4ff;
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      margin: 0 0 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e9edf5;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), #6f8aff);
+      transition: width .28s ease;
+    }
 
     .pill-row {
       display: flex;
@@ -1200,7 +1205,7 @@
     .loader-slot .drop-icon{width:42px;height:42px;margin-bottom:6px}
     .loader-slot .drop-zone h3,.loader-slot .module-drop-zone h3{margin:4px 0;font-size:.9rem}
     .loader-slot .drop-zone p,.loader-slot .module-drop-zone p{font-size:.72rem}
-    .loader-slot .file-actions{grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:10px}
+    .loader-slot .file-actions{display:none!important;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:10px}
     .loader-slot .file-meta{font-size:.72rem}
     .loader-slot .validation-list,.loader-slot .module-validation{max-height:152px;overflow:auto}
     .loader-slot.ready{border-color:#9fd89f;box-shadow:0 0 0 1px #dff1df}
@@ -1331,7 +1336,7 @@
     .purchase-agenda{margin:-2px 0 18px;overflow:hidden}.agenda-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px;border-bottom:1px solid #e5e5e5}.agenda-head h3{margin:0}.agenda-head p{margin:5px 0 0;color:#616161}.agenda-actions{display:flex;gap:8px;flex-wrap:wrap}.agenda-body{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(360px,.5fr);gap:18px;align-items:center;padding:16px 20px;background:#fafafa}.agenda-classes{display:flex;gap:7px;flex-wrap:wrap}.agenda-classes span{padding:6px 9px;border:1px solid #c7e0f4;border-radius:999px;background:#eff6fc;color:#0f6cbd;font-size:.7rem;font-weight:700}.agenda-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid #e1e1e1;border-radius:7px;background:#e1e1e1;overflow:hidden}.agenda-metrics div{padding:10px;background:#fff}.agenda-metrics span{display:block;color:#616161;font-size:.64rem}.agenda-metrics strong{display:block;margin-top:3px}
     .order-document-controls{display:grid;grid-template-columns:minmax(220px,1.3fr) minmax(160px,.8fr) minmax(145px,.65fr) minmax(180px,1fr) auto auto;gap:10px;align-items:end;padding:14px 18px;border-bottom:1px solid #e5e5e5;background:#f8fafc}.order-document-controls label span{display:block;margin-bottom:5px;color:#605e5c;font-size:.68rem;font-weight:600}.order-document-controls input,.order-document-controls select{width:100%;min-height:38px;padding:8px 10px;border:1px solid #c8c6c4;border-radius:5px;background:#fff}.order-summary{grid-template-columns:repeat(5,minmax(0,1fr))}.order-summary .order-warning strong{color:#c50f1f}.order-summary .order-ready strong{color:#107c10}
     .order-action-message{display:none;align-items:flex-start;gap:9px;padding:11px 18px;border-bottom:1px solid transparent;font-size:.74rem;line-height:1.45}.order-action-message.show{display:flex}.order-action-message.info{border-color:#c7e0f4;background:#f5f9fd;color:#0f548c}.order-action-message.success{border-color:#9fd5ae;background:#f1faf3;color:#0b6a0b}.order-action-message.error{border-color:#f1b8bd;background:#fff4f4;color:#a4262c}.order-action-message::before{content:"i";flex:0 0 18px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:currentColor;color:#fff;font-size:.64rem;font-weight:800}.order-action-message.success::before{content:"✓"}.order-action-message.error::before{content:"!"}
-    .order-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px;padding:14px 18px;border-bottom:1px solid #e5e5e5}.order-group-card{display:block;padding:12px;border:1px solid #d8d8d8;border-radius:7px;background:#fff;text-align:left}.order-group-card:hover,.order-group-card.active{border-color:#0f6cbd;background:#f5f9fd}.order-group-card.incomplete{border-left:4px solid #c75c00}.order-group-card>span{display:block;color:#0f6cbd;font-size:.64rem;font-weight:700;text-transform:uppercase}.order-group-card>strong{display:block;margin:4px 0;font-size:.78rem}.order-group-card>small{display:block;color:#616161;line-height:1.4}
+    .order-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px;padding:14px 18px;border-bottom:1px solid #e5e5e5}.order-group-card{display:block;padding:12px;border:1px solid #d8d8d8;border-radius:7px;background:#fff;text-align:left}.order-group-card:hover,.order-group-card.active{background:#f5f9fd}.order-group-card.incomplete{border-color:#c75c00;border-left-width:4px}.order-group-card.ready{border-color:#0f6cbd;border-left-width:4px}.order-group-card.exported{border-color:#107c10;border-left-width:4px;background:#f3fbf3;opacity:.66}.order-group-card.exported:hover,.order-group-card.exported.active{border-color:#107c10;background:#edf8ef;opacity:.82}.order-group-card.incomplete>span{color:#c75c00}.order-group-card.ready>span{color:#0f6cbd}.order-group-card.exported>span{color:#107c10}.order-group-card>span{display:block;color:#0f6cbd;font-size:.64rem;font-weight:700;text-transform:uppercase}.order-group-card>strong{display:block;margin:4px 0;font-size:.78rem}.order-group-card>small{display:block;color:#616161;line-height:1.4}
     .order-table-context{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 18px;border-bottom:1px solid #e5e5e5;background:#fff}.order-table-context strong{display:block;font-size:.76rem}.order-table-context span{display:block;margin-top:2px;color:#616161;font-size:.68rem}.order-scope-pill{flex:0 0 auto;padding:5px 9px;border:1px solid #c7e0f4;border-radius:999px;background:#eff6fc;color:#0f6cbd!important;font-size:.64rem!important;font-weight:700}.order-editor-table{min-width:1640px}.order-editor-table th{position:sticky;top:0;z-index:1}.order-editor-table td{padding:6px}.order-editor-table input,.order-editor-table select{width:100%;min-width:110px;padding:7px;border:1px solid #d1d1d1;border-radius:5px;background:#fff;text-align:left}.order-editor-table input[type="number"]{min-width:88px;text-align:right}.order-description-input{min-width:270px!important}.order-editor-table td:nth-child(5) select,.order-editor-table td:nth-child(6) select{min-width:190px}.order-row-actions{display:flex;gap:5px;align-items:center;min-width:116px}.order-split:disabled{opacity:.45;cursor:not-allowed}.order-insight{position:relative;flex:0 0 34px;width:34px;height:32px;display:grid;place-items:center;border:1px solid #b7d7f0;border-radius:6px;background:#f5f9fd;color:#0f6cbd;transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease}.order-insight:hover{border-color:#0f6cbd;background:#e5f1fb;box-shadow:0 3px 10px rgba(15,108,189,.16);transform:translateY(-1px)}.order-insight:focus-visible{outline:2px solid #0f6cbd;outline-offset:2px}.order-insight:disabled{border-color:#e1e1e1;background:#f5f5f5;color:#a19f9d;transform:none;box-shadow:none}.order-eye-icon{position:relative;width:17px;height:11px;border:1.8px solid currentColor;border-radius:55% 45% 55% 45%;transform:rotate(45deg)}.order-eye-icon::after{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:50%;background:currentColor;transform:translate(-50%,-50%)}.order-print-sheet{display:none}
     body.order-review-open{overflow:hidden}.order-review-modal{position:fixed;inset:0;z-index:180;display:grid;grid-template-columns:minmax(0,1fr) min(1040px,96vw);pointer-events:none;visibility:hidden}.order-review-modal.show{pointer-events:auto;visibility:visible}.order-review-backdrop{grid-column:1/-1;grid-row:1;background:rgba(32,31,30,.46);opacity:0;backdrop-filter:blur(2px);transition:opacity .22s ease}.order-review-modal.show .order-review-backdrop{opacity:1}.order-review-drawer{grid-column:2;grid-row:1;position:relative;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:#f6f8fb;border-left:1px solid rgba(255,255,255,.65);box-shadow:-20px 0 55px rgba(32,31,30,.22);transform:translateX(42px);opacity:0;transition:transform .24s cubic-bezier(.2,.8,.2,1),opacity .18s ease}.order-review-modal.show .order-review-drawer{transform:translateX(0);opacity:1}.order-review-head{position:relative;flex:0 0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:22px 26px 19px;background:linear-gradient(135deg,#fff 0%,#f2f8fd 100%);border-bottom:1px solid #dedede}.order-review-head::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,#0f6cbd,#5c2d91)}.order-review-title-wrap{min-width:0}.order-review-kicker{display:flex;align-items:center;gap:7px;margin-bottom:6px;color:#0f6cbd;font-size:.67rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.order-review-kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:#0f6cbd;box-shadow:0 0 0 4px #dff0fb}.order-review-head h2{margin:0;color:#242424;font-size:1.24rem;letter-spacing:-.02em}.order-review-head p{max-width:720px;margin:5px 0 0;color:#605e5c;font-size:.77rem;line-height:1.45}.order-review-close{flex:0 0 38px;width:38px;height:38px;border:1px solid #d1d1d1;border-radius:7px;background:#fff;color:#323130;font-size:1.3rem;line-height:1;transition:.16s ease}.order-review-close:hover{border-color:#a19f9d;background:#f3f2f1}.order-review-body{flex:1 1 auto;min-height:0;overflow:auto;padding:20px 26px 34px}.order-review-identity{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:16px 18px;margin-bottom:14px;border:1px solid #d9e7f2;border-radius:10px;background:#fff;box-shadow:0 4px 14px rgba(32,31,30,.05)}.order-review-product{min-width:0}.order-review-product strong{display:block;color:#242424;font-size:1rem}.order-review-product p{margin:4px 0 9px;color:#605e5c;font-size:.75rem}.order-review-chips{display:flex;flex-wrap:wrap;gap:6px}.order-review-chip{display:inline-flex;align-items:center;min-height:25px;padding:4px 8px;border:1px solid #d8e8f5;border-radius:999px;background:#f5f9fd;color:#0f548c;font-size:.66rem;font-weight:700}.order-review-qty-box{flex:0 0 260px;padding-left:18px;border-left:1px solid #e5e5e5}.order-review-qty-box label{display:block;margin-bottom:5px;color:#605e5c;font-size:.68rem;font-weight:700}.order-review-qty-controls{display:grid;grid-template-columns:minmax(80px,1fr) auto;gap:7px}.order-review-qty-controls input{width:100%;min-height:38px;padding:8px 10px;border:1px solid #8a8886;border-radius:5px;background:#fff;text-align:right;font-weight:700}.order-review-qty-controls .btn{min-height:38px}.order-review-qty-box small{display:block;margin-top:6px;color:#605e5c;font-size:.65rem}.order-review-save-state{min-height:18px;margin-top:6px;color:#107c10;font-size:.66rem;font-weight:700}.order-review-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}.order-review-kpi{padding:14px 15px;border:1px solid #e1dfdd;border-radius:9px;background:#fff}.order-review-kpi span{display:block;color:#605e5c;font-size:.67rem}.order-review-kpi strong{display:block;margin-top:3px;color:#242424;font-size:1.05rem}.order-review-kpi small{display:block;margin-top:3px;color:#797775;font-size:.64rem}.order-review-section{margin-top:12px;border:1px solid #e1dfdd;border-radius:10px;background:#fff;overflow:hidden;box-shadow:0 3px 12px rgba(32,31,30,.04)}.order-review-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:15px 17px;border-bottom:1px solid #edebe9;background:#faf9f8}.order-review-section-head h3{margin:0;color:#242424;font-size:.88rem}.order-review-section-head p{margin:3px 0 0;color:#605e5c;font-size:.68rem}.order-review-section-badge{flex:0 0 auto;padding:5px 8px;border-radius:999px;background:#eff6fc;color:#0f6cbd;font-size:.64rem;font-weight:800}.order-review-table-wrap{max-height:276px;overflow:auto}.order-review-table{width:100%;border-collapse:collapse;font-size:.7rem}.order-review-table th{position:sticky;top:0;z-index:1;padding:8px 10px;background:#f5f5f5;color:#605e5c;text-align:left;white-space:nowrap}.order-review-table td{padding:9px 10px;border-top:1px solid #edebe9;color:#323130;vertical-align:top}.order-review-table td.number,.order-review-table th.number{text-align:right}.order-review-table td strong{display:block}.order-review-table td small{display:block;margin-top:2px;color:#797775}.order-review-table tbody tr:hover{background:#f8fbfe}.order-review-empty{padding:24px 18px;text-align:center;color:#605e5c;font-size:.73rem}.order-review-sales-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:12px;padding:14px}.order-review-chart{height:230px;padding:8px;border:1px solid #edebe9;border-radius:8px}.order-review-sales-kpis{display:grid;grid-template-columns:1fr;gap:8px}.order-review-mini-kpi{padding:11px 12px;border:1px solid #edebe9;border-radius:8px;background:#fafafa}.order-review-mini-kpi span{display:block;color:#605e5c;font-size:.65rem}.order-review-mini-kpi strong{display:block;margin-top:3px;color:#242424;font-size:.87rem}.order-review-note{padding:10px 16px;border-top:1px solid #edebe9;background:#fffcf4;color:#6b5c25;font-size:.65rem;line-height:1.45}.order-review-status-negative{color:#c50f1f!important}.order-review-status-positive{color:#107c10!important}
     @media(max-width:780px){.order-review-modal{grid-template-columns:1fr}.order-review-drawer{grid-column:1}.order-review-head{padding:18px 18px 16px}.order-review-body{padding:14px 14px 26px}.order-review-identity{display:block}.order-review-qty-box{margin-top:14px;padding:14px 0 0;border-left:0;border-top:1px solid #e5e5e5}.order-review-overview{grid-template-columns:1fr}.order-review-sales-grid{grid-template-columns:1fr}.order-review-chart{height:210px}}
@@ -1341,14 +1346,88 @@
     @media(max-width:1100px){.company-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.order-document-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.agenda-body{grid-template-columns:1fr}.calendar-day-row{grid-template-columns:90px 1fr}.calendar-day-row label:last-child{grid-column:2}}
     @media(max-width:700px){.calendar-start-row,.company-settings-grid,.order-document-controls{grid-template-columns:1fr}.company-settings-grid .wide{grid-column:auto}.calendar-day-row{grid-template-columns:1fr}.calendar-day-row label:last-child{grid-column:auto}.agenda-head{flex-direction:column}.agenda-actions{width:100%}.agenda-actions .btn{flex:1}.agenda-metrics{grid-template-columns:1fr}.order-summary{grid-template-columns:1fr}}
     @media print{
-      body *{visibility:hidden!important}.order-print-sheet,.order-print-sheet *{visibility:visible!important}.order-print-sheet{display:block!important;position:absolute!important;inset:0!important;padding:18mm 14mm!important;background:#fff!important;color:#111!important}.app-header{display:none!important}
+      @page{margin:0}
+      html,body{
+        margin:0!important;
+        padding:0!important;
+        width:auto!important;
+        max-width:none!important;
+        height:auto!important;
+        min-height:0!important;
+        overflow:visible!important;
+        background:#fff!important;
+        box-shadow:none!important;
+      }
+      body::before{display:none!important}
+      body>*{display:none!important}
+      body>main{
+        display:block!important;
+        margin:0!important;
+        padding:0!important;
+        width:auto!important;
+        max-width:none!important;
+        height:auto!important;
+        min-height:0!important;
+        overflow:visible!important;
+        box-shadow:none!important;
+      }
+      body>main>*{display:none!important}
+      body>main>#module-purchase{
+        display:block!important;
+        margin:0!important;
+        padding:0!important;
+        width:auto!important;
+        max-width:none!important;
+        height:auto!important;
+        min-height:0!important;
+        overflow:visible!important;
+        box-shadow:none!important;
+        animation:none!important;
+      }
+      #module-purchase>*{display:none!important}
+      #module-purchase>.order-panel{
+        display:block!important;
+        margin:0!important;
+        padding:0!important;
+        border:0!important;
+        border-radius:0!important;
+        box-shadow:none!important;
+        width:auto!important;
+        max-width:none!important;
+        height:auto!important;
+        min-height:0!important;
+        overflow:visible!important;
+        background:#fff!important;
+      }
+      #module-purchase>.order-panel>*{display:none!important}
+      #module-purchase>.order-panel>.order-print-sheet{
+        display:block!important;
+        position:static!important;
+        inset:auto!important;
+        margin:0!important;
+        padding:12mm 14mm!important;
+        border:0!important;
+        border-radius:0!important;
+        box-shadow:none!important;
+        width:auto!important;
+        max-width:none!important;
+        height:auto!important;
+        min-height:0!important;
+        overflow:visible!important;
+        background:#fff!important;
+        color:#111!important;
+      }
+      .order-print-sheet,.order-print-sheet *{
+        visibility:visible!important;
+        box-shadow:none!important;
+      }
     }
   </style>
 </head>
 <body>
   <div class="loading-overlay" id="loading-overlay">
     <div class="loading-card">
-      <div class="spinner"></div>
+      <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="loading-fill"></div></div>
       <strong id="loading-title">Procesando ventas</strong>
       <p id="loading-message" style="color:var(--muted); margin:8px 0 0;">Leyendo y normalizando el archivo…</p>
     </div>
@@ -2245,14 +2324,21 @@
         return date;
       }
 
-      function showLoading(title, message) {
+      function showLoading(title, message, pct = 0) {
         $("loading-title").textContent = title;
         $("loading-message").textContent = message;
+        $("loading-fill").style.width = `${Math.max(0, Math.min(100, Number(pct) || 0))}%`;
         $("loading-overlay").classList.add("show");
+      }
+
+      function updateLoading(pct, message) {
+        if (message) $("loading-message").textContent = message;
+        $("loading-fill").style.width = `${Math.max(0, Math.min(100, Number(pct) || 0))}%`;
       }
 
       function hideLoading() {
         $("loading-overlay").classList.remove("show");
+        $("loading-fill").style.width = "0%";
       }
 
       function showNotice(message, type = "info", timeout = 5000) {
@@ -2512,14 +2598,22 @@
           return;
         }
 
-        showLoading("Leyendo archivo", "Abriendo el libro y detectando las hojas…");
+        showLoading("Leyendo archivo", "Cargando archivo en memoria…", 15);
         try {
           const buffer = await file.arrayBuffer();
+
+          updateLoading(30, "Descomprimiendo y preparando el libro…");
+          await new Promise(resolve => setTimeout(resolve, 50));
+
           state.workbook = XLSX.read(buffer, {
             type: "array",
             cellDates: true,
             dense: false
           });
+
+          updateLoading(40, "Hojas detectadas. Preparando análisis automático…");
+          await new Promise(resolve => setTimeout(resolve, 50));
+
           state.file = file;
           state.demoMode = false;
 
@@ -2541,8 +2635,7 @@
             ${(file.size / 1024 / 1024).toFixed(2)} MB · ${state.workbook.SheetNames.length} hoja(s)
           `;
 
-          hideLoading();
-          showNotice("Archivo cargado. Selecciona la hoja y presiona “Procesar ventas”.", "success");
+          // El overlay permanece abierto hasta que wireAutoProcess dispare "Procesar ventas".
         } catch (error) {
           hideLoading();
           console.error(error);
@@ -2554,7 +2647,7 @@
         if (!state.workbook) return;
         state.sheetName = $("sheet-select").value || state.workbook.SheetNames[0];
 
-        showLoading("Procesando ventas", "Detectando encabezados, fechas, importes y anomalías…");
+        showLoading("Procesando ventas", "Extrayendo matriz de datos…", 45);
         await new Promise(resolve => setTimeout(resolve, 50));
 
         try {
@@ -2568,6 +2661,9 @@
 
           if (!matrix.length) throw new Error("La hoja seleccionada está vacía.");
 
+          updateLoading(60, "Detectando encabezados y estructura…");
+          await new Promise(resolve => setTimeout(resolve, 50));
+
           const headerInfo = findHeaderRow(matrix);
           state.headerRowIndex = headerInfo.index;
           const headers = matrix[state.headerRowIndex] || [];
@@ -2578,6 +2674,9 @@
             renderValidation({ missing, totalRows: matrix.length - state.headerRowIndex - 1 });
             throw new Error(`Faltan columnas requeridas: ${missing.join(", ")}`);
           }
+
+          updateLoading(70, "Normalizando fechas, importes y productos…");
+          await new Promise(resolve => setTimeout(resolve, 50));
 
           const rows = [];
           const invalidRows = [];
@@ -2600,6 +2699,9 @@
           state.referenceDate = new Date(state.dateMax);
           state.activePreset = "30";
 
+          updateLoading(85, "Construyendo filtros, KPIs, gráficas y tabla…");
+          await new Promise(resolve => setTimeout(resolve, 50));
+
           initializeAnalysis();
           renderValidation({
             missing: [],
@@ -2608,6 +2710,8 @@
             invalidRows: invalidRows.length
           });
 
+          updateLoading(100, "¡Ventas listas!");
+          await new Promise(resolve => setTimeout(resolve, 250));
           hideLoading();
           showNotice(`Se procesaron ${intFmt.format(rows.length)} filas válidas de la hoja “${state.sheetName}”.`, "success");
         } catch (error) {
@@ -4194,8 +4298,9 @@
       function moneyF(v){return money.format(Number.isFinite(v)?v:0);} function numF(v){return num.format(Number.isFinite(v)?v:0);} function pctF(v){return v==null||!Number.isFinite(v)?"—":`${pct.format(v*100)}%`;}
       function escapeM(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
       function showM(msg,type="info",timeout=5000){const n=$m("notice");n.textContent=msg;n.className=`notice show ${type}`;if(timeout){clearTimeout(showM.t);showM.t=setTimeout(()=>n.classList.remove("show"),timeout);}}
-      function loadingM(title,msg){$m("loading-title").textContent=title;$m("loading-message").textContent=msg;$m("loading-overlay").classList.add("show");}
-      function stopLoadingM(){$m("loading-overlay").classList.remove("show");}
+      function loadingM(title,msg,pct=0){$m("loading-title").textContent=title;$m("loading-message").textContent=msg;$m("loading-fill").style.width=`${Math.max(0,Math.min(100,Number(pct)||0))}%`;$m("loading-overlay").classList.add("show");}
+      function updateLoadingM(pct,msg){if(msg)$m("loading-message").textContent=msg;$m("loading-fill").style.width=`${Math.max(0,Math.min(100,Number(pct)||0))}%`;}
+      function stopLoadingM(){$m("loading-overlay").classList.remove("show");$m("loading-fill").style.width="0%";}
       function headerRow(matrix,fields,aliases){let bi=0,bs=-1;for(let i=0;i<Math.min(matrix.length,25);i++){const hs=(matrix[i]||[]).map(nHeader);let score=0;for(const f of fields){const set=new Set([nHeader(f),...(aliases[f]||[])]);if(hs.some(h=>set.has(h)))score++;}if(score>bs){bs=score;bi=i;}}return bi;}
       function mapHeaders(headers,fields,aliases){const hs=headers.map(nHeader),m={};for(const f of fields){const set=new Set([nHeader(f),...(aliases[f]||[])]);const idx=hs.findIndex(h=>set.has(h));if(idx>=0)m[f]=idx;}return m;}
       function fillSelectM(id,vals,all="Todas"){const s=$m(id),cur=s.value;s.innerHTML=`<option value="">${all}</option>`;[...new Set(vals.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),"es",{numeric:true})).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;s.appendChild(o);});if([...s.options].some(o=>o.value===cur))s.value=cur;}
@@ -4257,10 +4362,44 @@
         };
       }
       
-      function readWorkbook(file,state,selectId,metaId,processId){
-        const ext=file.name.split(".").pop().toLowerCase();if(!["xlsx","xls","csv"].includes(ext)){showM("Formato no compatible.","error");return;}
-        loadingM("Leyendo archivo","Abriendo el libro y detectando hojas…");file.arrayBuffer().then(buf=>{state.workbook=XLSX.read(buf,{type:"array",cellDates:true});state.file=file;const s=$m(selectId);s.innerHTML="";state.workbook.SheetNames.forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;s.appendChild(o);});s.disabled=false;$m(processId).disabled=false;$m(metaId).style.display="block";$m(metaId).innerHTML=`<strong>${escapeM(file.name)}</strong><br>${(file.size/1024/1024).toFixed(2)} MB · ${state.workbook.SheetNames.length} hoja(s)`;stopLoadingM();showM("Archivo cargado. Selecciona la hoja y procésalo.","success");}).catch(e=>{console.error(e);stopLoadingM();showM("No fue posible leer el archivo.","error",0);});
+      async function readWorkbook(file,state,selectId,metaId,processId){
+        const ext=file.name.split(".").pop().toLowerCase();
+        if(!["xlsx","xls","csv"].includes(ext)){showM("Formato no compatible.","error");return;}
+
+        loadingM("Leyendo archivo","Cargando archivo en memoria…",15);
+        try{
+          const buf=await file.arrayBuffer();
+
+          updateLoadingM(30,"Descomprimiendo y preparando el libro…");
+          await new Promise(r=>setTimeout(r,50));
+
+          state.workbook=XLSX.read(buf,{type:"array",cellDates:true});
+
+          updateLoadingM(40,"Hojas detectadas. Preparando análisis automático…");
+          await new Promise(r=>setTimeout(r,50));
+
+          state.file=file;
+          const s=$m(selectId);
+          s.innerHTML="";
+          state.workbook.SheetNames.forEach(n=>{
+            const o=document.createElement("option");
+            o.value=n;
+            o.textContent=n;
+            s.appendChild(o);
+          });
+          s.disabled=false;
+          $m(processId).disabled=false;
+          $m(metaId).style.display="block";
+          $m(metaId).innerHTML=`<strong>${escapeM(file.name)}</strong><br>${(file.size/1024/1024).toFixed(2)} MB · ${state.workbook.SheetNames.length} hoja(s)`;
+
+          // El overlay permanece abierto hasta que wireAutoProcess dispare el proceso del módulo.
+        }catch(e){
+          console.error(e);
+          stopLoadingM();
+          showM("No fue posible leer el archivo.","error",0);
+        }
       }
+
       function setupDrop(zoneId,inputId,chooseId,handler){const z=$m(zoneId),i=$m(inputId);$m(chooseId).addEventListener("click",()=>i.click());i.addEventListener("change",e=>handler(e.target.files[0]));["dragenter","dragover"].forEach(t=>z.addEventListener(t,e=>{e.preventDefault();z.classList.add("dragging");}));["dragleave","drop"].forEach(t=>z.addEventListener(t,e=>{e.preventDefault();z.classList.remove("dragging");}));z.addEventListener("drop",e=>handler(e.dataTransfer.files[0]));}
 
       function switchModule(name){
@@ -4280,10 +4419,104 @@
       function invEnable(on){["inventory-cutoff-date","inventory-filter-class","inventory-filter-brand","inventory-filter-plaza","inventory-filter-site","inventory-filter-unit","inventory-filter-status","inventory-search","inventory-reset-btn","inventory-export-filtered","inventory-export-lagged","inventory-export-differences","inventory-clear-btn"].forEach(id=>$m(id).disabled=!on);}
       function invAge(days){if(days<=30)return ["ACTIVO","Activo"];if(days<=60)return ["LENTO","Movimiento lento"];if(days<=90)return ["REZAGADO","Rezagado"];if(days<=120)return ["CRITICO","Rezago crítico"];return ["LIQUIDACION","Candidato a liquidación"];}
       function invRecompute(){const cut=inventoryState.cutoff;inventoryState.rows.forEach(r=>{r.daysNoMove=Math.max(0,Math.floor((cut-r.updateDate)/DAY_MS));[r.ageCode,r.ageLabel]=invAge(r.daysNoMove);r.totalCalc=r.qtyAvail*r.lastCost;r.valueDiff=r.totalCost-r.totalCalc;r.invRezCalc=r.daysNoMove>60?r.totalCost:0;r.invRezDiff=r.invRez-r.invRezCalc;});}
-      async function processInventory(){if(!inventoryState.workbook)return;loadingM("Procesando inventario","Calculando valuación, antigüedad y rezago…");await new Promise(r=>setTimeout(r,30));try{const name=$m("inventory-sheet-select").value||inventoryState.workbook.SheetNames[0],sheet=inventoryState.workbook.Sheets[name],matrix=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null,blankrows:false});const hi=headerRow(matrix,INV_FIELDS,INV_ALIASES),headers=matrix[hi]||[];inventoryState.mapping=mapHeaders(headers,INV_FIELDS,INV_ALIASES);const missing=INV_FIELDS.filter(f=>inventoryState.mapping[f]==null);if(missing.length)throw new Error(`Faltan columnas: ${missing.join(", ")}`);const rows=[],invalid=[];const get=(raw,f)=>raw[inventoryState.mapping[f]];for(let i=hi+1;i<matrix.length;i++){const raw=matrix[i];if(!raw||raw.every(v=>v==null||String(v).trim()===""))continue;const sku=nText(get(raw,"InvtID")),site=nText(get(raw,"SiteID")),dt=parseDt(get(raw,"LUpd_DateTime"));if(!sku||!site||!dt){invalid.push({row:i+1});continue;}rows.push({id:i+1,classId:nText(get(raw,"ClassID")),invtId:sku,description:String(get(raw,"Descr")??"").trim(),siteId:site,qtyAvail:parseNum(get(raw,"QtyAvail")),lastCost:parseNum(get(raw,"LastCost")),totalCost:parseNum(get(raw,"TotCost")),updateDate:dt,updateLabel:dLabel(dt),stockBasePrice:parseNum(get(raw,"StkBasePrc")),invRez:parseNum(get(raw,"InvRez")),unit:nText(get(raw,"Unidad")),plaza:nText(get(raw,"Plaza")),brand:nText(get(raw,"Marca"))});}
-        if(!rows.length)throw new Error("No se encontraron filas válidas.");inventoryState.rows=rows;inventoryState.invalid=invalid;inventoryState.sheet=name;inventoryState.cutoff=new Date();inventoryState.cutoff.setHours(12,0,0,0);const seen=new Set();inventoryState.duplicateCount=0;rows.forEach(r=>{const k=`${r.invtId}|${r.siteId}`;if(seen.has(k))inventoryState.duplicateCount++;seen.add(k);});invRecompute();invEnable(true);if(inventoryState.cutoffPicker)inventoryState.cutoffPicker.destroy();inventoryState.cutoffPicker=flatpickr("#inventory-cutoff-date",{locale:"es",dateFormat:"d/m/Y",allowInput:true,defaultDate:inventoryState.cutoff,onChange:d=>{if(d[0]){inventoryState.cutoff=d[0];invRecompute();updateInventory();}}});fillSelectM("inventory-filter-class",rows.map(r=>r.classId));fillSelectM("inventory-filter-brand",rows.map(r=>r.brand));fillSelectM("inventory-filter-plaza",rows.map(r=>r.plaza));fillSelectM("inventory-filter-site",rows.map(r=>r.siteId));fillSelectM("inventory-filter-unit",rows.map(r=>r.unit));$m("inventory-file-meta").style.display="block";$m("inventory-file-meta").innerHTML=`<strong>${escapeM(inventoryState.file.name)}</strong><br>Hoja: ${escapeM(name)} · ${integer.format(rows.length)} filas válidas`;
-        renderInvValidation();updateInventory();stopLoadingM();showM(`Inventario procesado: ${integer.format(rows.length)} filas.`,"success");publishMaster("inventory");updatePurchaseReady();
-      }catch(e){console.error(e);stopLoadingM();showM(e.message||"Error al procesar inventario.","error",0);}}
+      async function processInventory(){
+        if(!inventoryState.workbook)return;
+
+        loadingM("Procesando inventario","Extrayendo matriz de inventario…",45);
+        await new Promise(r=>setTimeout(r,50));
+
+        try{
+          const name=$m("inventory-sheet-select").value||inventoryState.workbook.SheetNames[0];
+          const sheet=inventoryState.workbook.Sheets[name];
+          const matrix=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null,blankrows:false});
+
+          updateLoadingM(60,"Detectando encabezados y estructura…");
+          await new Promise(r=>setTimeout(r,50));
+
+          const hi=headerRow(matrix,INV_FIELDS,INV_ALIASES);
+          const headers=matrix[hi]||[];
+          inventoryState.mapping=mapHeaders(headers,INV_FIELDS,INV_ALIASES);
+          const missing=INV_FIELDS.filter(f=>inventoryState.mapping[f]==null);
+          if(missing.length)throw new Error(`Faltan columnas: ${missing.join(", ")}`);
+
+          updateLoadingM(70,"Normalizando existencias, costos y movimientos…");
+          await new Promise(r=>setTimeout(r,50));
+
+          const rows=[],invalid=[];
+          const get=(raw,f)=>raw[inventoryState.mapping[f]];
+          for(let i=hi+1;i<matrix.length;i++){
+            const raw=matrix[i];
+            if(!raw||raw.every(v=>v==null||String(v).trim()===""))continue;
+            const sku=nText(get(raw,"InvtID")),site=nText(get(raw,"SiteID")),dt=parseDt(get(raw,"LUpd_DateTime"));
+            if(!sku||!site||!dt){invalid.push({row:i+1});continue;}
+            rows.push({
+              id:i+1,
+              classId:nText(get(raw,"ClassID")),
+              invtId:sku,
+              description:String(get(raw,"Descr")??"").trim(),
+              siteId:site,
+              qtyAvail:parseNum(get(raw,"QtyAvail")),
+              lastCost:parseNum(get(raw,"LastCost")),
+              totalCost:parseNum(get(raw,"TotCost")),
+              updateDate:dt,
+              updateLabel:dLabel(dt),
+              stockBasePrice:parseNum(get(raw,"StkBasePrc")),
+              invRez:parseNum(get(raw,"InvRez")),
+              unit:nText(get(raw,"Unidad")),
+              plaza:nText(get(raw,"Plaza")),
+              brand:nText(get(raw,"Marca"))
+            });
+          }
+          if(!rows.length)throw new Error("No se encontraron filas válidas.");
+
+          inventoryState.rows=rows;
+          inventoryState.invalid=invalid;
+          inventoryState.sheet=name;
+          inventoryState.cutoff=new Date();
+          inventoryState.cutoff.setHours(12,0,0,0);
+
+          const seen=new Set();
+          inventoryState.duplicateCount=0;
+          rows.forEach(r=>{
+            const k=`${r.invtId}|${r.siteId}`;
+            if(seen.has(k))inventoryState.duplicateCount++;
+            seen.add(k);
+          });
+
+          updateLoadingM(82,"Calculando valuación, antigüedad y rezago…");
+          await new Promise(r=>setTimeout(r,50));
+
+          invRecompute();
+          invEnable(true);
+          if(inventoryState.cutoffPicker)inventoryState.cutoffPicker.destroy();
+          inventoryState.cutoffPicker=flatpickr("#inventory-cutoff-date",{locale:"es",dateFormat:"d/m/Y",allowInput:true,defaultDate:inventoryState.cutoff,onChange:d=>{if(d[0]){inventoryState.cutoff=d[0];invRecompute();updateInventory();}}});
+          fillSelectM("inventory-filter-class",rows.map(r=>r.classId));
+          fillSelectM("inventory-filter-brand",rows.map(r=>r.brand));
+          fillSelectM("inventory-filter-plaza",rows.map(r=>r.plaza));
+          fillSelectM("inventory-filter-site",rows.map(r=>r.siteId));
+          fillSelectM("inventory-filter-unit",rows.map(r=>r.unit));
+          $m("inventory-file-meta").style.display="block";
+          $m("inventory-file-meta").innerHTML=`<strong>${escapeM(inventoryState.file.name)}</strong><br>Hoja: ${escapeM(name)} · ${integer.format(rows.length)} filas válidas`;
+
+          updateLoadingM(92,"Generando gráficas y sincronizando Motor de Compra…");
+          await new Promise(r=>setTimeout(r,50));
+
+          renderInvValidation();
+          updateInventory();
+          publishMaster("inventory");
+          updatePurchaseReady();
+
+          updateLoadingM(100,"¡Inventario listo!");
+          await new Promise(r=>setTimeout(r,250));
+          stopLoadingM();
+          showM(`Inventario procesado: ${integer.format(rows.length)} filas.`,"success");
+        }catch(e){
+          console.error(e);
+          stopLoadingM();
+          showM(e.message||"Error al procesar inventario.","error",0);
+        }
+      }
+
       function renderInvValidation(){const diffs=inventoryState.rows.filter(r=>Math.abs(r.valueDiff)>.02).length,rezDiff=inventoryState.rows.filter(r=>Math.abs(r.invRezDiff)>.02).length;$m("inventory-validation-status").textContent="Estructura válida";$m("inventory-validation-status").className="tag success";$m("inventory-validation").innerHTML=`<div class="module-validation-row"><strong>${integer.format(inventoryState.rows.length)} filas válidas</strong><span>${integer.format(inventoryState.invalid.length)} ignoradas</span></div><div class="module-validation-row"><strong>${integer.format(inventoryState.duplicateCount)} posibles duplicados</strong><span>Llave: InvtID + SiteID; no se eliminaron.</span></div><div class="module-validation-row"><strong>${integer.format(diffs)} diferencias de valuación</strong><span>TotCost contra QtyAvail × LastCost.</span></div><div class="module-validation-row"><strong>${integer.format(rezDiff)} diferencias de InvRez</strong><span>InvRez reportado contra regla de más de 60 días.</span></div>`;}
       function invFiltered(){const c=$m("inventory-filter-class").value,b=$m("inventory-filter-brand").value,p=$m("inventory-filter-plaza").value,s=$m("inventory-filter-site").value,u=$m("inventory-filter-unit").value,st=$m("inventory-filter-status").value,q=nText($m("inventory-search").value);return inventoryState.rows.filter(r=>(!c||r.classId===c)&&(!b||r.brand===b)&&(!p||r.plaza===p)&&(!s||r.siteId===s)&&(!u||r.unit===u)&&(!st||r.ageCode===st)&&(!q||nText(`${r.invtId} ${r.description}`).includes(q)));}
       function invAgg(rows){let value=0,units=0,active=0,lagged=0,laggedRecords=0,liquid=0,diffCount=0,diffAmount=0;rows.forEach(r=>{value+=r.totalCost;units+=r.qtyAvail;if(r.daysNoMove>60){lagged+=r.totalCost;laggedRecords++;}else active+=r.totalCost;if(r.daysNoMove>120)liquid++;if(Math.abs(r.valueDiff)>.02){diffCount++;diffAmount+=Math.abs(r.valueDiff);}});return{value,units,active,lagged,laggedPct:value?lagged/value:null,laggedRecords,liquid,diffCount,diffAmount};}
@@ -4303,9 +4536,109 @@
 
       /* RECEPCIONES */
       function recEnable(on){["receipts-date-start","receipts-date-end","receipts-filter-vendor","receipts-filter-site","receipts-filter-class","receipts-search","receipts-reset-btn","receipts-time-granularity","receipts-vendor-metric","receipts-cost-sku","receipts-export-filtered","receipts-export-summary","receipts-export-differences","receipts-clear-btn"].forEach(id=>$m(id).disabled=!on);$$m(".receipt-preset").forEach(b=>b.disabled=!on);}
-      async function processReceipts(){if(!receiptsState.workbook)return;loadingM("Procesando recepciones","Normalizando órdenes, cantidades y costos…");await new Promise(r=>setTimeout(r,30));try{const name=$m("receipts-sheet-select").value||receiptsState.workbook.SheetNames[0],sheet=receiptsState.workbook.Sheets[name],matrix=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null,blankrows:false});const hi=headerRow(matrix,REC_FIELDS,REC_ALIASES),headers=matrix[hi]||[];receiptsState.mapping=mapHeaders(headers,REC_FIELDS,REC_ALIASES);const missing=REC_FIELDS.filter(f=>receiptsState.mapping[f]==null);if(missing.length)throw new Error(`Faltan columnas: ${missing.join(", ")}`);const get=(raw,f)=>raw[receiptsState.mapping[f]],rows=[],invalid=[];for(let i=hi+1;i<matrix.length;i++){const raw=matrix[i];if(!raw||raw.every(v=>v==null||String(v).trim()===""))continue;const dt=parseDt(get(raw,"Crtd_DateTime")),sku=nText(get(raw,"InvtID"));if(!dt||!sku){invalid.push({row:i+1});continue;}const qty=parseNum(get(raw,"Qty")),rcptQty=parseNum(get(raw,"RcptQty")),unitCost=parseNum(get(raw,"UnitCost")),extCost=parseNum(get(raw,"ExtCost"));rows.push({id:i+1,date:dt,dateKey:dKey(dt),dateLabel:dLabel(dt),invtId:sku,qty,siteId:nText(get(raw,"SiteID")),vendorId:nText(get(raw,"VendId")),createdUser:nText(get(raw,"Crtd_User")),extCost,rcptQty,description:String(get(raw,"TranDesc")??"").trim(),unitCost,poNbr:nText(get(raw,"PONbr")),classId:nText(get(raw,"ClassID")),qtyDiff:qty-rcptQty,extCostCalc:rcptQty*unitCost,costDiff:extCost-(rcptQty*unitCost)});}
-        if(!rows.length)throw new Error("No se encontraron filas válidas.");receiptsState.rows=rows;receiptsState.invalid=invalid;receiptsState.sheet=name;receiptsState.minDate=new Date(Math.min(...rows.map(r=>r.date)));receiptsState.maxDate=new Date(Math.max(...rows.map(r=>r.date)));receiptsState.reference=new Date();receiptsState.reference.setHours(12,0,0,0);receiptsState.preset="30";const seen=new Set();receiptsState.duplicateCount=0;rows.forEach(r=>{const k=`${r.dateKey}|${r.poNbr}|${r.invtId}|${r.siteId}|${r.vendorId}|${r.rcptQty}`;if(seen.has(k))receiptsState.duplicateCount++;seen.add(k);});recEnable(true);initRecPickers();fillSelectM("receipts-filter-vendor",rows.map(r=>r.vendorId),"Todos");fillSelectM("receipts-filter-site",rows.map(r=>r.siteId));fillSelectM("receipts-filter-class",rows.map(r=>r.classId));fillSelectM("receipts-cost-sku",rows.map(r=>r.invtId),"Selecciona un SKU");const topSku=recGroup(rows,"invtId").sort((a,b)=>b.cost-a.cost)[0]?.key||"";$m("receipts-cost-sku").value=topSku;$m("receipts-file-meta").style.display="block";$m("receipts-file-meta").innerHTML=`<strong>${escapeM(receiptsState.file.name)}</strong><br>Hoja: ${escapeM(name)} · ${integer.format(rows.length)} filas · ${dLabel(receiptsState.minDate)} a ${dLabel(receiptsState.maxDate)}`;renderRecValidation();applyRecPreset("30");stopLoadingM();showM(`Recepciones procesadas: ${integer.format(rows.length)} filas.`,"success");publishMaster("receipts");updatePurchaseReady();
-      }catch(e){console.error(e);stopLoadingM();showM(e.message||"Error al procesar recepciones.","error",0);}}
+      async function processReceipts(){
+        if(!receiptsState.workbook)return;
+
+        loadingM("Procesando recepciones","Extrayendo matriz de recepciones…",45);
+        await new Promise(r=>setTimeout(r,50));
+
+        try{
+          const name=$m("receipts-sheet-select").value||receiptsState.workbook.SheetNames[0];
+          const sheet=receiptsState.workbook.Sheets[name];
+          const matrix=XLSX.utils.sheet_to_json(sheet,{header:1,raw:true,defval:null,blankrows:false});
+
+          updateLoadingM(60,"Detectando encabezados y estructura…");
+          await new Promise(r=>setTimeout(r,50));
+
+          const hi=headerRow(matrix,REC_FIELDS,REC_ALIASES);
+          const headers=matrix[hi]||[];
+          receiptsState.mapping=mapHeaders(headers,REC_FIELDS,REC_ALIASES);
+          const missing=REC_FIELDS.filter(f=>receiptsState.mapping[f]==null);
+          if(missing.length)throw new Error(`Faltan columnas: ${missing.join(", ")}`);
+
+          updateLoadingM(70,"Normalizando órdenes, cantidades y costos…");
+          await new Promise(r=>setTimeout(r,50));
+
+          const get=(raw,f)=>raw[receiptsState.mapping[f]],rows=[],invalid=[];
+          for(let i=hi+1;i<matrix.length;i++){
+            const raw=matrix[i];
+            if(!raw||raw.every(v=>v==null||String(v).trim()===""))continue;
+            const dt=parseDt(get(raw,"Crtd_DateTime")),sku=nText(get(raw,"InvtID"));
+            if(!dt||!sku){invalid.push({row:i+1});continue;}
+            const qty=parseNum(get(raw,"Qty")),rcptQty=parseNum(get(raw,"RcptQty")),unitCost=parseNum(get(raw,"UnitCost")),extCost=parseNum(get(raw,"ExtCost"));
+            rows.push({
+              id:i+1,
+              date:dt,
+              dateKey:dKey(dt),
+              dateLabel:dLabel(dt),
+              invtId:sku,
+              qty,
+              siteId:nText(get(raw,"SiteID")),
+              vendorId:nText(get(raw,"VendId")),
+              createdUser:nText(get(raw,"Crtd_User")),
+              extCost,
+              rcptQty,
+              description:String(get(raw,"TranDesc")??"").trim(),
+              unitCost,
+              poNbr:nText(get(raw,"PONbr")),
+              classId:nText(get(raw,"ClassID")),
+              qtyDiff:qty-rcptQty,
+              extCostCalc:rcptQty*unitCost,
+              costDiff:extCost-(rcptQty*unitCost)
+            });
+          }
+          if(!rows.length)throw new Error("No se encontraron filas válidas.");
+
+          receiptsState.rows=rows;
+          receiptsState.invalid=invalid;
+          receiptsState.sheet=name;
+          receiptsState.minDate=new Date(Math.min(...rows.map(r=>r.date)));
+          receiptsState.maxDate=new Date(Math.max(...rows.map(r=>r.date)));
+          receiptsState.reference=new Date();
+          receiptsState.reference.setHours(12,0,0,0);
+          receiptsState.preset="30";
+
+          const seen=new Set();
+          receiptsState.duplicateCount=0;
+          rows.forEach(r=>{
+            const k=`${r.dateKey}|${r.poNbr}|${r.invtId}|${r.siteId}|${r.vendorId}|${r.rcptQty}`;
+            if(seen.has(k))receiptsState.duplicateCount++;
+            seen.add(k);
+          });
+
+          updateLoadingM(82,"Preparando filtros y validaciones de recepción…");
+          await new Promise(r=>setTimeout(r,50));
+
+          recEnable(true);
+          initRecPickers();
+          fillSelectM("receipts-filter-vendor",rows.map(r=>r.vendorId),"Todos");
+          fillSelectM("receipts-filter-site",rows.map(r=>r.siteId));
+          fillSelectM("receipts-filter-class",rows.map(r=>r.classId));
+          fillSelectM("receipts-cost-sku",rows.map(r=>r.invtId),"Selecciona un SKU");
+          const topSku=recGroup(rows,"invtId").sort((a,b)=>b.cost-a.cost)[0]?.key||"";
+          $m("receipts-cost-sku").value=topSku;
+          $m("receipts-file-meta").style.display="block";
+          $m("receipts-file-meta").innerHTML=`<strong>${escapeM(receiptsState.file.name)}</strong><br>Hoja: ${escapeM(name)} · ${integer.format(rows.length)} filas · ${dLabel(receiptsState.minDate)} a ${dLabel(receiptsState.maxDate)}`;
+
+          updateLoadingM(92,"Generando gráficas y sincronizando Motor de Compra…");
+          await new Promise(r=>setTimeout(r,50));
+
+          renderRecValidation();
+          applyRecPreset("30");
+          publishMaster("receipts");
+          updatePurchaseReady();
+
+          updateLoadingM(100,"¡Recepciones listas!");
+          await new Promise(r=>setTimeout(r,250));
+          stopLoadingM();
+          showM(`Recepciones procesadas: ${integer.format(rows.length)} filas.`,"success");
+        }catch(e){
+          console.error(e);
+          stopLoadingM();
+          showM(e.message||"Error al procesar recepciones.","error",0);
+        }
+      }
+
       function initRecPickers(){Object.values(receiptsState.pickers).forEach(p=>p.destroy());const common={locale:"es",dateFormat:"d/m/Y",allowInput:true};receiptsState.pickers.start=flatpickr("#receipts-date-start",{...common,onChange:d=>{if(d[0])receiptsState.start=d[0];}});receiptsState.pickers.end=flatpickr("#receipts-date-end",{...common,onChange:d=>{if(d[0])receiptsState.end=d[0];}});}
       function applyRecPreset(p){receiptsState.preset=String(p);const ref=new Date();ref.setHours(12,0,0,0);receiptsState.reference=ref;let start=new Date(ref),end=new Date(ref),name="";if(p==="today")name=`Hoy (${dLabel(ref)})`;else if(p==="month"){start=new Date(ref.getFullYear(),ref.getMonth(),1,12);name="Mes actual";}else if(p==="prevMonth"){start=new Date(ref.getFullYear(),ref.getMonth()-1,1,12);end=new Date(ref.getFullYear(),ref.getMonth(),0,12);name="Mes anterior";}else if(p==="custom"){start=parseDt($m("receipts-date-start").value);end=parseDt($m("receipts-date-end").value);if(!start||!end){showM("Captura fechas válidas.","error");return;}name="Rango personalizado";}else{const days=Number(p);start=addDaysM(ref,-(days-1));name=`Últimos ${days} días`;}if(start>end)[start,end]=[end,start];receiptsState.start=start;receiptsState.end=end;receiptsState.pickers.start.setDate(receiptsState.start,false);receiptsState.pickers.end.setDate(receiptsState.end,false);$$m(".receipt-preset").forEach(b=>b.classList.toggle("active",b.dataset.receiptPreset===String(p)));receiptsState.periodName=name;updateReceipts();}
       function renderRecValidation(){const qtyDiff=receiptsState.rows.filter(r=>Math.abs(r.qtyDiff)>.0001).length,costDiff=receiptsState.rows.filter(r=>Math.abs(r.costDiff)>.02).length,missingVendor=receiptsState.rows.filter(r=>!r.vendorId).length,missingPO=receiptsState.rows.filter(r=>!r.poNbr).length;$m("receipts-validation-status").textContent="Estructura válida";$m("receipts-validation-status").className="tag success";$m("receipts-validation").innerHTML=`<div class="module-validation-row"><strong>${integer.format(receiptsState.rows.length)} filas válidas</strong><span>${integer.format(receiptsState.invalid.length)} ignoradas</span></div><div class="module-validation-row"><strong>${integer.format(receiptsState.duplicateCount)} posibles duplicados</strong><span>No se eliminaron automáticamente.</span></div><div class="module-validation-row"><strong>${integer.format(qtyDiff)} diferencias Qty / RcptQty</strong><span>${integer.format(costDiff)} diferencias de costo extendido</span></div><div class="module-validation-row"><strong>${integer.format(missingVendor)} sin proveedor</strong><span>${integer.format(missingPO)} sin orden de compra</span></div>`;}
@@ -4916,7 +5249,7 @@
     let priorityPlaza = "CTM";
     let flowChart = null;
     const order = new Map();
-    let orderMeta = {folio:"",orderDate:"",buyerId:"",scope:"general",groupFolios:{}};
+    let orderMeta = {folio:"",orderDate:"",buyerId:"",scope:"general",groupFolios:{},exportedGroups:new Set()};
     let orderLineSequence = 0;
     let orderReviewChart = null;
     let orderReviewKey = "";
@@ -4929,6 +5262,20 @@
     const addDays = (date,days) => { const result=dateOnly(date); if(result) result.setDate(result.getDate()+days); return result; };
     const dateKey = value => { const d=dateOnly(value); return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`:""; };
     const dateLabel = value => { const d=dateOnly(value); return d?new Intl.DateTimeFormat("es-MX",{day:"2-digit",month:"2-digit",year:"numeric"}).format(d):"—"; };
+    const safeFilePart = value => String(value??"")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+      .replace(/[^a-z0-9]+/gi,"_")
+      .replace(/^_+|_+$/g,"")
+      .toUpperCase() || "SIN_DATO";
+    const compactFileDate = value => {
+      const d=dateOnly(value)||dateOnly(new Date());
+      return `${String(d.getDate()).padStart(2,"0")}${String(d.getMonth()+1).padStart(2,"0")}${d.getFullYear()}`;
+    };
+    const formalOrderFileBase = context => {
+      const plaza=plazaCode(context?.group?.lines?.[0])||plazaCode(context?.destination)||"PLAZA";
+      const provider=context?.supplier?.name||context?.supplier?.id||"PROVEEDOR";
+      return `${safeFilePart(plaza)}_${safeFilePart(provider)}_${compactFileDate(context?.orderDate)}`;
+    };
     const clone = value => JSON.parse(JSON.stringify(value));
     const parseIsoDate = value => {
       const match=String(value||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -5994,7 +6341,7 @@
       orderMeta.orderDate=dateKey(new Date());
       orderMeta.buyerId=settings.procurement.buyers.find(item=>item.active!==false)?.id||"";
       $("order-add-line-btn").addEventListener("click",addManualOrderLine);
-      $("order-clear-btn").addEventListener("click",()=>{closeOrderReview();order.clear();orderMeta.groupFolios={};orderMeta.scope="general";renderOrder();showNotice("Centro de Órdenes vaciado.","info");});
+      $("order-clear-btn").addEventListener("click",()=>{closeOrderReview();order.clear();orderMeta.groupFolios={};orderMeta.exportedGroups.clear();orderMeta.scope="general";renderOrder();showNotice("Centro de Órdenes vaciado.","info");});
       $("order-export-general-btn").addEventListener("click",exportOrderGeneral);
       $("order-export-provider-btn").addEventListener("click",exportSelectedFormalOrder);
       $("order-print-btn").addEventListener("click",printSelectedFormalOrder);
@@ -6096,7 +6443,7 @@
       return true;
     }
     function buildOrderFromFilter(){
-      const rows=window.MotorEngine?.getFilteredRows?.()||[];order.clear();orderMeta.groupFolios={};let added=0;
+      const rows=window.MotorEngine?.getFilteredRows?.()||[];order.clear();orderMeta.groupFolios={};orderMeta.exportedGroups.clear();let added=0;
       rows.forEach(row=>{if(addOrder(row,true))added++;});renderOrder();
       showNotice(added?`Pedido preparado con ${INT.format(added)} líneas recomendadas.`:"No hay cantidades de compra positivas con los filtros y la política actuales.",added?"success":"info");
       if(added)$("purchase-order-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
@@ -6199,7 +6546,10 @@
       groupRoot.innerHTML=groups.length?groups.map(group=>{
         const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
         const groupIssues=orderGroupIssues(group);
-        return `<button type="button" class="order-group-card ${orderMeta.scope===group.key?"active":""} ${groupIssues.length?"incomplete":""}" data-order-scope="${esc(group.key)}"><span>${groupIssues.length?`${INT.format(groupIssues.length)} validaciones pendientes`:"OC lista"}</span><strong>${esc(groupLabel(group))}</strong><small>${INT.format(group.lines.length)} partidas · ${MXN.format(subtotal)} sin IVA · ${esc(orderMeta.groupFolios[group.key]||"Sin folio")}</small></button>`;
+        const exported=orderMeta.exportedGroups.has(group.key);
+        const stateClass=groupIssues.length?"incomplete":exported?"exported":"ready";
+        const stateText=groupIssues.length?`${INT.format(groupIssues.length)} validaciones pendientes`:exported?"Exportada / cerrada":"OC lista";
+        return `<button type="button" class="order-group-card ${orderMeta.scope===group.key?"active":""} ${stateClass}" data-order-scope="${esc(group.key)}"><span>${stateText}</span><strong>${esc(groupLabel(group))}</strong><small>${INT.format(group.lines.length)} partidas · ${MXN.format(subtotal)} sin IVA · ${esc(orderMeta.groupFolios[group.key]||"Sin folio")}</small></button>`;
       }).join(""):"";
       groupRoot.querySelectorAll("[data-order-scope]").forEach(button=>button.addEventListener("click",()=>{orderMeta.scope=button.dataset.orderScope;clearOrderMessage();renderOrder();}));
       if(!allLines.length){content.innerHTML='<div class="order-empty"><strong>El Centro de Órdenes está vacío.</strong><br>Usa la Agenda de hoy, agrega productos desde la recomendación o crea una partida manual.</div>';return;}
@@ -6293,7 +6643,7 @@
     function formalOrderSheet(context){
       const {group,supplier,destination,buyer,folio,orderDate}=context,company=settings.procurement.company;
       const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
-      const taxRate=number(destination.taxRate)||number(supplier.taxRate),tax=subtotal*taxRate/100,total=subtotal+tax;
+      const taxRate=number(supplier?.taxRate,0),tax=subtotal*taxRate/100,total=subtotal+tax;
       const matrix=[
         [company.legalName||"ELECTRÓNICOS Y MÁS","","","","","",""],
         ["PROVEEDOR",`${supplier.id} · ${supplier.name}`,"","","ORDEN DE COMPRA","",folio],
@@ -6337,20 +6687,24 @@
       try{
         const {sheet}=formalOrderSheet(context),workbook=XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook,sheet,"Orden de compra");
-        const safeVendor=context.supplier.id.replace(/[^A-Z0-9_-]+/gi,"_");
-        XLSX.writeFile(workbook,`${context.folio}_${safeVendor}_${context.destination.id}.xlsx`,{cellDates:true});
+        XLSX.writeFile(workbook,`${formalOrderFileBase(context)}.xlsx`,{cellDates:true});
+        orderMeta.exportedGroups.add(context.group.key);
         consumeOrderFolio(context.folio);
+        renderOrder();
         showOrderMessage(`Orden ${context.folio} exportada correctamente para ${context.supplier.name}.`,"success",6500);
       }catch(error){
         console.error(error);
         showOrderMessage(`No fue posible generar el Excel de esta OC: ${error?.message||"error de exportación"}.`,"error");
       }
     }
+
     function printSelectedFormalOrder(){
       const context=validateFormalGroup(selectedOrderGroup());if(!context)return;
+      const originalTitle=document.title;
       try{
         const {group,supplier,destination,buyer,folio,orderDate}=context;
-        const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0),taxRate=number(destination.taxRate)||number(supplier.taxRate),tax=subtotal*taxRate/100,total=subtotal+tax;
+        const subtotal=group.lines.reduce((sum,line)=>sum+number(line.qty)*number(line.unitCost),0);
+        const taxRate=number(supplier?.taxRate,0),tax=subtotal*taxRate/100,total=subtotal+tax;
         const printSheet=$("order-print-sheet");
         printSheet.innerHTML=`
           <div class="po-print-title"><div><strong>${esc(settings.procurement.company.legalName)}</strong><span>${esc(settings.procurement.company.address)}</span></div><div><b>ORDEN DE COMPRA</b><strong>${esc(folio)}</strong></div></div>
@@ -6358,14 +6712,24 @@
           <table><thead><tr><th>Partida</th><th>Artículo</th><th>Descripción</th><th>Cantidad</th><th>Fecha requerida</th><th>Costo</th><th>Costo ext.</th></tr></thead><tbody>${group.lines.map((line,index)=>`<tr><td>${index+1}</td><td>${esc(line.invtId)}</td><td>${esc(line.description)}</td><td>${INT.format(line.qty)}</td><td>${dateLabel(parseIsoDate(line.requiredDate))}</td><td>${MXN.format(line.unitCost)}</td><td>${MXN.format(line.qty*line.unitCost)}</td></tr>`).join("")}</tbody></table>
           <div class="po-print-totals"><span>Subtotal <b>${MXN.format(subtotal)}</b></span><span>Impuesto ${PCT.format(taxRate)}% <b>${MXN.format(tax)}</b></span><span>Total <b>${MXN.format(total)}</b></span></div>`;
         printSheet.setAttribute("aria-hidden","false");
+        document.title=formalOrderFileBase(context);
         showOrderMessage(`Vista de impresión preparada para ${folio}. Si no aparece el diálogo, permite ventanas de impresión en el navegador.`,"info",6500);
-        window.print();
-        printSheet.setAttribute("aria-hidden","true");
+        try{
+          window.print();
+          orderMeta.exportedGroups.add(context.group.key);
+        }finally{
+          document.title=originalTitle;
+          printSheet.setAttribute("aria-hidden","true");
+        }
+        renderOrder();
       }catch(error){
+        document.title=originalTitle;
+        $("order-print-sheet")?.setAttribute("aria-hidden","true");
         console.error(error);
         showOrderMessage(`No fue posible preparar la impresión: ${error?.message||"error de impresión"}.`,"error");
       }
     }
+
     function renderDashboard(){
       if(!$("module-dashboard"))return;
       renderReportStatus();renderDesired();renderPriority();renderFlow();updatePolicyLabels();

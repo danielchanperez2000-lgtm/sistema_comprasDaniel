@@ -2710,7 +2710,7 @@
             invalidRows: invalidRows.length
           });
 
-          updateLoading(100, "¡Ventas listas!");
+          updateLoading(100, "¡Casi Listo!");
           await new Promise(resolve => setTimeout(resolve, 250));
           hideLoading();
           showNotice(`Se procesaron ${intFmt.format(rows.length)} filas válidas de la hoja “${state.sheetName}”.`, "success");
@@ -4628,7 +4628,7 @@
           publishMaster("receipts");
           updatePurchaseReady();
 
-          updateLoadingM(100,"¡Recepciones listas!");
+          updateLoadingM(100,"¡Casi Listo!");
           await new Promise(r=>setTimeout(r,250));
           stopLoadingM();
           showM(`Recepciones procesadas: ${integer.format(rows.length)} filas.`,"success");

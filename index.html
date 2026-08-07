@@ -1481,10 +1481,10 @@
     </section>
 
     <section class="journey-rail" aria-label="Progreso del análisis">
-      <button class="journey-step active" type="button" data-go-module="sales" data-journey="sales"><span class="journey-number">1</span><span><strong>Ventas</strong><small id="journey-sales-status">Carga el historial</small></span><i>→</i></button>
-      <button class="journey-step" type="button" data-go-module="inventory" data-journey="inventory"><span class="journey-number">2</span><span><strong>Inventario</strong><small id="journey-inventory-status">Carga la fotografía</small></span><i>→</i></button>
-      <button class="journey-step" type="button" data-go-module="receipts" data-journey="receipts"><span class="journey-number">3</span><span><strong>Recepciones</strong><small id="journey-receipts-status">Carga el abastecimiento</small></span><i>→</i></button>
-      <button class="journey-step" type="button" data-go-module="purchase" data-journey="purchase"><span class="journey-number">4</span><span><strong>Motor Domina</strong><small id="journey-purchase-status">Esperando reportes</small></span><i>✓</i></button>
+      <button class="journey-step active" type="button" data-go-module="sales" data-journey="sales"><span class="journey-number">1</span><span><strong>Ventas</strong><small id="journey-sales-status">Carga el historico de ventas</small></span><i>→</i></button>
+      <button class="journey-step" type="button" data-go-module="inventory" data-journey="inventory"><span class="journey-number">2</span><span><strong>Inventario</strong><small id="journey-inventory-status">Carga tu inventario actualizado</small></span><i>→</i></button>
+      <button class="journey-step" type="button" data-go-module="receipts" data-journey="receipts"><span class="journey-number">3</span><span><strong>Recepciones</strong><small id="journey-receipts-status">Carga el abastecimiento de mercancia</small></span><i>→</i></button>
+      <button class="journey-step" type="button" data-go-module="purchase" data-journey="purchase"><span class="journey-number">4</span><span><strong>Motor Domina</strong><small id="journey-purchase-status">En espera de los reportes</small></span><i>✓</i></button>
     </section>
 
     <div id="module-sales" class="module-view active">
@@ -1554,8 +1554,7 @@
         <div>
           <strong>Filtro de ventas</strong>
           <div class="period-strip">
-            <span>Periodo activo: <strong id="period-label">Sin datos</strong></span>
-            <span>Filas filtradas: <strong id="filtered-count">0</strong></span>
+            
           </div>
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -1563,26 +1562,35 @@
         </div>
       </div>
 
+      <div class="preset-row">
+        <button class="preset" data-preset="today" disabled>Hoy</button>
+        <button class="preset" data-preset="yesterday" disabled>Ayer</button>
+        <button class="preset" data-preset="7" disabled>7 días</button>
+        <button class="preset" data-preset="15" disabled>15 días</button>
+        <button class="preset active" data-preset="30" disabled>30 días</button>
+        <button class="preset" data-preset="60" disabled>60 días</button>
+        <button class="preset" data-preset="90" disabled>90 días</button>
+        <button class="preset" data-preset="month" disabled>Mes actual</button>
+        <button class="preset" data-preset="prevMonth" disabled>Mes anterior</button>
+        <button class="preset" data-preset="custom" disabled>Aplicar rango</button>
+
+        <div class="inline-group">
+          <div class="control">
+            <label for="custom-days">Otro Plazo</label>
+            <input id="custom-days" type="number" min="1" max="3650" value="45" disabled />
+          </div>
+          <button class="btn btn-secondary" id="apply-custom-days" disabled>Aplicar</button>
+        </div>
+      </div>
+
       <div class="toolbar-grid">
-        <div class="control">
+        <div class="control" style="display:none;">
           <label for="reference-date">Fecha de referencia</label>
           <input type="text" id="reference-date" placeholder="dd/mm/aaaa" disabled />
         </div>
         <div class="control">
-          <label for="date-start">Fecha inicial</label>
-          <input type="text" id="date-start" placeholder="dd/mm/aaaa" disabled />
-        </div>
-        <div class="control">
-          <label for="date-end">Fecha final</label>
-          <input type="text" id="date-end" placeholder="dd/mm/aaaa" disabled />
-        </div>
-        <div class="control">
-          <label for="filter-class">Clase</label>
-          <select id="filter-class" disabled><option value="">Todas</option></select>
-        </div>
-        <div class="control">
-          <label for="filter-brand">Marca</label>
-          <select id="filter-brand" disabled><option value="">Todas</option></select>
+          <label for="filter-unit">Unidad</label>
+          <select id="filter-unit" disabled><option value="">Todas</option></select>
         </div>
         <div class="control">
           <label for="filter-plaza">Plaza</label>
@@ -1593,12 +1601,20 @@
           <select id="filter-site" disabled><option value="">Todas</option></select>
         </div>
         <div class="control">
-          <label for="filter-unit">Unidad</label>
-          <select id="filter-unit" disabled><option value="">Todas</option></select>
+          <label for="filter-brand">Marca</label>
+          <select id="filter-brand" disabled><option value="">Todas</option></select>
         </div>
-        <div class="control wide">
-          <label for="filter-search">SKU, descripción o documento</label>
-          <input id="filter-search" type="search" placeholder="Buscar texto…" disabled />
+        <div class="control">
+          <label for="filter-class">Clase</label>
+          <select id="filter-class" disabled><option value="">Todas</option></select>
+        </div>
+        <div class="control">
+          <label for="date-start">Desde</label>
+          <input type="text" id="date-start" placeholder="dd/mm/aaaa" disabled />
+        </div>
+        <div class="control">
+          <label for="date-end">Hasta</label>
+          <input type="text" id="date-end" placeholder="dd/mm/aaaa" disabled />
         </div>
         <div class="control">
           <label for="filter-anomaly">Anomalía</label>
@@ -1636,28 +1652,12 @@
           <label for="margin-max">Margen alto mayor a %</label>
           <input id="margin-max" type="number" min="-1000" max="1000" step="0.1" value="80" disabled />
         </div>
-      </div>
-
-      <div class="preset-row">
-        <button class="preset" data-preset="today" disabled>Hoy</button>
-        <button class="preset" data-preset="yesterday" disabled>Ayer</button>
-        <button class="preset" data-preset="7" disabled>7 días</button>
-        <button class="preset" data-preset="15" disabled>15 días</button>
-        <button class="preset active" data-preset="30" disabled>30 días</button>
-        <button class="preset" data-preset="60" disabled>60 días</button>
-        <button class="preset" data-preset="90" disabled>90 días</button>
-        <button class="preset" data-preset="month" disabled>Mes actual</button>
-        <button class="preset" data-preset="prevMonth" disabled>Mes anterior</button>
-        <button class="preset" data-preset="custom" disabled>Aplicar rango</button>
-
-        <div class="inline-group">
-          <div class="control">
-            <label for="custom-days">Plazo Personalizado</label>
-            <input id="custom-days" type="number" min="1" max="3650" value="45" disabled />
-          </div>
-          <button class="btn btn-secondary" id="apply-custom-days" disabled>Aplicar</button>
+        <div class="control wide">
+          <label for="filter-search">Busqueda avanzada</label>
+          <input id="filter-search" type="search" placeholder="Ingresa modelo, descripción o documento" disabled />
         </div>
       </div>
+
     </section>
 
     <section class="kpi-grid">
@@ -1884,14 +1884,6 @@
     </div><!-- /module-sales -->
 
     <div id="module-inventory" class="module-view">
-      <section class="panel module-intro">
-        <div>
-          <h2>Inventario</h2>
-          <p>Aqui podras observar tu inventario por sano e inventario rezagado.</p>
-        </div>
-        <span class="tag primary">Fase 2</span>
-      </section>
-
       <section class="module-loader-grid">
         <article class="panel">
           <div class="panel-body">
@@ -1920,16 +1912,16 @@
       </section>
 
       <section class="panel toolbar">
-        <div class="toolbar-top"><div><strong>Filtros de inventario</strong><div class="period-strip"><span>Registros filtrados: <strong id="inventory-filtered-count">0</strong></span></div></div><button class="btn btn-outline" id="inventory-reset-btn" disabled type="button">Limpiar filtros</button></div>
+        <div class="toolbar-top"><div><strong>Filtros de inventario</strong><div class="period-strip"></div></div><button class="btn btn-outline" id="inventory-reset-btn" disabled type="button">Limpiar filtros</button></div>
         <div class="module-toolbar-grid">
-          <div class="control"><label for="inventory-cutoff-date">Fecha de corte</label><input id="inventory-cutoff-date" type="text" placeholder="dd/mm/aaaa" disabled></div>
+          <div class="control" style="display:none;"><label for="inventory-cutoff-date">Fecha de corte</label><input id="inventory-cutoff-date" type="text" placeholder="dd/mm/aaaa" disabled></div>
           <div class="control"><label for="inventory-filter-unit">Unidad</label><select id="inventory-filter-unit" disabled><option value="">Todas</option></select></div>
           <div class="control"><label for="inventory-filter-plaza">Plaza</label><select id="inventory-filter-plaza" disabled><option value="">Todas</option></select></div>
           <div class="control"><label for="inventory-filter-site">Sucursal</label><select id="inventory-filter-site" disabled><option value="">Todas</option></select></div>
-          <div class="control"><label for="inventory-filter-class">Clase</label><select id="inventory-filter-class" disabled><option value="">Todas</option></select></div>
           <div class="control"><label for="inventory-filter-brand">Marca</label><select id="inventory-filter-brand" disabled><option value="">Todas</option></select></div>
+          <div class="control"><label for="inventory-filter-class">Clase</label><select id="inventory-filter-class" disabled><option value="">Todas</option></select></div>
           <div class="control"><label for="inventory-filter-status">Antigüedad</label><select id="inventory-filter-status" disabled><option value="">Todas</option><option value="ACTIVO">Activo (0–30)</option><option value="LENTO">Movimiento lento (31–60)</option><option value="REZAGADO">Rezagado (61–90)</option><option value="CRITICO">Rezago crítico (91–120)</option><option value="LIQUIDACION">Candidato a liquidación (&gt;120)</option></select></div>
-          <div class="control wide"><label for="inventory-search">Sku o descripción</label><input id="inventory-search" type="search" placeholder="Buscar producto…" disabled></div>
+          <div class="control wide"><label for="inventory-search">Busqueda avanzada</label><input id="inventory-search" type="search" placeholder="Ingresa modelo, descripción o documento" disabled></div>
         </div>
       </section>
 
@@ -1958,25 +1950,23 @@
     </div>
 
     <div id="module-receipts" class="module-view">
-      <section class="panel module-intro"><div><h2>Recepciones de mercancía</h2><p>Entradas por proveedor, sucursal, clase, orden de compra y evolución de costos. Todos los importes están sin IVA.</p></div><span class="tag primary">Fase 3</span></section>
-
       <section class="module-loader-grid">
         <article class="panel"><div class="panel-body"><div class="section-title"><div><h3>Cargar reporte de recepciones</h3><p>Columnas esperadas: Crtd_DateTime, InvtID, Qty, SiteID, VendId, Crtd_User, ExtCost, RcptQty, TranDesc, UnitCost, PONbr y ClassID.</p></div><span class="tag primary">Excel local</span></div><div class="module-drop-zone" id="receipts-drop-zone"><div><div class="drop-icon">⇧</div><h3>Arrastra las recepciones</h3><p>.xlsx, .xls o .csv</p><button class="btn btn-primary" id="receipts-choose-btn" type="button">Seleccionar archivo</button><input type="file" id="receipts-file-input" accept=".xlsx,.xls,.csv" hidden></div></div><div class="file-actions"><div class="control"><label for="receipts-sheet-select">Hoja</label><select id="receipts-sheet-select" disabled><option value="">Selecciona primero un archivo</option></select></div><button class="btn btn-primary" id="receipts-process-btn" disabled type="button">Procesar recepciones</button></div><div class="file-meta" id="receipts-file-meta"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button class="btn btn-outline" id="receipts-clear-btn" disabled type="button">Eliminar recepciones</button></div></div></article>
         <aside class="panel"><div class="panel-body"><div class="section-title"><div><h3>Validación</h3><p>Filas, fechas, cantidades, costos y órdenes.</p></div><span class="tag" id="receipts-validation-status">Sin archivo</span></div><div class="module-validation" id="receipts-validation"><div class="empty-state"><div><strong>Sin recepciones</strong>Carga el reporte para comenzar.</div></div></div></div></aside>
       </section>
 
       <section class="panel toolbar">
-        <div class="toolbar-top"><div><strong>Filtro de recepciones</strong><div class="period-strip"><span>Periodo: <strong id="receipts-period-label">Sin datos</strong></span><span>Registros: <strong id="receipts-filtered-count">0</strong></span></div></div><button class="btn btn-outline" id="receipts-reset-btn" disabled type="button">Limpiar filtros</button></div>
+        <div class="toolbar-top"><div><strong>Filtro de recepciones</strong><div class="period-strip"></div></div><button class="btn btn-outline" id="receipts-reset-btn" disabled type="button">Limpiar filtros</button></div>
+        <div class="preset-row"><button class="receipt-preset" data-receipt-preset="today" disabled>Hoy</button><button class="receipt-preset" data-receipt-preset="7" disabled>7 días</button><button class="receipt-preset active" data-receipt-preset="30" disabled>30 días</button><button class="receipt-preset" data-receipt-preset="60" disabled>60 días</button><button class="receipt-preset" data-receipt-preset="90" disabled>90 días</button><button class="receipt-preset" data-receipt-preset="month" disabled>Mes actual</button><button class="receipt-preset" data-receipt-preset="prevMonth" disabled>Mes anterior</button><button class="receipt-preset" data-receipt-preset="custom" disabled>Aplicar rango</button></div>
         <div class="module-toolbar-grid">
           <div class="control"><label for="receipts-reference-date">Fecha de referencia</label><input id="receipts-reference-date" type="text" placeholder="dd/mm/aaaa" disabled></div>
-          <div class="control"><label for="receipts-date-start">Fecha inicial</label><input id="receipts-date-start" type="text" placeholder="dd/mm/aaaa" disabled></div>
-          <div class="control"><label for="receipts-date-end">Fecha final</label><input id="receipts-date-end" type="text" placeholder="dd/mm/aaaa" disabled></div>
-          <div class="control"><label for="receipts-filter-vendor">Proveedor / VendId</label><select id="receipts-filter-vendor" disabled><option value="">Todos</option></select></div>
-          <div class="control"><label for="receipts-filter-site">Sucursal / SiteID</label><select id="receipts-filter-site" disabled><option value="">Todas</option></select></div>
+          <div class="control"><label for="receipts-date-start">Desde</label><input id="receipts-date-start" type="text" placeholder="dd/mm/aaaa" disabled></div>
+          <div class="control"><label for="receipts-date-end">Hasta</label><input id="receipts-date-end" type="text" placeholder="dd/mm/aaaa" disabled></div>
+          <div class="control"><label for="receipts-filter-vendor">Proveedor</label><select id="receipts-filter-vendor" disabled><option value="">Todos</option></select></div>
+          <div class="control"><label for="receipts-filter-site">Sucursal</label><select id="receipts-filter-site" disabled><option value="">Todas</option></select></div>
           <div class="control"><label for="receipts-filter-class">Clase</label><select id="receipts-filter-class" disabled><option value="">Todas</option></select></div>
-          <div class="control wide"><label for="receipts-search">SKU, descripción u orden</label><input id="receipts-search" type="search" placeholder="Buscar…" disabled></div>
+          <div class="control wide"><label for="receipts-search">Busqueda avanzada</label><input id="receipts-search" type="search" placeholder="Ingresa modelo, descripción o documento" disabled></div>
         </div>
-        <div class="preset-row"><button class="receipt-preset" data-receipt-preset="today" disabled>Hoy</button><button class="receipt-preset" data-receipt-preset="7" disabled>7 días</button><button class="receipt-preset active" data-receipt-preset="30" disabled>30 días</button><button class="receipt-preset" data-receipt-preset="60" disabled>60 días</button><button class="receipt-preset" data-receipt-preset="90" disabled>90 días</button><button class="receipt-preset" data-receipt-preset="month" disabled>Mes actual</button><button class="receipt-preset" data-receipt-preset="prevMonth" disabled>Mes anterior</button><button class="receipt-preset" data-receipt-preset="custom" disabled>Aplicar rango</button></div>
       </section>
 
       <section class="kpi-grid">
@@ -2011,7 +2001,7 @@
       <section class="panel product-360-panel">
         <div class="product-360-head"><div><span class="section-kicker">Herramienta prioritaria</span><h2>Busquda Rápida por Producto</h2><p>Escribe un SKU o una palabra como “TECLADOS” para revisar todas las coincidencias y justificar una compra propuesta.</p></div><span class="audit-badge">Conclusión auditable</span></div>
         <div class="product-search-grid">
-          <div class="control search-control"><label for="ficha-product-search">SKU o descripción</label><input id="ficha-product-search" type="search" list="ficha-product-list" placeholder="Ej. TECLADOS, LOGITECH o LO920…" autocomplete="off"><datalist id="ficha-product-list"></datalist></div>
+          <div class="control search-control"><label for="ficha-product-search">Busqueda avanzada</label><input id="ficha-product-search" type="search" list="ficha-product-list" placeholder="Ingresa modelo, descripción o documento" autocomplete="off"><datalist id="ficha-product-list"></datalist></div>
           <div class="control"><label for="ficha-plaza">Plaza</label><select id="ficha-plaza"><option value="">Todas las plazas</option></select></div>
           <div class="control"><label for="ficha-proposed-qty">Compra propuesta</label><input id="ficha-proposed-qty" type="number" min="0" step="1" value="0"></div>
           <button class="btn btn-primary btn-analyze" id="ficha-analyze-btn" type="button">Analizar producto</button>
@@ -5588,11 +5578,11 @@
       const toolbar=$("analysis-toolbar"),grid=toolbar?.querySelector(".toolbar-grid");if(!toolbar||!grid)return;
       grid.classList.add("sales-advanced-grid","collapsed");
       const quick=document.createElement("div");quick.className="sales-quickbar";
-      quick.innerHTML='<p>Usa Hoy, Ayer, 7 días o Mes actual. Abre los filtros avanzados solo cuando quieras analizar producto, clase, plaza o sucursal.</p><button class="btn btn-outline" id="sales-advanced-toggle" type="button">Mostrar filtros avanzados</button>';
+      quick.innerHTML='<p></p><button class="btn btn-outline" id="sales-advanced-toggle" type="button">Mostrar filtro</button>';
       grid.before(quick);
       $("sales-advanced-toggle").addEventListener("click",event=>{
         const expanded=grid.classList.toggle("expanded");grid.classList.toggle("collapsed",!expanded);
-        event.currentTarget.textContent=expanded?"Ocultar filtros avanzados":"Mostrar filtros avanzados";
+        event.currentTarget.textContent=expanded?"Ocultar filtro":"Mostrar filtro";
       });
     }
     function simplifyReceipts(){
@@ -6000,7 +5990,7 @@
       if(agenda.status==="ready"){
         root.innerHTML=`
           <div class="agenda-head">
-            <div><span class="dashboard-eyebrow">Agenda de compra de hoy</span><h3>${esc(agenda.day.label)} ${dateLabel(agenda.date)} · Semana ${agenda.week}, bloque ${esc(agenda.block)}</h3><p>${esc(agenda.item.focus||"Sin enfoque definido")}</p></div>
+            <div><span class="dashboard-eyebrow">Agenda diaria</span><h3>${esc(agenda.day.label)} ${dateLabel(agenda.date)} · Semana ${agenda.week}, bloque ${esc(agenda.block)}</h3><p>${esc(agenda.item.focus||"Sin enfoque definido")}</p></div>
             <div class="agenda-actions"><button class="btn btn-outline" data-agenda-action="settings" type="button">Configurar calendario</button><button class="btn btn-primary" id="agenda-build-order" type="button" ${rows.length?"":"disabled"}>Preparar compra de hoy</button></div>
           </div>
           <div class="agenda-body">
@@ -6741,7 +6731,7 @@
         slot?.classList.toggle("ready",Boolean(count));if(label)label.textContent=count?`${INT.format(count)} filas listas`:"Pendiente";
       });
       const latest=(app.receipts||[]).reduce((date,row)=>row.date&&(!date||row.date>date)?row.date:date,null);
-      if($("receipts-latest-note"))$("receipts-latest-note").textContent=latest?`Última fecha disponible en el reporte: ${dateLabel(latest)}. Los periodos rápidos se calculan contra el calendario real de hoy.`:"Los accesos rápidos usan el calendario real. Carga recepciones para ver la última fecha disponible.";
+      if($("receipts-latest-note"))$("receipts-latest-note").textContent=latest?`Última fecha disponible en el reporte: ${dateLabel(latest)}. `:"";
     }
     function actualInventory(plaza,classes=null){
       return (app.inventory||[]).filter(row=>plazaCode(row)===plaza&&(!classes||classes.includes(norm(row.classId)))).reduce((sum,row)=>sum+number(row.totalCost),0);

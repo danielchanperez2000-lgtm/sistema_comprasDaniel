@@ -5931,22 +5931,13 @@
       };
 
       ["CTM","CUN"].forEach(plaza=>{
-        const savedRows=Array.isArray(saved.classTargets?.[plaza])
-          ? saved.classTargets[plaza]
-          : [];
-
-        result.classTargets[plaza]=result.classTargets[plaza].map(row=>{
-          const found=savedRows.find(item=>
-            item.id===row.id ||
-            item.id===legacyClassTargetIds[row.id]
-          );
-
-          return found
-            ? {...row,target:number(found.target,row.target)}
-            : row;
-        });
+        if(Array.isArray(saved.classTargets?.[plaza]) && saved.classTargets[plaza].length > 0){
+          result.classTargets[plaza] = clone(saved.classTargets[plaza]);
+        }
       });
       return result;
+    }
+    
     }
     function loadSettings(){
       try{
@@ -6089,7 +6080,11 @@
           <article class="panel dashboard-panel">
             <div class="dashboard-section-head">
               <div><span class="dashboard-eyebrow">INDICES DE COMPRA</span><h3>Índices prioritarios por ClassID</h3><p>Stock actual de las 10 clases mas importantes.</p></div>
-              <div class="priority-switch"><button class="active" data-priority-plaza="CTM" type="button">Chetumal</button><button data-priority-plaza="CUN" type="button">Cancún</button></div>
+              <div class="priority-switch" style="align-items: center;">
+                <strong id="priority-avg-score" style="font-size: 1.55rem; color: #0f6cbd; margin-right: 12px; letter-spacing: -0.03em;">0%</strong>
+                <button class="active" data-priority-plaza="CTM" type="button">Chetumal</button>
+                <button data-priority-plaza="CUN" type="button">Cancún</button>
+              </div>
             </div>
             <div id="priority-index-table"></div>
           </article>
@@ -6347,11 +6342,12 @@
         const input=replaceControl(id);if(input){input.disabled=false;input.addEventListener("input",markSettingsDirty);}
       });
     }
-    function renderClassTargetInputs(){
+   function renderClassTargetInputs(){
       const root=$("settings-class-targets");if(!root)return;
-      root.innerHTML=["CTM","CUN"].map(plaza=>`<div class="class-target-column"><h4>${plaza==="CTM"?"Chetumal":"Cancún"}</h4>${settings.classTargets[plaza].map((row,index)=>`<label class="class-target-row"><span>${index+1}. ${esc(row.id)}</span><input type="number" min="0" step="1000" data-class-target="${plaza}" data-class-index="${index}" value="${number(row.target)}"></label>`).join("")}</div>`).join("");
-      root.querySelectorAll("[data-class-target]").forEach(input=>input.addEventListener("input",markSettingsDirty));
+      root.innerHTML=["CTM","CUN"].map(plaza=>`<div class="class-target-column"><h4>${plaza==="CTM"?"Chetumal":"Cancún"}</h4>${settings.classTargets[plaza].map((row,index)=>`<div class="class-target-row"><div style="display:flex; align-items:center; gap:8px;"><span style="color:#605e5c; font-size:0.75rem; width:16px;">${index+1}.</span><input type="text" data-class-id-target="${plaza}" data-class-index="${index}" value="${esc(row.id)}" placeholder="Ej. TCIP00"></div><input type="number" min="0" step="1000" data-class-target="${plaza}" data-class-index="${index}" value="${number(row.target)}"></div>`).join("")}</div>`).join("");
+      root.querySelectorAll("input").forEach(input=>input.addEventListener("input",markSettingsDirty));
     }
+    
     function renderCalendarSettings(calendar=settings.calendar){
       const root=$("settings-calendar-blocks");if(!root)return;
       $("settings-calendar-start").value=parseIsoDate(calendar.startDate)?calendar.startDate:dateKey(currentQuarterMonday(new Date()));
@@ -6557,7 +6553,16 @@
         next.engine[key].safety=Math.max(0,number($(`engine-${prefix}-safety`).value));
         next.engine[key].review=Math.max(1,number($(`engine-${prefix}-review`).value));
       });
-      $$("[data-class-target]").forEach(input=>{next.classTargets[input.dataset.classTarget][Number(input.dataset.classIndex)].target=Math.max(0,number(input.value));});
+      $$("[data-class-id-target]").forEach(idInput => {
+        const plaza = idInput.dataset.classIdTarget;
+        const index = Number(idInput.dataset.classIndex);
+        const targetInput = document.querySelector(`input[data-class-target="${plaza}"][data-class-index="${index}"]`);
+        
+        const rawId = String(idInput.value).trim().toUpperCase();
+        next.classTargets[plaza][index].id = rawId;
+        next.classTargets[plaza][index].classes = [...new Set(rawId.split(/[\s\+\,]+/).filter(Boolean))];
+        next.classTargets[plaza][index].target = Math.max(0, number(targetInput?.value));
+      });
       next.calendar=collectCalendarSettings();
       if(!collectProcurementSettings(next))return;
       
@@ -7445,14 +7450,35 @@
       root.innerHTML=desiredCard("Chetumal",ctm,targetCtm)+desiredCard("Cancún",cun,targetCun)+desiredCard("Total",ctm+cun,targetCtm+targetCun,true);
     }
     function renderPriority(){
-      const root=$("priority-index-table");if(!root)return;
-      if(!(app.inventory||[]).length){root.innerHTML='<div class="dashboard-empty-note">Carga el reporte de inventario para calcular los índices reales.</div>';return;}
-      const rows=settings.classTargets[priorityPlaza].map((item,index)=>{
-        const actual=actualInventory(priorityPlaza,item.classes),target=number(item.target),coverage=target?actual/target*100:0,gap=target-actual;
-        return `<tr><td><span class="priority-rank">${index+1}</span></td><td><strong>${esc(item.id)}</strong></td><td>${MXN.format(actual)}</td><td>${MXN.format(target)}</td><td class="coverage-cell"><strong>${PCT.format(coverage)}%</strong><div class="mini-progress"><i style="width:${Math.max(0,Math.min(100,coverage))}%"></i></div></td><td style="color:${gap>0?"#c50f1f":"#107c10"}">${gap>0?"Faltan":"Exceden"} ${MXN.format(Math.abs(gap))}</td></tr>`;
-      }).join("");
-      root.innerHTML=`<div class="priority-table-wrap"><table class="priority-table"><thead><tr><th>#</th><th>ClassID</th><th>Stock actual</th><th>Objetivo</th><th>% objetivo cubierto</th><th>Brecha</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  const root=$("priority-index-table");if(!root)return;
+  if(!(app.inventory||[]).length){root.innerHTML='<div class="dashboard-empty-note">Carga el reporte de inventario para calcular los índices reales.</div>';return;}
+
+  let totalCoverageAcc = 0;
+  let validTargets = 0;
+
+  const rows=settings.classTargets[priorityPlaza].map((item,index)=>{
+    const actual=actualInventory(priorityPlaza,item.classes);
+    const target=number(item.target);
+    const coverage=target?(actual/target)*100:0;
+    const gap=target-actual;
+
+    if (target > 0) {
+      totalCoverageAcc += Math.min(coverage, 100); 
+      validTargets++;
     }
+
+    return `<tr><td><span class="priority-rank">${index+1}</span></td><td><strong>${esc(item.id)}</strong></td><td>${MXN.format(actual)}</td><td>${MXN.format(target)}</td><td class="coverage-cell"><strong>${PCT.format(coverage)}%</strong><div class="mini-progress"><i style="width:${Math.max(0,Math.min(100,coverage))}%"></i></div></td><td style="color:${gap>0?"#c50f1f":"#107c10"}">${gap>0?"Faltan":"Exceden"} ${MXN.format(Math.abs(gap))}</td></tr>`;
+  }).join("");
+
+  const avgCoverage = validTargets > 0 ? (totalCoverageAcc / validTargets) : 0;
+  const avgNode = $("priority-avg-score");
+  if (avgNode) {
+    avgNode.textContent = `${PCT.format(avgCoverage)}%`;
+    avgNode.style.color = avgCoverage >= 90 ? "#107c10" : (avgCoverage >= 70 ? "#c75c00" : "#c50f1f");
+  }
+
+  root.innerHTML=`<div class="priority-table-wrap"><table class="priority-table"><thead><tr><th>#</th><th>ClassID</th><th>Stock actual</th><th>Objetivo</th><th>% objetivo cubierto</th><th>Brecha</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
     function dashboardContext(){
       const days=Math.max(1,number($("dashboard-window")?.value,30)),plaza=$("dashboard-plaza-filter")?.value||"",metric=$("dashboard-flow-metric")?.value||"amount";
       const dated=[...(app.sales||[]),...(app.receipts||[])].filter(row=>row.date instanceof Date&&!Number.isNaN(row.date));

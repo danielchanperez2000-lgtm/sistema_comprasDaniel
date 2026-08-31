@@ -5937,8 +5937,7 @@
       });
       return result;
     }
-    
-    }
+
     function loadSettings(){
       try{
         const loaded=mergeSettings(DEFAULTS,JSON.parse(localStorage.getItem(STORAGE_KEY)||"null"));
@@ -5948,8 +5947,10 @@
       catch(error){
         console.warn("No fue posible recuperar la configuración guardada.",error);
         const fallback=clone(DEFAULTS);fallback.calendar.startDate=dateKey(currentQuarterMonday(new Date()));return fallback;
-      }
+        }
     }
+    
+    
     function persistSettings(){
       try{localStorage.setItem(STORAGE_KEY,JSON.stringify(settings));}
       catch(error){console.warn("No fue posible guardar la configuración.",error);}

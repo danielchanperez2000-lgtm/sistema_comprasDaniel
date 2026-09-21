@@ -1694,9 +1694,9 @@
 
       <nav class="phase-nav" aria-label="Fases del proyecto">
         <button class="phase module-tab active" data-module="sales" type="button"><span>1</span> Ventas</button>
-        <button class="phase module-tab" data-module="inventory" type="button"><span>2</span> Inventario</button>
+        <button class="phase module-tab" data-module="inventory" type="button"><span>2</span> Existencias</button>
         <button class="phase module-tab" data-module="receipts" type="button"><span>3</span> Recepciones</button>
-        <button class="phase module-tab" data-module="purchase" type="button"><span>4</span> Motor Domina</button>
+        <button class="phase module-tab" data-module="purchase" type="button"><span>4</span> Motor</button>
       </nav>
 
       <div class="header-actions">
@@ -1724,7 +1724,7 @@
         <div class="orbit-ring ring-b"></div>
         <div class="orbit-core"><strong>DOMINA</strong><span>Tu decisión</span></div>
         <div class="orbit-node node-sales"><span>Ventas</span></div>
-        <div class="orbit-node node-stock"><span>Inventario</span></div>
+        <div class="orbit-node node-stock"><span>Existencias</span></div>
         <div class="orbit-node node-cost"><span>Costos</span></div>
       </div>
     </section>
@@ -2144,13 +2144,13 @@
         <article class="panel">
           <div class="panel-body">
             <div class="section-title">
-              <div><h3>Cargar reporte de inventario</h3><p>Columnas esperadas: ClassID, InvtID, Descr, SiteID, QtyAvail, LastCost, TotCost, LUpd_DateTime, StkBasePrc, InvRez, Unidad, Plaza y Marca.</p></div>
+              <div><h3>Cargar reporte de existencias</h3><p>Columnas esperadas: ClassID, InvtID, Descr, SiteID, QtyAvail, LastCost, TotCost, LUpd_DateTime, StkBasePrc, InvRez, Unidad, Plaza y Marca.</p></div>
               <span class="tag primary">Excel local</span>
             </div>
             <div class="module-drop-zone" id="inventory-drop-zone">
               <div>
                 <div class="drop-icon">⇧</div>
-                <h3>Arrastra el inventario</h3>
+                <h3>Arrastra las existencias</h3>
                 <p>.xlsx, .xls o .csv</p>
                 <button class="btn btn-primary" id="inventory-choose-btn" type="button">Seleccionar archivo</button>
                 <input type="file" id="inventory-file-input" accept=".xlsx,.xls,.csv" hidden>
@@ -2158,7 +2158,7 @@
             </div>
             <div class="file-actions">
               <div class="control"><label for="inventory-sheet-select">Hoja</label><select id="inventory-sheet-select" disabled><option value="">Selecciona primero un archivo</option></select></div>
-              <button class="btn btn-primary" id="inventory-process-btn" disabled type="button">Procesar inventario</button>
+              <button class="btn btn-primary" id="inventory-process-btn" disabled type="button">Procesar existencias</button>
             </div>
             <div class="file-meta" id="inventory-file-meta"></div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"><button class="btn btn-outline" id="inventory-clear-btn" disabled type="button">Eliminar inventario</button></div>
@@ -2168,7 +2168,7 @@
       </section>
 
       <section class="panel toolbar">
-        <div class="toolbar-top"><div><strong>Filtro de inventarios</strong><div class="period-strip"><span>Registros filtrados: <strong id="inventory-filtered-count">0</strong></span></div></div><button class="btn btn-outline" id="inventory-reset-btn" disabled type="button">Limpiar filtros</button></div>
+        <div class="toolbar-top"><div><strong>Filtro de inventario</strong><div class="period-strip"><span>Registros filtrados: <strong id="inventory-filtered-count">0</strong></span></div></div><button class="btn btn-outline" id="inventory-reset-btn" disabled type="button">Limpiar filtros</button></div>
         <div class="module-toolbar-grid">
           <div class="control" style="display:none;">
             <label for="inventory-cutoff-date">Fecha de corte</label>

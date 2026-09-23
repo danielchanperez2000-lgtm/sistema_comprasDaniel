@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Centro de inteligencia comercial para analizar ventas, inventario y recepciones, comparar periodos y generar recomendaciones de compra auditables." />
+  <meta name="description" content="Centro de inteligencia comercial para analizar ventas, existencias y recepciones, comparar periodos y generar recomendaciones de compra auditables." />
   <title>DOMINA· Inteligencia comercial</title>
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f6cbd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'/%3E%3Cpolyline points='3.27 6.96 12 12.01 20.73 6.96'/%3E%3Cline x1='12' y1='22.08' x2='12' y2='12'/%3E%3C/svg%3E" type="image/svg+xml">
@@ -1731,7 +1731,7 @@
 
     <section class="journey-rail" aria-label="Progreso del análisis">
       <button class="journey-step active" type="button" data-go-module="sales" data-journey="sales"><span class="journey-number">1</span><span><strong>Ventas</strong><small id="journey-sales-status">Carga el historial</small></span><i>→</i></button>
-      <button class="journey-step" type="button" data-go-module="inventory" data-journey="inventory"><span class="journey-number">2</span><span><strong>Inventario</strong><small id="journey-inventory-status">Carga la fotografía</small></span><i>→</i></button>
+      <button class="journey-step" type="button" data-go-module="inventory" data-journey="inventory"><span class="journey-number">2</span><span><strong>Existencias</strong><small id="journey-inventory-status">Carga la fotografía</small></span><i>→</i></button>
       <button class="journey-step" type="button" data-go-module="receipts" data-journey="receipts"><span class="journey-number">3</span><span><strong>Recepciones</strong><small id="journey-receipts-status">Carga el abastecimiento</small></span><i>→</i></button>
       <button class="journey-step" type="button" data-go-module="purchase" data-journey="purchase"><span class="journey-number">4</span><span><strong>Motor Domina</strong><small id="journey-purchase-status">Esperando reportes</small></span><i>✓</i></button>
     </section>
@@ -6075,12 +6075,12 @@
         <section class="enterprise-kpi-strip" id="dashboard-executive-kpis" aria-label="Indicadores ejecutivos"></section>
         <section class="dashboard-grid">
           <article class="panel dashboard-panel">
-            <div class="dashboard-section-head"><div><span class="dashboard-eyebrow">Capital objetivo</span><h3>Inventario final deseado</h3><p>Stock actual por plaza</p></div></div>
+            <div class="dashboard-section-head"><div><span class="dashboard-eyebrow">Capital objetivo</span><h3> "IFD" Inventario final deseado</h3><p>Stock actual por plaza</p></div></div>
             <div class="desired-cards" id="desired-inventory-cards"></div>
           </article>
           <article class="panel dashboard-panel">
             <div class="dashboard-section-head">
-              <div><span class="dashboard-eyebrow">INDICES DE COMPRA</span><h3>Índices prioritarios por ClassID</h3><p>Stock actual de las 10 clases mas importantes.</p></div>
+              <div><span class="dashboard-eyebrow">INDICES DE INVENTARIO</span><h3>Índices prioritarios por ClassID</h3><p>Stock actual de las 10 clases mas importantes.</p></div>
               <div class="priority-switch" style="align-items: center;">
                 <strong id="priority-avg-score" style="font-size: 1.55rem; color: #0f6cbd; margin-right: 12px; letter-spacing: -0.03em;">0%</strong>
                 <button class="active" data-priority-plaza="CTM" type="button">Chetumal</button>
